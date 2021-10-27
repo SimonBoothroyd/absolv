@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  test:
+
+    name: ${{ matrix.os }} python=${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - name: Setup Conda Environment
+      uses: conda-incubator/setup-miniconda@v2.1.1
+      with:
+        python-version: ${{ matrix.python-version }}
+        environment-file: devtools/conda-envs/test-env.yaml
+
+        channels: conda-forge,defaults
+
+        activate-environment: test
+        auto-update-conda: true
+        auto-activate-base: false
+        show-channel-urls: true
+
+    - name: Install Package
+      shell: bash -l {0}
+      run: |
+        python setup.py develop --no-deps
+
+    - name: Conda Environment Information
+      shell: bash -l {0}
+      run: |
+        conda info
+        conda list
+
+    - name: Run Tests
+      shell: bash -l {0}
+      run: |
+        pytest -v --cov=absolv --cov-report=xml --color=yes absolv/tests/
+
+    - name: CodeCov
+      uses: codecov/codecov-action@v2.0.3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
