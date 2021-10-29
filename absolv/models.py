@@ -1,5 +1,6 @@
 from typing import Dict, List, Literal, Optional, Tuple, Union
 
+from openmm import unit
 from pydantic import (
     BaseModel,
     Field,
@@ -7,7 +8,22 @@ from pydantic import (
     PositiveInt,
     confloat,
     root_validator,
+    validator,
 )
+
+
+def float_validator(field_name: str, expected_units: unit.Unit) -> validator:
+    def validate_unit(cls, value):
+
+        if isinstance(value, str):
+            return float(value)
+        elif isinstance(value, float):
+            return value
+
+        assert isinstance(value, unit.Quantity)
+        return value.value_in_unit(expected_units)
+
+    return validator(field_name, allow_reuse=True, pre=True)(validate_unit)
 
 
 class System(BaseModel):
@@ -77,6 +93,9 @@ class State(BaseModel):
     temperature: PositiveFloat = Field(..., description="The temperature [K].")
     pressure: Optional[PositiveFloat] = Field(..., description="The pressure [atm].")
 
+    _validate_temperature = float_validator("temperature", unit.kelvin)
+    _validate_pressure = float_validator("pressure", unit.atmosphere)
+
 
 class MinimizationProtocol(BaseModel):
     """A model that encodes how a system should be energy minimized."""
@@ -89,6 +108,10 @@ class MinimizationProtocol(BaseModel):
         0,
         description="The maximum number of iterations to perform. If this is 0, "
         "minimization is continued until the results converge.",
+    )
+
+    _validate_tolerance = float_validator(
+        "tolerance", unit.kilojoule_per_mole / unit.nanometers
     )
 
 
@@ -114,6 +137,11 @@ class SimulationProtocol(BaseModel):
         1.0,
         description="The friction coefficient [1/ps] to use for the Langevin "
         "thermostat.",
+    )
+
+    _validate_timestep = float_validator("timestep", unit.femtoseconds)
+    _validate_thermostat_friction = float_validator(
+        "thermostat_friction", (unit.picoseconds ** -1)
     )
 
 
@@ -229,6 +257,8 @@ class NonEquilibriumProtocol(EquilibriumProtocol):
         "transition between the states whereas a value greater than 1 will yield a "
         "stepwise transition as shown in Figure 3 of doi:10.1063/1.4712028.",
     )
+
+    _validate_transition_time = float_validator("transition_time", unit.picoseconds)
 
 
 class TransferFreeEnergySchema(BaseModel):

@@ -1,7 +1,16 @@
 import pytest
+from openmm import unit
 from pydantic import ValidationError
 
-from absolv.models import EquilibriumProtocol, System
+from absolv.models import (
+    EquilibriumProtocol,
+    MinimizationProtocol,
+    NonEquilibriumProtocol,
+    SimulationProtocol,
+    State,
+    System,
+)
+from absolv.tests import is_close
 
 
 class TestSystem:
@@ -44,6 +53,41 @@ class TestSystem:
         assert components_b == [("CO", 1), ("CCO", 2), ("OCO", 4)]
 
 
+class TestState:
+    def test_unit_validation(self):
+
+        state = State(
+            temperature=298.0 * unit.kelvin, pressure=101.325 * unit.kilopascals
+        )
+
+        assert is_close(state.temperature, 298.0)
+        assert is_close(state.pressure, 1.0)
+
+
+class TestMinimizationProtocol:
+    def test_unit_validation(self):
+
+        protocol = MinimizationProtocol(
+            tolerance=1.0 * unit.kilojoule_per_mole / unit.angstrom
+        )
+
+        assert is_close(protocol.tolerance, 10.0)
+
+
+class TestSimulationProtocol:
+    def test_unit_validation(self):
+
+        protocol = SimulationProtocol(
+            n_steps_per_iteration=1,
+            n_iterations=1,
+            timestep=0.002 * unit.picoseconds,
+            thermostat_friction=0.003 / unit.femtoseconds,
+        )
+
+        assert is_close(protocol.timestep, 2.0)
+        assert is_close(protocol.thermostat_friction, 3.0)
+
+
 class TestEquilibriumProtocol:
     def test_n_states(self):
 
@@ -64,3 +108,16 @@ class TestEquilibriumProtocol:
                 lambda_sterics=lambda_sterics,
                 lambda_electrostatics=lambda_electrostatics,
             )
+
+
+class TestNonEquilibriumProtocol:
+    def test_unit_validation(self):
+
+        protocol = NonEquilibriumProtocol(
+            lambda_sterics=[1.0],
+            lambda_electrostatics=[1.0],
+            transition_time=50000.0 * unit.femtoseconds,
+            n_steps_per_transition_state=1,
+        )
+
+        assert is_close(protocol.transition_time, 50.0)
