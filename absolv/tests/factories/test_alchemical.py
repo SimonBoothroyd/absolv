@@ -70,15 +70,9 @@ class TestOpenMMAlchemicalFactory:
 
         OpenMMAlchemicalFactory._add_electrostatics_lambda(nonbonded_force, [{0}, {1}])
 
-        assert nonbonded_force.getNumGlobalParameters() == 2
-
+        assert nonbonded_force.getNumGlobalParameters() == 1
         assert nonbonded_force.getGlobalParameterName(0) == "lambda_electrostatics"
-        assert nonbonded_force.getGlobalParameterName(1) == "lambda_electrostatics_sqrt"
-
-        assert all(
-            numpy.isclose(nonbonded_force.getGlobalParameterDefaultValue(i), 1.0)
-            for i in range(2)
-        )
+        numpy.isclose(nonbonded_force.getGlobalParameterDefaultValue(0), 1.0)
 
         assert nonbonded_force.getNumParticleParameterOffsets() == 2
 
@@ -92,7 +86,7 @@ class TestOpenMMAlchemicalFactory:
                 epsilon_scale,
             ) = nonbonded_force.getParticleParameterOffset(i)
 
-            assert parameter == "lambda_electrostatics_sqrt"
+            assert parameter == "lambda_electrostatics"
             assert index == i
 
             assert numpy.isclose(charge_scale, [1, -1][i])

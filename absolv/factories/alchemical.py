@@ -168,8 +168,9 @@ class OpenMMAlchemicalFactory:
         nonbonded_force: openmm.NonbondedForce,
         alchemical_indices: List[Set[int]],
     ):
-        """Modifies a standard non-bonded force so that the charges are linearly scaled
-        by `lambda_electrostatics` and `lambda_electrostatics_sqrt`.
+        """Modifies a standard non-bonded force so that the charges are scaled
+        by `lambda_electrostatics`. The alchemical-chemical interactions will be linearly
+        scaled while the alchemical-alchemical interactions will be quadratically scaled.
 
         Args:
             nonbonded_force: The force to modify.
@@ -186,7 +187,6 @@ class OpenMMAlchemicalFactory:
         ), "the non-bonded force should not already contain parameter offsets"
 
         nonbonded_force.addGlobalParameter("lambda_electrostatics", 1.0)
-        nonbonded_force.addGlobalParameter("lambda_electrostatics_sqrt", 1.0)
 
         alchemical_atom_indices = {i for values in alchemical_indices for i in values}
 
@@ -203,7 +203,7 @@ class OpenMMAlchemicalFactory:
                 continue
 
             nonbonded_force.addParticleParameterOffset(
-                "lambda_electrostatics_sqrt", i, charge, 0.0, 0.0
+                "lambda_electrostatics", i, charge, 0.0, 0.0
             )
 
         for i in range(nonbonded_force.getNumExceptions()):

@@ -122,9 +122,6 @@ def set_alchemical_lambdas(
         ), "`lambda_electrostatics` must be between 0 and 1"
 
         context.setParameter("lambda_electrostatics", lambda_electrostatics)
-        context.setParameter(
-            "lambda_electrostatics_sqrt", numpy.sqrt(lambda_electrostatics)
-        )
 
 
 def set_coordinates(
