@@ -8,7 +8,6 @@ import numpy
 import openmm
 import pytest
 from openff.toolkit.topology import Molecule, Topology
-from openff.utilities import temporary_cd
 from openmm import unit
 
 from absolv.factories.alchemical import OpenMMAlchemicalFactory
@@ -24,7 +23,7 @@ from absolv.simulations import (
     EquilibriumOpenMMSimulation,
     _OpenMMTopology,
 )
-from absolv.tests import all_close, is_close
+from absolv.tests import BaseTemporaryDirTest, all_close, is_close
 from absolv.utilities.openmm import (
     array_to_vectors,
     extract_coordinates,
@@ -107,13 +106,7 @@ def alchemical_argon_simulation(alchemical_argon_system):
     del simulation._context
 
 
-class TestEquilibriumOpenMMSimulation:
-    @pytest.fixture(autouse=True)
-    def _temporary_cd(self, tmpdir):
-
-        with temporary_cd(str(tmpdir)):
-            yield
-
+class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
     def test_init(self, alchemical_argon_system):
 
         topology, coordinates, system = alchemical_argon_system
@@ -271,13 +264,7 @@ class TestEquilibriumOpenMMSimulation:
         assert os.path.isfile("production-final-state.xml")
 
 
-class TestAlchemicalOpenMMSimulation:
-    @pytest.fixture(autouse=True)
-    def _temporary_cd(self, tmpdir):
-
-        with temporary_cd(str(tmpdir)):
-            yield
-
+class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
     def test_init(self, alchemical_argon_system):
 
         topology, coordinates, system = alchemical_argon_system

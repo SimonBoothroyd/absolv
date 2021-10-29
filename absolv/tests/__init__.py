@@ -2,7 +2,20 @@ import functools
 from typing import Callable, Union
 
 import numpy
+import pytest
+from openff.utilities import temporary_cd
 from openmm import unit
+
+
+class BaseTemporaryDirTest:
+    """The base class for test classes whose inner tests should in run in a temporary
+    directory."""
+
+    @pytest.fixture(autouse=True)
+    def _temporary_cd(self, tmpdir):
+
+        with temporary_cd(str(tmpdir)):
+            yield
 
 
 def _compare_values(
