@@ -26,6 +26,18 @@ def _soft_core_lj_potential() -> str:
 class OpenMMAlchemicalFactory:
     """A factory that aids in transforming existing OpenMM systems into ones whose
     non-bonded interactions can be alchemically disabled using global context parameters.
+
+    Notes:
+        * Currently only OpenMM systems that have:
+
+          - vdW + electrostatics in a single built-in LJ force
+          - vdW + electrostatics in a single built-in LJ force and vdW 1-4
+            interactions in a custom **bond** force
+          - electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
+            force and vdW 1-4 interactions in a custom **bond** force
+          - all of the above sans any electrostatics
+
+          are supported.
     """
 
     @classmethod
@@ -71,16 +83,6 @@ class OpenMMAlchemicalFactory:
 
         Args:
             system: The OpenMM system containing the forces.
-
-        Notes:
-            * Currently only OpenMM systems that have:
-
-              - vdW + electrostatics in a single built-in LJ force
-              - vdW + electrostatics in a single built-in LJ force and vdW 1-4
-                interactions in a custom **bond** force
-              - electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
-                force and vdW 1-4 interactions in a custom **bond** force
-              - all of the above sans any electrostatics.
         """
 
         normal_nonbonded_forces = []
@@ -167,26 +169,24 @@ class OpenMMAlchemicalFactory:
         alchemical_indices: List[Set[int]],
     ):
         """Modifies a standard non-bonded force so that the charges are linearly scaled
-        by `lambda_electrostatics`.
+        by `lambda_electrostatics` and `lambda_electrostatics_sqrt`.
 
         Args:
-            nonbonded_force: The force to modifiy.
+            nonbonded_force: The force to modify.
             alchemical_indices: The indices of the alchemical particles in the force.
         """
 
-        global_parameter_names = {
-            nonbonded_force.getGlobalParameterName(i)
-            for i in range(nonbonded_force.getNumGlobalParameters())
-        }
         assert (
-            "lambda_electrostatics" not in global_parameter_names
-        ), "electrostatics lambda already present"
+            nonbonded_force.getNumGlobalParameters() == 0
+        ), "the non-bonded force should not already contain global parameters"
+
         assert (
             nonbonded_force.getNumParticleParameterOffsets() == 0
             and nonbonded_force.getNumExceptionParameterOffsets() == 0
         ), "the non-bonded force should not already contain parameter offsets"
 
         nonbonded_force.addGlobalParameter("lambda_electrostatics", 1.0)
+        nonbonded_force.addGlobalParameter("lambda_electrostatics_sqrt", 1.0)
 
         alchemical_atom_indices = {i for values in alchemical_indices for i in values}
 
@@ -202,9 +202,8 @@ class OpenMMAlchemicalFactory:
                 # We don't need to scale already zero charges
                 continue
 
-            # TODO: Does it matter if we don't scale by sqrt lambda here?
             nonbonded_force.addParticleParameterOffset(
-                "lambda_electrostatics", i, charge, 0.0, 0.0
+                "lambda_electrostatics_sqrt", i, charge, 0.0, 0.0
             )
 
         for i in range(nonbonded_force.getNumExceptions()):
