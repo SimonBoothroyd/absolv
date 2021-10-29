@@ -94,7 +94,7 @@ def alchemical_argon_simulation(alchemical_argon_system):
         production_protocol=SimulationProtocol(n_iterations=1, n_steps_per_iteration=1),
     )
 
-    simulation = AlchemicalOpenMMSimulation(
+    simulation = EquilibriumOpenMMSimulation(
         system,
         coordinates,
         topology.box_vectors,
@@ -344,26 +344,48 @@ class TestAlchemicalOpenMMSimulation:
 
         assert is_close(reduced_potential, expected_reduced)
 
-    def test_begin_end_iteration(self, alchemical_argon_simulation):
+    def test_begin_end_iteration(self):
 
-        alchemical_argon_simulation._begin_iteration(0, "test")
-        assert alchemical_argon_simulation._energies_file is None
+        topology = Topology.from_molecules([Molecule.from_smiles("[Ar]")] * 2)
 
-        alchemical_argon_simulation._begin_iteration(0, "production")
-        assert alchemical_argon_simulation._energies_file is not None
+        system = _build_alchemical_lj_system(
+            1, 1, 1.0 * unit.kilojoules_per_mole, 1.0 * unit.angstrom
+        )
+        [*system.getForces()][0].setNonbondedMethod(
+            openmm.NonbondedForce.CutoffNonPeriodic
+        )
 
-        alchemical_argon_simulation._end_iteration(0, "test")
-        assert alchemical_argon_simulation._energies_file is not None
+        coordinates = numpy.array([[-1.0, 0.0, 0.0], [1.0, 0.0, 0.0]]) * unit.angstrom
 
-        alchemical_argon_simulation._end_iteration(0, "production")
+        simulation = AlchemicalOpenMMSimulation(
+            system,
+            coordinates,
+            topology.box_vectors,
+            State(temperature=3.0 * unit.kelvin, pressure=None),
+            EquilibriumProtocol(
+                lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
+            ),
+            0,
+            "CPU",
+        )
+
+        expected_reduced_potential = simulation._compute_reduced_potential()
+
+        simulation._begin_iteration(0, "test")
+        assert simulation._energies_file is None
+
+        simulation._begin_iteration(0, "production")
+        assert simulation._energies_file is not None
+
+        simulation._end_iteration(0, "test")
+        assert simulation._energies_file is not None
+
+        simulation._end_iteration(0, "production")
         assert os.path.isfile("lambda-potentials.csv")
 
         lambda_potentials = numpy.genfromtxt("lambda-potentials.csv", delimiter=" ")
         assert lambda_potentials.shape == (2,)
 
         assert all_close(
-            lambda_potentials,
-            # Calculated on 29/10/2021 11:17 and used simply as a regression check,
-            # not a correctness test.
-            numpy.array([5903.21903535, 5884.02080115]),
+            lambda_potentials, numpy.array([expected_reduced_potential, 0.0])
         )

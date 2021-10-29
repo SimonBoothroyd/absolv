@@ -17,7 +17,7 @@ def float_validator(field_name: str, expected_units: unit.Unit) -> validator:
 
         if isinstance(value, str):
             return float(value)
-        elif isinstance(value, float):
+        elif value is None or isinstance(value, float):
             return value
 
         assert isinstance(value, unit.Quantity)
