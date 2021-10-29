@@ -21,8 +21,8 @@ class _OpenMMTopology:
     without needing to know the full topological information.
     """
 
-    def __init__(self, n_positions: int, box_vectors):
-        self._atoms = list(range(n_positions))
+    def __init__(self, n_coordinates: int, box_vectors):
+        self._atoms = list(range(n_coordinates))
         self._box_vectors = box_vectors
 
     def atoms(self):
@@ -48,7 +48,7 @@ class EquilibriumOpenMMSimulation:
     def __init__(
         self,
         system: openmm.System,
-        positions: unit.Quantity,
+        coordinates: unit.Quantity,
         box_vectors: Optional[unit.Quantity],
         state: State,
         protocol: EquilibriumProtocol,
@@ -59,7 +59,7 @@ class EquilibriumOpenMMSimulation:
 
         Args:
             system: The OpenMM system to simulate.
-            positions: The initial positions of all atoms.
+            coordinates: The initial coordinates of all atoms.
             box_vectors: The (optional) initial periodic box vectors.
             state: The state to simulate at.
             protocol: The protocol to simulate according to.
@@ -69,7 +69,7 @@ class EquilibriumOpenMMSimulation:
 
         self._context = build_context(
             system,
-            positions,
+            coordinates,
             box_vectors,
             state.temperature * unit.kelvin,
             None if state.pressure is None else state.pressure * unit.atmosphere,
@@ -243,7 +243,7 @@ class AlchemicalOpenMMSimulation(EquilibriumOpenMMSimulation):
     def __init__(
         self,
         system: openmm.System,
-        positions: unit.Quantity,
+        coordinates: unit.Quantity,
         box_vectors: Optional[unit.Quantity],
         state: State,
         protocol: EquilibriumProtocol,
@@ -252,7 +252,7 @@ class AlchemicalOpenMMSimulation(EquilibriumOpenMMSimulation):
     ):
 
         super(AlchemicalOpenMMSimulation, self).__init__(
-            system, positions, box_vectors, state, protocol, lambda_index, platform
+            system, coordinates, box_vectors, state, protocol, lambda_index, platform
         )
 
         self._energies_file: Optional[IO] = None

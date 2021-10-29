@@ -1,5 +1,5 @@
 import copy
-from typing import Literal, Optional, Tuple, Union
+from typing import List, Literal, Optional, Tuple, Union, overload
 
 import numpy
 import openmm
@@ -8,9 +8,39 @@ from openmm import unit
 OpenMMPlatform = Literal["Reference", "OpenCL", "CUDA", "CPU"]
 
 
+@overload
+def array_to_vectors(box_vectors: numpy.ndarray) -> List[openmm.Vec3]:
+    ...
+
+
+@overload
+def array_to_vectors(box_vectors: unit.Quantity) -> unit.Quantity:
+    ...
+
+
+def array_to_vectors(array):
+    """A utility to convert numpy arrays into lists of OpenMM vectors.
+
+    Args:
+        array: The array to convert with shape=(n_items, 3)
+
+    Returns:
+        A list of three ``Vec3`` objects
+    """
+
+    original_units = None if not isinstance(array, unit.Quantity) else array.unit
+
+    if original_units is not None:
+        array = array.value_in_unit(original_units)
+
+    vectors = [openmm.Vec3(row[0], row[1], row[2]) for row in array]
+
+    return vectors if original_units is None else vectors * original_units
+
+
 def build_context(
     system: openmm.System,
-    positions: unit.Quantity,
+    coordinates: unit.Quantity,
     box_vectors: Optional[unit.Quantity],
     temperature: unit.Quantity,
     pressure: Optional[unit.Quantity],
@@ -22,7 +52,7 @@ def build_context(
 
     Args:
         system: The system encoding the potential energy function.
-        positions: The atom positions stored in a unit wrapped array with
+        coordinates: The atom coordinates stored in a unit wrapped array with
             shape=(n_atoms, 3).
         box_vectors: The (optional) box vectors stored in a unit wrapped array with
             shape=(3, 3).
@@ -61,7 +91,7 @@ def build_context(
         openmm.Platform.getPlatformByName(platform),
     )
 
-    set_positions(context, positions, box_vectors)
+    set_coordinates(context, coordinates, box_vectors)
 
     context.setVelocitiesToTemperature(temperature * unit.kelvin)
 
@@ -86,58 +116,56 @@ def set_alchemical_lambdas(
         context.setParameter("lambda_sterics", lambda_sterics)
 
     if lambda_electrostatics is not None:
+
         assert (
             0.0 <= lambda_electrostatics <= 1.0
         ), "`lambda_electrostatics` must be between 0 and 1"
+
         context.setParameter("lambda_electrostatics", lambda_electrostatics)
+        context.setParameter(
+            "lambda_electrostatics_sqrt", numpy.sqrt(lambda_electrostatics)
+        )
 
 
-def set_positions(
+def set_coordinates(
     context: openmm.Context,
-    positions: unit.Quantity,
+    coordinates: unit.Quantity,
     box_vectors: Optional[unit.Quantity],
 ):
-    """Updates an OpenMM context with a new set of positions and box vectors.
+    """Updates an OpenMM context with a new set of coordinates and box vectors.
 
     Args:
         context: The context to update.
-        positions: The new positions stored in a unit wrapped array with
+        coordinates: The new coordinates stored in a unit wrapped array with
             shape=(n_atoms, 3).
         box_vectors: The (optional) box vectors stored in a unit wrapped array with
-            shape=(3, 3).
+            shape=(3, 3) or list of three ``Vec3`` objects.
     """
 
     if box_vectors is not None:
 
-        box_vectors = box_vectors.value_in_unit(unit.nanometers)
-
-        if isinstance(box_vectors, numpy.ndarray):
-
-            box_vectors = [
-                openmm.Vec3(box_vectors[0, 0], box_vectors[0, 1], box_vectors[0, 2]),
-                openmm.Vec3(box_vectors[1, 0], box_vectors[1, 1], box_vectors[1, 2]),
-                openmm.Vec3(box_vectors[2, 0], box_vectors[2, 1], box_vectors[2, 2]),
-            ]
+        if isinstance(box_vectors.value_in_unit(unit.nanometers), numpy.ndarray):
+            box_vectors = array_to_vectors(box_vectors)
 
         context.setPeriodicBoxVectors(*box_vectors)
 
     system: openmm.System = context.getSystem()
 
-    if len(positions) != system.getNumParticles():
+    if len(coordinates) != system.getNumParticles():
 
-        positions = positions.value_in_unit(unit.nanometers)
+        coordinates = coordinates.value_in_unit(unit.nanometers)
 
         n_v_sites = sum(
             1 for i in range(system.getNumParticles()) if system.isVirtualSite(i)
         )
         n_atoms = system.getNumParticles() - n_v_sites
 
-        assert len(positions) == n_atoms, (
-            "positions must either have shape=(n_atoms, 3) "
+        assert len(coordinates) == n_atoms, (
+            "coordinates must either have shape=(n_atoms, 3) "
             "or (n_atoms + n_v_sites, 3)"
         )
 
-        full_positions = numpy.zeros((system.getNumParticles(), 3))
+        full_coordinates = numpy.zeros((system.getNumParticles(), 3))
         counter = 0
 
         for i in range(system.getNumParticles()):
@@ -145,25 +173,25 @@ def set_positions(
             if system.isVirtualSite(i):
                 continue
 
-            full_positions[i] = positions[counter]
+            full_coordinates[i] = coordinates[counter]
             counter += 1
 
-        positions = full_positions * unit.nanometers
+        coordinates = full_coordinates * unit.nanometers
 
-    context.setPositions(positions)
+    context.setPositions(coordinates)
     context.computeVirtualSites()
 
 
-def extract_positions(
+def extract_coordinates(
     state: Union[openmm.State, openmm.Context]
 ) -> Tuple[unit.Quantity, unit.Quantity]:
-    """Extracts the current positions and box vectors from an OpenMM context.
+    """Extracts the current coordinates and box vectors from an OpenMM context.
 
     Args:
         state: The state (or context) to extract from.
 
     Returns:
-        The current positions and box vectors stored in unit wrapped arrays with
+        The current coordinates and box vectors stored in unit wrapped arrays with
         shape=(n_atoms, 3) and shape=(3, 3) respectively.
     """
 
@@ -203,7 +231,7 @@ def minimize(
 
 def evaluate_energy(
     system: openmm.System,
-    positions: unit.Quantity,
+    coordinates: unit.Quantity,
     box_vectors: Optional[unit.Quantity] = None,
     lambda_sterics: Optional[float] = None,
     lambda_electrostatics: Optional[float] = None,
@@ -213,7 +241,7 @@ def evaluate_energy(
 
     Args:
         system: The openmm system that should be used to evaluate the energies.
-        positions: The positions that should be used when evaluating the energies.
+        coordinates: The coordinates that should be used when evaluating the energies.
         box_vectors: The (optional) periodic box vectors that should be used when
             evaluating the energies.
         lambda_sterics: The value of `lambda_sterics` to evaluate the energies at.
@@ -226,7 +254,7 @@ def evaluate_energy(
     """
 
     context = build_context(
-        system, positions, box_vectors, 1.0 * unit.kelvin, None, platform
+        system, coordinates, box_vectors, 1.0 * unit.kelvin, None, platform
     )
     set_alchemical_lambdas(context, lambda_sterics, lambda_electrostatics)
 

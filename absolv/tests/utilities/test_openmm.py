@@ -8,13 +8,33 @@ from openmm import unit
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.tests import all_close, is_close
 from absolv.utilities.openmm import (
+    array_to_vectors,
     build_context,
     evaluate_energy,
-    extract_positions,
+    extract_coordinates,
     minimize,
-    set_positions,
+    set_coordinates,
 )
 from absolv.utilities.topology import topology_to_components
+
+
+@pytest.mark.parametrize(
+    "input_array",
+    [numpy.arange(12).reshape((4, 3)), numpy.arange(12).reshape((4, 3)) * unit.kelvin],
+)
+def test_array_to_vectors(input_array):
+
+    vectors = array_to_vectors(input_array)
+
+    assert len(vectors) == 4
+
+    for row, vector in zip(input_array, vectors):
+
+        assert isinstance(
+            vector,
+            (openmm.Vec3 if isinstance(input_array, numpy.ndarray) else unit.Quantity),
+        )
+        assert all(is_close(vector[i], row[i]) for i in range(3))
 
 
 @pytest.mark.parametrize(
@@ -30,7 +50,7 @@ from absolv.utilities.topology import topology_to_components
 )
 def test_build_context(box_vectors, pressure, aq_nacl_topology, aq_nacl_lj_system):
 
-    positions = (
+    coordinates = (
         numpy.random.random((aq_nacl_topology.n_topology_atoms, 3)) * unit.angstrom
     )
 
@@ -38,7 +58,7 @@ def test_build_context(box_vectors, pressure, aq_nacl_topology, aq_nacl_lj_syste
 
     context = build_context(
         aq_nacl_lj_system,
-        positions,
+        coordinates,
         box_vectors,
         123.0 * unit.kelvin,
         pressure,
@@ -62,46 +82,48 @@ def test_build_context(box_vectors, pressure, aq_nacl_topology, aq_nacl_lj_syste
     assert is_close(context.getIntegrator().getTemperature(), 123.0 * unit.kelvin)
 
     state: openmm.State = context.getState(getPositions=True)
-    state_positions = state.getPositions(asNumpy=True)
+    state_coordinates = state.getPositions(asNumpy=True)
 
-    assert all_close(state_positions[: aq_nacl_topology.n_topology_atoms], positions)
+    assert all_close(
+        state_coordinates[: aq_nacl_topology.n_topology_atoms], coordinates
+    )
 
 
-def test_get_set_positions(aq_nacl_topology, aq_nacl_lj_system):
+def test_get_set_coordinates(aq_nacl_topology, aq_nacl_lj_system):
 
-    expected_positions = (
+    expected_coordinates = (
         numpy.zeros((aq_nacl_lj_system.getNumParticles(), 3)) * unit.angstrom
     )
     expected_box_vectors = aq_nacl_topology.box_vectors
 
     context = build_context(
         aq_nacl_lj_system,
-        expected_positions,
+        expected_coordinates,
         expected_box_vectors,
         123.0 * unit.kelvin,
         None,
     )
 
-    current_positions, current_box_vectors = extract_positions(context)
+    current_coordinates, current_box_vectors = extract_coordinates(context)
 
-    assert all_close(current_positions, expected_positions)
+    assert all_close(current_coordinates, expected_coordinates)
     assert all_close(current_box_vectors, expected_box_vectors)
 
-    _, expected_positions = PACKMOLCoordinateFactory.generate(
+    _, expected_coordinates = PACKMOLCoordinateFactory.generate(
         topology_to_components(aq_nacl_topology),
     )
-    assert len(expected_positions) == aq_nacl_topology.n_topology_atoms
+    assert len(expected_coordinates) == aq_nacl_topology.n_topology_atoms
 
-    set_positions(context, expected_positions, expected_box_vectors)
+    set_coordinates(context, expected_coordinates, expected_box_vectors)
 
-    current_positions, current_box_vectors = extract_positions(context)
-    assert len(current_positions) == aq_nacl_lj_system.getNumParticles()
+    current_coordinates, current_box_vectors = extract_coordinates(context)
+    assert len(current_coordinates) == aq_nacl_lj_system.getNumParticles()
 
     assert all_close(
-        current_positions[: aq_nacl_topology.n_topology_atoms], expected_positions
+        current_coordinates[: aq_nacl_topology.n_topology_atoms], expected_coordinates
     )
     assert not all_close(
-        current_positions[aq_nacl_topology.n_topology_atoms :], 0.0 * unit.angstrom
+        current_coordinates[aq_nacl_topology.n_topology_atoms :], 0.0 * unit.angstrom
     )
 
     assert all_close(current_box_vectors, expected_box_vectors)
@@ -128,9 +150,9 @@ def test_minimize():
     )
     minimize(context, tolerance=0.1 * unit.kilojoules_per_mole / unit.nanometer)
 
-    positions, _ = extract_positions(context)
+    coordinates, _ = extract_coordinates(context)
 
-    delta = positions[0, :] - positions[1, :]
+    delta = coordinates[0, :] - coordinates[1, :]
     distance = (delta * delta).sum().sqrt()
 
     assert is_close(distance, 1.0 * unit.angstrom)

@@ -39,8 +39,8 @@ class TestEquilibriumRunner:
                 numpy.load("coords-initial.npy") * unit.angstrom,
                 numpy.array(
                     [
-                        [value.value_in_unit(unit.nanometers) for value in position]
-                        for position in pdb_file.positions
+                        [value.value_in_unit(unit.nanometers) for value in coordinate]
+                        for coordinate in pdb_file.positions
                     ]
                 )
                 * unit.nanometers,

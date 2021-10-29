@@ -31,6 +31,8 @@ dependencies:
   - pytest-cov
   - codecov
 
+  - mdtraj  # loading trajectories
+
     # Development
   - isort
   - black

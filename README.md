@@ -39,6 +39,8 @@ iii) and finally, the type of free energy calculation to perform as well as the 
 This can be compactly done by creating a new `TransferFreeEnergySchema` object:
 
 ```python
+from openmm import unit
+
 from absolv.models import EquilibriumProtocol, State, System, TransferFreeEnergySchema
 
 schema = TransferFreeEnergySchema(
@@ -47,7 +49,7 @@ schema = TransferFreeEnergySchema(
     # will be transferred into a vacuum.
     system=System(solutes={"CCO": 1}, solvent_a={"O": 895}, solvent_b=None),
     # Define the state that the calculation will be performed at.
-    state=State(temperature=298.15, pressure=1.0),
+    state=State(temperature=298.15 * unit.kelvin, pressure=1.0 * unit.atmosphere),
     # Define the alchemical pathway to transform the solute along in the first
     # and second (i.e. vacuum) solvent respectively.
     alchemical_protocol_a=EquilibriumProtocol(
