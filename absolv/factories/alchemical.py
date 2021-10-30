@@ -266,10 +266,11 @@ class OpenMMAlchemicalFactory:
             persistent_indices: The indices of the chemical particles in the force.
 
         Returns:
-            Custom non-bonded forces that contain all of the chemical-alchemical and
-            alchemical-alchemical interactions, not including any 1-2, 1-3 and 1-4
-            interactions which should be handled by either the built-in non-bonded force
-            or an unscaled custom bond force.
+            A custom non-bonded forces that contain all of the chemical-alchemical and
+            intermolecular alchemical-alchemical interactions, and one containing all of
+            the intramolecular alchemical-alchemical interactions excluding any 1-2, 1-3
+            and 1-4 interactions which should be handled by either the built-in
+            non-bonded force or an un-scaled custom bond force.
         """
 
         custom_nonbonded_template = openmm.CustomNonbondedForce("")
@@ -321,6 +322,9 @@ class OpenMMAlchemicalFactory:
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
         )
+        # and each alchemical molecule so that things ion pairs interactions are disabled
+        for pair in itertools.combinations(alchemical_indices, r=2):
+            aa_na_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         # Make sure that each alchemical molecule can also interact with themselves
         # excluding any 1-2, 1-3, and 1-4 interactions
@@ -329,9 +333,6 @@ class OpenMMAlchemicalFactory:
 
         for atom_indices in alchemical_indices:
             aa_aa_custom_nonbonded_force.addInteractionGroup(atom_indices, atom_indices)
-        # and that each alchemical molecule interacts with each other alchemical molecule
-        for pair in itertools.combinations(alchemical_indices, r=2):
-            aa_aa_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         return aa_na_custom_nonbonded_force, aa_aa_custom_nonbonded_force
 
@@ -358,10 +359,11 @@ class OpenMMAlchemicalFactory:
             persistent_indices: The indices of the chemical particles in the force.
 
         Returns:
-            Custom non-bonded forces that contain all of the chemical-alchemical and
-            alchemical-alchemical interactions, not including any 1-2, 1-3 and 1-4
-            interactions which should be instead handled by an un-modified custom bond
-            force.
+            A custom non-bonded forces that contain all of the chemical-alchemical and
+            intermolecular alchemical-alchemical interactions, and one containing all of
+            the intramolecular alchemical-alchemical interactions excluding any 1-2, 1-3
+            and 1-4 interactions which should be instead handled by an un-scaled custom
+            bond force.
         """
 
         assert original_force.getNumInteractionGroups() == 0, (
@@ -392,6 +394,9 @@ class OpenMMAlchemicalFactory:
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
         )
+        # and each alchemical molecule so that things ion pairs interactions are disabled
+        for pair in itertools.combinations(alchemical_indices, r=2):
+            aa_na_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         # Make sure that each alchemical molecule can also interact with themselves
         # excluding any 1-2, 1-3, and 1-4 interactions
@@ -399,8 +404,6 @@ class OpenMMAlchemicalFactory:
 
         for atom_indices in alchemical_indices:
             aa_aa_custom_nonbonded_force.addInteractionGroup(atom_indices, atom_indices)
-        for pair in itertools.combinations(alchemical_indices, r=2):
-            aa_aa_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         return aa_na_custom_nonbonded_force, aa_aa_custom_nonbonded_force
 

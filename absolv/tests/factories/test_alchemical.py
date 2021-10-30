@@ -151,16 +151,16 @@ class TestOpenMMAlchemicalFactory:
         assert aa_aa_custom_force.getNumGlobalParameters() == 0
 
         # Make sure the alchemical-chemical interaction groups are correctly set-up
-        assert aa_na_custom_force.getNumInteractionGroups() == 1
+        assert aa_na_custom_force.getNumInteractionGroups() == 2
         assert aa_na_custom_force.getInteractionGroupParameters(0) == [
             (0, 1),
             (2, 3, 4, 5, 6, 7),
         ]
+        assert aa_na_custom_force.getInteractionGroupParameters(1) == [(0,), (1,)]
 
-        assert aa_aa_custom_force.getNumInteractionGroups() == 3
+        assert aa_aa_custom_force.getNumInteractionGroups() == 2
         assert aa_aa_custom_force.getInteractionGroupParameters(0) == [(0,), (0,)]
         assert aa_aa_custom_force.getInteractionGroupParameters(1) == [(1,), (1,)]
-        assert aa_aa_custom_force.getInteractionGroupParameters(2) == [(0,), (1,)]
 
     def test_add_custom_vdw_lambda(self, aq_meoh_de_nonbonded):
 

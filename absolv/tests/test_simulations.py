@@ -308,10 +308,8 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
             coordinates,
             topology.box_vectors,
             State(temperature=3.0 * unit.kelvin, pressure=4.0 * unit.atmosphere),
-            EquilibriumProtocol(
-                lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
-            ),
-            1,
+            EquilibriumProtocol(lambda_sterics=[1.0], lambda_electrostatics=[1.0]),
+            0,
             "CPU",
         )
 
