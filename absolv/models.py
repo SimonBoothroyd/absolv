@@ -201,9 +201,50 @@ class EquilibriumProtocol(BaseModel):
         return values
 
 
-class NonEquilibriumProtocol(EquilibriumProtocol):
+class SwitchPathway(BaseModel):
+    """A model that encodes the protocol for non-reversibly driving a system between
+    to alchemical states."""
+
+    lambda_0: confloat(ge=0.0, le=1.0) = Field(
+        1.0,
+        description="The value of lambda that should be used for state 0.",
+    )
+    lambda_1: confloat(ge=0.0, le=1.0) = Field(
+        0.0,
+        description="The value of lambda that should be used for state 1.",
+    )
+
+    transition_time: PositiveFloat = Field(
+        ...,
+        description="The time [ps] in which to complete the non-equilibrium transition "
+        "between the two end states (0 -> 1).",
+    )
+    n_steps_per_transition_state: PositiveInt = Field(
+        ...,
+        description="The number of steps to run at each value of lambda as the system "
+        "is transitioning between the two end states. A value of 1 will give a smooth "
+        "transition between the states whereas a value greater than 1 will yield a "
+        "stepwise transition as shown in Figure 3 of doi:10.1063/1.4712028.",
+    )
+
+    _validate_transition_time = float_validator("transition_time", unit.picoseconds)
+
+
+class NonEquilibriumProtocol(BaseModel):
     """A model that encodes the protocol for performing a non-equilibrium switching
-    like alchemical free energy calculation.
+    like alchemical free energy calculation [1, 2].
+
+    It is expected that first the electrostatics interactions will be annihilated
+    followed by a decoupling of the sterics interactions.
+
+    References:
+        [1] Ballard, Andrew J., and Christopher Jarzynski. "Replica exchange with
+            nonequilibrium switches: Enhancing equilibrium sampling by increasing replica
+            overlap." The Journal of chemical physics 136.19 (2012): 194101.
+
+        [2] Gapsys, Vytautas, et al. "Large scale relative protein ligand binding
+            affinities using non-equilibrium alchemy." Chemical Science 11.4 (2020):
+            1140-1152.
     """
 
     type: Literal["non-equilibrium"] = "non-equilibrium"
@@ -222,43 +263,20 @@ class NonEquilibriumProtocol(EquilibriumProtocol):
     production_protocol: SimulationProtocol = Field(
         SimulationProtocol(n_steps_per_iteration=6250, n_iterations=160),  # 2 ns
         description="The protocol to follow when running the production equilibrium "
-        "simulation in both the end states.",
+        "simulation in both the end states. The snapshots generated at the end of each "
+        "iteration will be used for each non-equilibrium switch.",
     )
 
-    lambda_sterics_0: confloat(ge=0.0, le=1.0) = Field(
-        0.0,
-        description="The value of `lambda_sterics` that should be used for state 0.",
+    electrostatics_pathway: SwitchPathway = Field(
+        SwitchPathway(n_steps_per_transition_state=1, transition_time=12.5),
+        description="The pathway to drive the electrostatics interactions along "
+        "during the non-equilibrium switching.",
     )
-    lambda_electrostatics_0: confloat(ge=0.0, le=1.0) = Field(
-        0.0,
-        description="The value of `lambda_electrostatics` that should be used for "
-        "state 0.",
+    sterics_pathway: SwitchPathway = Field(
+        SwitchPathway(n_steps_per_transition_state=1, transition_time=37.5),
+        description="The pathway to drive the sterics interactions along "
+        "during the non-equilibrium switching.",
     )
-
-    lambda_sterics_1: confloat(ge=0.0, le=1.0) = Field(
-        1.0,
-        description="The value of `lambda_sterics` that should be used for state 1.",
-    )
-    lambda_electrostatics_1: confloat(ge=0.0, le=1.0) = Field(
-        1.0,
-        description="The value of `lambda_electrostatics` that should be used for "
-        "state 1.",
-    )
-
-    transition_time: PositiveFloat = Field(
-        50.0,
-        description="The time [ps] in which to complete the non-equilibrium transition "
-        "between the two end states (0 -> 1).",
-    )
-    n_steps_per_transition_state: PositiveInt = Field(
-        ...,
-        description="The number of steps to run at each value of lambda as the system "
-        "is transitioning between the two end states. A value of 1 will give a smooth "
-        "transition between the states whereas a value greater than 1 will yield a "
-        "stepwise transition as shown in Figure 3 of doi:10.1063/1.4712028.",
-    )
-
-    _validate_transition_time = float_validator("transition_time", unit.picoseconds)
 
 
 class TransferFreeEnergySchema(BaseModel):

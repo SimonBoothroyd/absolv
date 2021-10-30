@@ -5,9 +5,9 @@ from pydantic import ValidationError
 from absolv.models import (
     EquilibriumProtocol,
     MinimizationProtocol,
-    NonEquilibriumProtocol,
     SimulationProtocol,
     State,
+    SwitchPathway,
     System,
 )
 from absolv.tests import is_close
@@ -110,12 +110,10 @@ class TestEquilibriumProtocol:
             )
 
 
-class TestNonEquilibriumProtocol:
+class TestSwitchPathway:
     def test_unit_validation(self):
 
-        protocol = NonEquilibriumProtocol(
-            lambda_sterics=[1.0],
-            lambda_electrostatics=[1.0],
+        protocol = SwitchPathway(
             transition_time=50000.0 * unit.femtoseconds,
             n_steps_per_transition_state=1,
         )
