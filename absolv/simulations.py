@@ -1,18 +1,25 @@
 import os.path
-from typing import IO, Optional
+from typing import IO, Optional, Tuple
 
+import numpy
 import openmm
 from openff.utilities import temporary_cd
 from openmm import unit
 from openmm.app import DCDFile
 from tqdm import tqdm
 
-from absolv.models import EquilibriumProtocol, SimulationProtocol, State
+from absolv.models import (
+    EquilibriumProtocol,
+    SimulationProtocol,
+    State,
+    SwitchingProtocol,
+)
 from absolv.utilities.openmm import (
     OpenMMPlatform,
     build_context,
     minimize,
     set_alchemical_lambdas,
+    set_coordinates,
 )
 
 
@@ -334,3 +341,198 @@ class AlchemicalOpenMMSimulation(EquilibriumOpenMMSimulation):
             " ".join(f"{energy:+.10f}" for energy in alchemical_potentials) + "\n"
         )
         self._energies_file.flush()
+
+
+class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
+    """A class that simplifies the process of running a non-equilibrium simulation with
+    OpenMM, whereby a system is non-reversibly pulled along an alchemical pathway
+    as described by Ballard and Jarzynski [1] (Figure 3) and Gapsys et al [2].
+
+    Both the forward and reverse directions will be simulated by this class.
+
+    References:
+        [1] Ballard, Andrew J., and Christopher Jarzynski. "Replica exchange with
+        nonequilibrium switches: Enhancing equilibrium sampling by increasing replica
+        overlap." The Journal of chemical physics 136.19 (2012): 194101.
+
+        [2] Gapsys, Vytautas, et al. "Large scale relative protein ligand binding
+        affinities using non-equilibrium alchemy." Chemical Science 11.4 (2020):
+        1140-1152.
+    """
+
+    def __init__(
+        self,
+        system: openmm.System,
+        state: State,
+        coordinates_0: unit.Quantity,
+        box_vectors_0: Optional[unit.Quantity],
+        coordinates_1: unit.Quantity,
+        box_vectors_1: Optional[unit.Quantity],
+        protocol: SwitchingProtocol,
+        platform: OpenMMPlatform,
+    ):
+        """
+
+        Args:
+            system: The OpenMM system to simulate.
+            state: The state to simulate at.
+            coordinates_0:
+            box_vectors_0:
+            coordinates_1:
+            box_vectors_1:
+            protocol:
+            platform: The OpenMM platform to simulate using.
+        """
+
+        super(NonEquilibriumOpenMMSimulation, self).__init__(
+            system, coordinates_0, box_vectors_0, state, platform
+        )
+
+        integrator: openmm.LangevinIntegrator = self._context.getIntegrator()
+        integrator.setStepSize(protocol.timestep)
+        integrator.setFriction(protocol.thermostat_friction)
+
+        self._protocol = protocol
+
+        self._state_0 = (coordinates_0, box_vectors_0)
+        self._state_1 = (coordinates_1, box_vectors_1)
+
+    def _compute_lambdas(
+        self, time_frame: int, reverse_direction: bool
+    ) -> Tuple[float, float, float]:
+        """Computes the values of the global, electrostatics and sterics lambdas for
+        a given time frame.
+
+        Args:
+            time_frame: The current time frame (i.e. current time / timestep).
+            reverse_direction: Whether to move from state 1 -> 0 rather than 0 -> 1.
+
+        Returns:
+            The values of the global, electrostatics and sterics lambdas
+        """
+
+        n_electrostatic_timesteps = (
+            self._protocol.n_electrostatic_steps
+            * self._protocol.n_steps_per_electrostatic_step
+        )
+        n_steric_timesteps = (
+            self._protocol.n_steric_steps * self._protocol.n_steps_per_steric_step
+        )
+
+        n_total_timesteps = n_electrostatic_timesteps + n_steric_timesteps
+
+        if reverse_direction:
+            time_frame = n_total_timesteps - time_frame
+
+        time = time_frame * self._protocol.timestep
+
+        time_electrostatics = self._protocol.timestep * n_electrostatic_timesteps
+        time_total = self._protocol.timestep * n_total_timesteps
+
+        lambda_global = (time_total - time) / time_total
+
+        lambda_electrostatics = (
+            0.0
+            if time_frame >= n_electrostatic_timesteps
+            else (
+                (time_electrostatics + time_total * (lambda_global - 1.0))
+                / time_electrostatics
+            )
+        )
+        lambda_sterics = (
+            1.0
+            if time_frame <= n_electrostatic_timesteps
+            else (time_total / (time_total - time_electrostatics) * lambda_global)
+        )
+
+        return lambda_global, lambda_electrostatics, lambda_sterics
+
+    def _simulate(
+        self,
+        coordinates: unit.Quantity,
+        box_vectors: Optional[unit.Quantity],
+        reverse_direction: bool,
+    ) -> numpy.ndarray:
+        """Evolve the state of the context according to a specific protocol."""
+
+        _, lambda_electrostatics, lambda_sterics = self._compute_lambdas(
+            0, reverse_direction
+        )
+
+        set_coordinates(self._context, coordinates, box_vectors)
+        set_alchemical_lambdas(self._context, lambda_sterics, lambda_electrostatics)
+
+        integrator: openmm.LangevinIntegrator = self._context.getIntegrator()
+
+        frame_index = 0
+
+        reduced_potentials = []
+
+        stages = (
+            (
+                self._protocol.n_electrostatic_steps,
+                self._protocol.n_steps_per_electrostatic_step,
+            ),
+            (
+                self._protocol.n_steric_steps + 1,
+                self._protocol.n_steps_per_steric_step,
+            ),
+        )
+
+        for i, (n_lambda_steps, n_steps_per_lambda) in enumerate(
+            stages if not reverse_direction else reversed(stages)
+        ):
+
+            for _ in range(n_lambda_steps - int(i + 1 == len(stages))):
+
+                reduced_potential_old = self._compute_reduced_potential()
+
+                (_, lambda_electrostatics, lambda_sterics) = self._compute_lambdas(
+                    frame_index + 1, reverse_direction
+                )
+
+                set_alchemical_lambdas(
+                    self._context, lambda_sterics, lambda_electrostatics
+                )
+
+                reduced_potential_new = self._compute_reduced_potential()
+
+                reduced_potentials.append(
+                    (reduced_potential_old, reduced_potential_new)
+                )
+
+                integrator.step(n_steps_per_lambda)
+                frame_index += n_steps_per_lambda
+
+        return numpy.array(reduced_potentials)
+
+    def run(self, directory: Optional[str]) -> Tuple[float, float]:
+        """Run the full simulation, restarting from where it left off if a previous
+        attempt to run had already been made.
+
+        Args:
+            directory: The (optional) directory to run in. If no directory is specified
+                the outputs will be stored in a temporary directory and no restarts will
+                be possible.
+        """
+
+        if directory is not None and len(directory) > 0:
+            os.makedirs(directory, exist_ok=True)
+
+        if not os.path.isfile("forward-potentials.csv"):
+
+            forward_potentials = self._simulate(*self._state_0, reverse_direction=False)
+            numpy.savetxt("forward-potentials.csv", forward_potentials, delimiter=" ")
+
+        if not os.path.isfile("reverse-potentials.csv"):
+
+            reverse_potentials = self._simulate(*self._state_1, reverse_direction=True)
+            numpy.savetxt("reverse-potentials.csv", reverse_potentials, delimiter=" ")
+
+        forward_potentials = numpy.genfromtxt("forward-potentials.csv", delimiter=" ")
+        reverse_potentials = numpy.genfromtxt("reverse-potentials.csv", delimiter=" ")
+
+        forward_work = (forward_potentials[:, 1] - forward_potentials[:, 0]).sum()
+        reverse_work = (reverse_potentials[:, 1] - reverse_potentials[:, 0]).sum()
+
+        return forward_work, reverse_work
