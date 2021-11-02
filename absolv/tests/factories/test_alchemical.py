@@ -7,6 +7,7 @@ from openmm import unit
 from absolv.factories.alchemical import (
     OpenMMAlchemicalFactory,
     _lj_potential,
+    _lorentz_berthelot,
     _soft_core_lj_potential,
 )
 from absolv.tests import is_close
@@ -136,14 +137,16 @@ class TestOpenMMAlchemicalFactory:
             for i in range(nonbonded_force.getNumExceptions())
         )
 
-        assert all(
-            isinstance(force, openmm.CustomNonbondedForce) for force in custom_forces
-        )
+        assert isinstance(custom_forces[0], openmm.CustomNonbondedForce)
+        assert isinstance(custom_forces[1], openmm.CustomBondForce)
 
         aa_na_custom_force, aa_aa_custom_force = custom_forces
 
         # Make sure only the alchemical-chemical interactions are transformed
-        assert aa_na_custom_force.getEnergyFunction() == _soft_core_lj_potential()
+        assert (
+            aa_na_custom_force.getEnergyFunction()
+            == _soft_core_lj_potential() + _lorentz_berthelot()
+        )
         assert aa_na_custom_force.getNumGlobalParameters() == 1
         assert aa_na_custom_force.getGlobalParameterName(0) == "lambda_sterics"
 
@@ -158,9 +161,7 @@ class TestOpenMMAlchemicalFactory:
         ]
         assert aa_na_custom_force.getInteractionGroupParameters(1) == [(0,), (1,)]
 
-        assert aa_aa_custom_force.getNumInteractionGroups() == 2
-        assert aa_aa_custom_force.getInteractionGroupParameters(0) == [(0,), (0,)]
-        assert aa_aa_custom_force.getInteractionGroupParameters(1) == [(1,), (1,)]
+        assert aa_aa_custom_force.getNumBonds() == 0
 
     def test_add_custom_vdw_lambda(self, aq_meoh_de_nonbonded):
 
@@ -224,6 +225,11 @@ class TestOpenMMAlchemicalFactory:
             (0, 1, 2, 3, 4, 5),
         ]
 
+        assert (
+            aa_aa_custom_force.getNonbondedMethod()
+            == openmm.CustomNonbondedForce.CutoffNonPeriodic
+        )
+
     def test_generate_electrostatic_and_lj(self, aq_nacl_lj_system, monkeypatch):
 
         original_system = copy.deepcopy(aq_nacl_lj_system)
@@ -252,4 +258,11 @@ class TestOpenMMAlchemicalFactory:
             for force in alchemical_system.getForces()
             if isinstance(force, openmm.CustomNonbondedForce)
         ]
-        assert len(custom_nonbonded_forces) == 2
+        assert len(custom_nonbonded_forces) == 1
+
+        custom_bond_forces = [
+            force
+            for force in alchemical_system.getForces()
+            if isinstance(force, openmm.CustomBondForce)
+        ]
+        assert len(custom_bond_forces) == 1

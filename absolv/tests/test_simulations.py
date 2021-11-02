@@ -44,6 +44,7 @@ def _build_alchemical_lj_system(
     force = openmm.NonbondedForce()
     force.setNonbondedMethod(openmm.NonbondedForce.CutoffPeriodic)
     force.setCutoffDistance(6.0 * unit.angstrom)
+    force.setUseDispersionCorrection(False)
 
     system.addForce(force)
 
