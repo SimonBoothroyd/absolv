@@ -4,6 +4,7 @@ from openmm import unit
 from pydantic import (
     BaseModel,
     Field,
+    NonNegativeInt,
     PositiveFloat,
     PositiveInt,
     confloat,
@@ -201,33 +202,54 @@ class EquilibriumProtocol(BaseModel):
         return values
 
 
-class SwitchPathway(BaseModel):
+class SwitchingProtocol(BaseModel):
     """A model that encodes the protocol for non-reversibly driving a system between
     to alchemical states."""
 
-    lambda_0: confloat(ge=0.0, le=1.0) = Field(
+    n_electrostatic_steps: NonNegativeInt = Field(
+        ...,
+        description="The number of steps to annihilate the electrostatics interactions "
+        "over. The total time needed to annihilate the electrostatics interactions will "
+        "be ``n_electrostatic_steps * n_steps_per_electrostatic_step * timestep``",
+    )
+    n_steps_per_electrostatic_step: NonNegativeInt = Field(
+        ...,
+        description="The number of timesteps to evolve the system by each time the "
+        "electrostatics interactions are modified. A value of 1 will give a 'smooth' "
+        "transition between the each discrete lambda value whereas a value greater than "
+        "1 will yield a stepwise transition as shown in Figure 3 of "
+        "doi:10.1063/1.4712028.",
+    )
+
+    n_steric_steps: NonNegativeInt = Field(
+        ...,
+        description="The number of steps to decouple the sterics interactions over once "
+        "the electrostatics interactions have been annihilated. The total time needed "
+        "to annihilate the sterics interactions will be "
+        "``n_steric_steps * n_steps_per_steric_step * timestep``",
+    )
+    n_steps_per_steric_step: NonNegativeInt = Field(
+        ...,
+        description="The number of timesteps to evolve the system by each time the "
+        "sterics interactions are modified. A value of 1 will give a 'smooth' "
+        "transition between the each discrete lambda value whereas a value greater than "
+        "1 will yield a stepwise transition as shown in Figure 3 of "
+        "doi:10.1063/1.4712028.",
+    )
+
+    timestep: PositiveFloat = Field(
+        2.0, description="The timestep [fs] to evolve the system by at each step."
+    )
+    thermostat_friction: PositiveFloat = Field(
         1.0,
-        description="The value of lambda that should be used for state 0.",
-    )
-    lambda_1: confloat(ge=0.0, le=1.0) = Field(
-        0.0,
-        description="The value of lambda that should be used for state 1.",
+        description="The friction coefficient [1/ps] to use for the Langevin "
+        "thermostat.",
     )
 
-    transition_time: PositiveFloat = Field(
-        ...,
-        description="The time [ps] in which to complete the non-equilibrium transition "
-        "between the two end states (0 -> 1).",
+    _validate_timestep = float_validator("timestep", unit.femtoseconds)
+    _validate_thermostat_friction = float_validator(
+        "thermostat_friction", (unit.picoseconds ** -1)
     )
-    n_steps_per_transition_state: PositiveInt = Field(
-        ...,
-        description="The number of steps to run at each value of lambda as the system "
-        "is transitioning between the two end states. A value of 1 will give a smooth "
-        "transition between the states whereas a value greater than 1 will yield a "
-        "stepwise transition as shown in Figure 3 of doi:10.1063/1.4712028.",
-    )
-
-    _validate_transition_time = float_validator("transition_time", unit.picoseconds)
 
 
 class NonEquilibriumProtocol(BaseModel):
@@ -267,15 +289,11 @@ class NonEquilibriumProtocol(BaseModel):
         "iteration will be used for each non-equilibrium switch.",
     )
 
-    electrostatics_pathway: SwitchPathway = Field(
-        SwitchPathway(n_steps_per_transition_state=1, transition_time=12.5),
-        description="The pathway to drive the electrostatics interactions along "
-        "during the non-equilibrium switching.",
-    )
-    sterics_pathway: SwitchPathway = Field(
-        SwitchPathway(n_steps_per_transition_state=1, transition_time=37.5),
-        description="The pathway to drive the sterics interactions along "
-        "during the non-equilibrium switching.",
+    switching_protocol: SwitchingProtocol = Field(
+        ...,
+        description="The protocol that describes how each snapshot generated during the "
+        "production simulation should be driven from state 0 -> 1 and likewise 1 -> 0 "
+        "in order to compute the non-equilibrium work distributions.",
     )
 
 

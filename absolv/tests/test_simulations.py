@@ -21,6 +21,7 @@ from absolv.models import (
 from absolv.simulations import (
     AlchemicalOpenMMSimulation,
     EquilibriumOpenMMSimulation,
+    _BaseOpenMMSimulation,
     _OpenMMTopology,
 )
 from absolv.tests import BaseTemporaryDirTest, all_close, is_close
@@ -106,22 +107,16 @@ def alchemical_argon_simulation(alchemical_argon_system):
     del simulation._context
 
 
-class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
+class TestBaseOpenMMSimulation(BaseTemporaryDirTest):
     def test_init(self, alchemical_argon_system):
 
         topology, coordinates, system = alchemical_argon_system
 
-        protocol = EquilibriumProtocol(
-            lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
-        )
-
-        simulation = EquilibriumOpenMMSimulation(
+        simulation = _BaseOpenMMSimulation(
             system,
             coordinates,
             topology.box_vectors,
-            State(temperature=85.5, pressure=1.0),
-            protocol,
-            1,
+            State(temperature=85.5, pressure=0.5),
             "CPU",
         )
 
@@ -136,15 +131,11 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
         assert isinstance(simulation._mock_topology, _OpenMMTopology)
         assert simulation._mock_topology.atoms() == list(range(100))
 
-        assert simulation._protocol == protocol
+        expected_beta = 1.0 / (85.5 * unit.kelvin * unit.BOLTZMANN_CONSTANT_kB)
+        assert is_close(expected_beta, simulation._beta)
 
-        assert numpy.isclose(simulation._lambda_sterics, 0.0)
-        assert numpy.isclose(simulation._lambda_electrostatics, 1.0)
-
-        assert numpy.isclose(simulation._context.getParameter("lambda_sterics"), 0.0)
-        assert numpy.isclose(
-            simulation._context.getParameter("lambda_electrostatics"), 1.0
-        )
+        expected_pressure = 0.5 * unit.atmosphere
+        assert is_close(expected_pressure, simulation._pressure)
 
     def test_save_restore_state(self, alchemical_argon_simulation):
 
@@ -168,6 +159,74 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
         )
         assert all_close(initial_coordinates, coordinates)
         assert all_close(initial_box_vectors, box_vectors)
+
+    def test_compute_reduced_potential(self):
+
+        topology = Topology.from_molecules([Molecule.from_smiles("[Ar]")] * 2)
+        topology.box_vectors = (numpy.eye(3) * 12.0) * unit.angstrom
+
+        system = _build_alchemical_lj_system(
+            2, 0, 1.0 * unit.kilojoules_per_mole, 1.0 * unit.angstrom
+        )
+
+        coordinates = numpy.array([[-1.0, 0.0, 0.0], [1.0, 0.0, 0.0]]) * unit.angstrom
+
+        simulation = _BaseOpenMMSimulation(
+            system,
+            coordinates,
+            topology.box_vectors,
+            State(temperature=3.0 * unit.kelvin, pressure=4.0 * unit.atmosphere),
+            "CPU",
+        )
+
+        reduced_potential = simulation._compute_reduced_potential()
+
+        expected_energy = 4.0 * (2.0 ** -12 - 2.0 ** -6) * unit.kilojoules_per_mole
+        expected_volume = (12.0 * unit.angstrom) ** 3
+
+        expected_reduced = expected_energy / (
+            3.0 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R
+        )
+        expected_reduced += (
+            (4.0 * unit.atmosphere)
+            * expected_volume
+            / (3.0 * unit.kelvin * unit.BOLTZMANN_CONSTANT_kB)
+        )
+
+        assert is_close(reduced_potential, expected_reduced)
+
+
+class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
+    def test_init(self, alchemical_argon_system):
+
+        topology, coordinates, system = alchemical_argon_system
+
+        protocol = EquilibriumProtocol(
+            lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
+        )
+
+        simulation = EquilibriumOpenMMSimulation(
+            system,
+            coordinates,
+            topology.box_vectors,
+            State(temperature=85.5, pressure=1.0),
+            protocol,
+            1,
+            "CPU",
+        )
+
+        # Sanity check super was called
+        assert isinstance(simulation._context, openmm.Context)
+
+        assert simulation._protocol == protocol
+
+        assert numpy.isclose(simulation._lambda_sterics, 0.0)
+        assert numpy.isclose(simulation._lambda_electrostatics, 1.0)
+
+        assert numpy.isclose(simulation._context.getParameter("lambda_sterics"), 0.0)
+        assert numpy.isclose(
+            simulation._context.getParameter("lambda_electrostatics"), 1.0
+        )
 
     def test_minimize(self, alchemical_argon_simulation):
 
@@ -285,49 +344,6 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
 
         # Sanity check super was called
         assert isinstance(simulation._context, openmm.Context)
-
-        expected_beta = 1.0 / (85.5 * unit.kelvin * unit.BOLTZMANN_CONSTANT_kB)
-        assert is_close(expected_beta, simulation._beta)
-
-        expected_pressure = 0.5 * unit.atmosphere
-        assert is_close(expected_pressure, simulation._pressure)
-
-    def test_compute_reduced_potential(self):
-
-        topology = Topology.from_molecules([Molecule.from_smiles("[Ar]")] * 2)
-        topology.box_vectors = (numpy.eye(3) * 12.0) * unit.angstrom
-
-        system = _build_alchemical_lj_system(
-            2, 0, 1.0 * unit.kilojoules_per_mole, 1.0 * unit.angstrom
-        )
-
-        coordinates = numpy.array([[-1.0, 0.0, 0.0], [1.0, 0.0, 0.0]]) * unit.angstrom
-
-        simulation = AlchemicalOpenMMSimulation(
-            system,
-            coordinates,
-            topology.box_vectors,
-            State(temperature=3.0 * unit.kelvin, pressure=4.0 * unit.atmosphere),
-            EquilibriumProtocol(lambda_sterics=[1.0], lambda_electrostatics=[1.0]),
-            0,
-            "CPU",
-        )
-
-        reduced_potential = simulation._compute_reduced_potential()
-
-        expected_energy = 4.0 * (2.0 ** -12 - 2.0 ** -6) * unit.kilojoules_per_mole
-        expected_volume = (12.0 * unit.angstrom) ** 3
-
-        expected_reduced = expected_energy / (
-            3.0 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R
-        )
-        expected_reduced += (
-            (4.0 * unit.atmosphere)
-            * expected_volume
-            / (3.0 * unit.kelvin * unit.BOLTZMANN_CONSTANT_kB)
-        )
-
-        assert is_close(reduced_potential, expected_reduced)
 
     def test_begin_end_iteration(self):
 

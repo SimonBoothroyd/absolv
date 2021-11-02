@@ -39,20 +39,13 @@ class _OpenMMTopology:
         )
 
 
-class EquilibriumOpenMMSimulation:
-    """A class that simplifies the process of running an equilibrium simulation with
-    OpenMM, including performing energy minimizations, equilibration steps, and
-    checkpointing.
-    """
-
+class _BaseOpenMMSimulation:
     def __init__(
         self,
         system: openmm.System,
         coordinates: unit.Quantity,
         box_vectors: Optional[unit.Quantity],
         state: State,
-        protocol: EquilibriumProtocol,
-        lambda_index: int,
         platform: OpenMMPlatform,
     ):
         """
@@ -62,8 +55,6 @@ class EquilibriumOpenMMSimulation:
             coordinates: The initial coordinates of all atoms.
             box_vectors: The (optional) initial periodic box vectors.
             state: The state to simulate at.
-            protocol: The protocol to simulate according to.
-            lambda_index: The index defining which value of lambda to simulate at.
             platform: The OpenMM platform to simulate using.
         """
 
@@ -77,13 +68,11 @@ class EquilibriumOpenMMSimulation:
         )
         self._mock_topology = _OpenMMTopology(system.getNumParticles(), box_vectors)
 
-        self._protocol = protocol
-
-        self._lambda_sterics = protocol.lambda_sterics[lambda_index]
-        self._lambda_electrostatics = protocol.lambda_electrostatics[lambda_index]
-
-        set_alchemical_lambdas(
-            self._context, self._lambda_sterics, self._lambda_electrostatics
+        self._beta = 1.0 / (
+            unit.BOLTZMANN_CONSTANT_kB * (state.temperature * unit.kelvin)
+        )
+        self._pressure = (
+            (state.pressure * unit.atmosphere) if state.pressure is not None else None
         )
 
     def _restore_state(self, name: str) -> bool:
@@ -123,6 +112,64 @@ class EquilibriumOpenMMSimulation:
 
         with open(f"{name}-state.xml", "w") as file:
             file.write(openmm.XmlSerializer.serialize(state))
+
+    def _compute_reduced_potential(self) -> float:
+        """Computes the reduced potential of the contexts current state.
+
+        Returns:
+            The reduced potential.
+        """
+
+        state = self._context.getState(getEnergy=True)
+
+        unreduced_potential = state.getPotentialEnergy() / unit.AVOGADRO_CONSTANT_NA
+
+        if self._pressure is not None:
+            unreduced_potential += self._pressure * state.getPeriodicBoxVolume()
+
+        return unreduced_potential * self._beta
+
+
+class EquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
+    """A class that simplifies the process of running an equilibrium simulation with
+    OpenMM, including performing energy minimizations, equilibration steps, and
+    checkpointing.
+    """
+
+    def __init__(
+        self,
+        system: openmm.System,
+        coordinates: unit.Quantity,
+        box_vectors: Optional[unit.Quantity],
+        state: State,
+        protocol: EquilibriumProtocol,
+        lambda_index: int,
+        platform: OpenMMPlatform,
+    ):
+        """
+
+        Args:
+            system: The OpenMM system to simulate.
+            coordinates: The initial coordinates of all atoms.
+            box_vectors: The (optional) initial periodic box vectors.
+            state: The state to simulate at.
+            protocol: The protocol to simulate according to.
+            lambda_index: The index defining which value of lambda to simulate at.
+            platform: The OpenMM platform to simulate using.
+        """
+
+        super(EquilibriumOpenMMSimulation, self).__init__(
+            system, coordinates, box_vectors, state, platform
+        )
+
+        self._protocol = protocol
+
+        self._lambda_sterics = protocol.lambda_sterics[lambda_index]
+        self._lambda_electrostatics = protocol.lambda_electrostatics[lambda_index]
+
+        set_alchemical_lambdas(
+            self._context, self._lambda_sterics, self._lambda_electrostatics
+        )
 
     def _minimize(self):
         """Energy minimize the context if minimization has not already occurred."""
@@ -256,29 +303,6 @@ class AlchemicalOpenMMSimulation(EquilibriumOpenMMSimulation):
         )
 
         self._energies_file: Optional[IO] = None
-
-        self._beta = 1.0 / (
-            unit.BOLTZMANN_CONSTANT_kB * (state.temperature * unit.kelvin)
-        )
-        self._pressure = (
-            None if state.pressure is None else state.pressure * unit.atmosphere
-        )
-
-    def _compute_reduced_potential(self) -> float:
-        """Computes the reduced potential of the contexts current state.
-
-        Returns:
-            The reduced potential.
-        """
-
-        state = self._context.getState(getEnergy=True)
-
-        unreduced_potential = state.getPotentialEnergy() / unit.AVOGADRO_CONSTANT_NA
-
-        if self._pressure is not None:
-            unreduced_potential += self._pressure * state.getPeriodicBoxVolume()
-
-        return unreduced_potential * self._beta
 
     def _begin_iteration(self, iteration: int, name: str):
         super(AlchemicalOpenMMSimulation, self)._begin_iteration(iteration, name)

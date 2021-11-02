@@ -7,7 +7,7 @@ from absolv.models import (
     MinimizationProtocol,
     SimulationProtocol,
     State,
-    SwitchPathway,
+    SwitchingProtocol,
     System,
 )
 from absolv.tests import is_close
@@ -110,12 +110,17 @@ class TestEquilibriumProtocol:
             )
 
 
-class TestSwitchPathway:
+class TestSwitchingProtocol:
     def test_unit_validation(self):
 
-        protocol = SwitchPathway(
-            transition_time=50000.0 * unit.femtoseconds,
-            n_steps_per_transition_state=1,
+        protocol = SwitchingProtocol(
+            n_electrostatic_steps=6250,
+            n_steps_per_electrostatic_step=1,
+            n_steric_steps=18750,
+            n_steps_per_steric_step=1,
+            timestep=0.002 * unit.picoseconds,
+            thermostat_friction=0.003 / unit.femtoseconds,
         )
 
-        assert is_close(protocol.transition_time, 50.0)
+        assert is_close(protocol.timestep, 2.0)
+        assert is_close(protocol.thermostat_friction, 3.0)
