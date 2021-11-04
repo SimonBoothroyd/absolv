@@ -181,9 +181,12 @@ def aq_nacl_topology() -> Topology:
 @pytest.fixture(scope="module")
 def aq_meoh_topology() -> Topology:
 
-    return Topology.from_molecules(
+    topology = Topology.from_molecules(
         [Molecule.from_smiles("CO")] + [Molecule.from_smiles("O")] * 2
     )
+    topology.box_vectors = (numpy.eye(3) * 5.0) * unit.nanometers
+
+    return topology
 
 
 @pytest.fixture(scope="module")

@@ -12,7 +12,7 @@ def _lorentz_berthelot() -> str:
 
 
 def _lj_potential() -> str:
-    return "4.0*epsilon*x*(x-1.0); x = (sigma/r)^6;" + _lorentz_berthelot()
+    return "4.0*epsilon*x*(x-1.0); x = (sigma/r)^6;"
 
 
 def _soft_core_lj_potential() -> str:
@@ -20,7 +20,7 @@ def _soft_core_lj_potential() -> str:
         "lambda_sterics*4.0*epsilon*x*(x-1.0);"
         "x = (sigma/reff_sterics)^6;"
         "reff_sterics = sigma*(0.5*(1.0-lambda_sterics) + (r/sigma)^6)^(1/6);"
-    ) + _lorentz_berthelot()
+    )
 
 
 class OpenMMAlchemicalFactory:
@@ -31,8 +31,6 @@ class OpenMMAlchemicalFactory:
         * Currently only OpenMM systems that have:
 
           - vdW + electrostatics in a single built-in LJ force
-          - vdW + electrostatics in a single built-in LJ force and vdW 1-4
-            interactions in a custom **bond** force
           - electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
             force and vdW 1-4 interactions in a custom **bond** force
           - all of the above sans any electrostatics
@@ -104,9 +102,6 @@ class OpenMMAlchemicalFactory:
         if not (
             # vdW + electrostatics in a single built-in LJ force
             (len(normal_nonbonded_forces) == 1 and len(custom_nonbonded_forces) == 0)
-            # OR vdW + electrostatics in a single built-in LJ force and vdW 1-4
-            #    interactions in a custom **bond** force
-            or (len(normal_nonbonded_forces) == 1 and len(custom_bond_forces) == 1)
             # OR electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
             #    force and vdW 1-4 interactions in a custom **bond** force
             or (
@@ -125,8 +120,6 @@ class OpenMMAlchemicalFactory:
             raise NotImplementedError(
                 "Currently only OpenMM systems that have:\n\n"
                 "- vdW + electrostatics in a single built-in LJ force\n"
-                "- vdW + electrostatics in a single built-in LJ force and vdW 1-4 "
-                "interactions in a custom **bond** force\n"
                 "- electrostatics in a built-in LJ force, vdW in a custom **non-"
                 "bonded** force and vdW 1-4 interactions in a custom **bond** force\n"
                 "- all of the above sans any electrostatics\n\n"
@@ -249,16 +242,22 @@ class OpenMMAlchemicalFactory:
         original_force: openmm.NonbondedForce,
         alchemical_indices: List[Set[int]],
         persistent_indices: List[Set[int]],
-    ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomNonbondedForce]:
+    ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomBondForce]:
         """Modifies a standard non-bonded force so that only the interactions between
-        persistent (chemical) particles and all 1-4 interactions are retained, and splits
-        out all alchemical (both chemical-alchemical and alchemical-alchemical)
-        interactions into two custom non-bonded forces.
+        persistent (chemical) particles and all intramolecular interactions (including
+        those in alchemical molecules) are retained, and splits out all intermolecular
+        alchemical (both chemical-alchemical and alchemical-alchemical) interactions
+        into a separate custom non-bonded force.
 
         Notes:
-            The chemical-alchemical custom non-bonded force will use a soft-core
-            version of the LJ potential with a-b-c of 1-1-6 and alpha=0.5 that can be
-            scaled by a global `lambda_sterics` parameter.
+            * The custom non-bonded force will use a soft-core version of the LJ
+              potential with a-b-c of 1-1-6 and alpha=0.5 that can be scaled by a global
+              `lambda_sterics` parameter.
+            * All of the intramolecular vdW interactions of alchemical molecules
+              (excluding 1-2, 1-3 and 1-4 interactions) will be replaced with explicit
+              exceptions in a new custom bond force. This ensures that the decoupled
+              state truly corresponds to a set of alchemical molecules in vacuum with no
+              periodic effects.
 
         Args:
             original_force: The force to modify.
@@ -266,11 +265,11 @@ class OpenMMAlchemicalFactory:
             persistent_indices: The indices of the chemical particles in the force.
 
         Returns:
-            A custom non-bonded forces that contain all of the chemical-alchemical and
-            intermolecular alchemical-alchemical interactions, and one containing all of
-            the intramolecular alchemical-alchemical interactions excluding any 1-2, 1-3
-            and 1-4 interactions which should be handled by either the built-in
-            non-bonded force or an un-scaled custom bond force.
+            A custom non-bonded force that contains all of the chemical-alchemical and
+            **intermolecular** alchemical-alchemical interactions, and a custom bond
+            force that contains the intermolecular interactions of the alchemical
+            molecules excluding any 1-2, 1-3, and 1-4 interactions which are still
+            handled by the original force.
         """
 
         custom_nonbonded_template = openmm.CustomNonbondedForce("")
@@ -287,7 +286,7 @@ class OpenMMAlchemicalFactory:
             original_force.getUseSwitchingFunction()
         )
         custom_nonbonded_template.setUseLongRangeCorrection(
-            False  # original_force.getUseDispersionCorrection()
+            original_force.getUseDispersionCorrection()
         )
 
         custom_nonbonded_template.addPerParticleParameter("sigma")
@@ -295,6 +294,8 @@ class OpenMMAlchemicalFactory:
 
         alchemical_atom_indices = {i for values in alchemical_indices for i in values}
         persistent_atom_indices = {i for values in persistent_indices for i in values}
+
+        original_parameters = {}
 
         for index in range(original_force.getNumParticles()):
 
@@ -305,36 +306,62 @@ class OpenMMAlchemicalFactory:
             if index not in alchemical_atom_indices:
                 continue
 
+            # The vdW intermolecular alchemical interactions will be handled in a custom
+            # nonbonded force below, while the intramolecular interactions will be
+            # converted to exceptions so we zero them out here.
+            original_parameters[index] = (sigma, epsilon)
             original_force.setParticleParameters(index, charge, sigma, epsilon * 0)
 
         for index in range(original_force.getNumExceptions()):
 
             index_a, index_b, *_ = original_force.getExceptionParameters(index)
-            # Let the exceptions be handled by the original force as we don't intent to
+            # Let the exceptions be handled by the original force as we don't intend to
             # annihilate those while switching off the intermolecular vdW interactions
             custom_nonbonded_template.addExclusion(index_a, index_b)
 
         # Make sure that each alchemical molecule interacts with each chemical molecule
         aa_na_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
         aa_na_custom_nonbonded_force.addGlobalParameter("lambda_sterics", 1.0)
-        aa_na_custom_nonbonded_force.setEnergyFunction(_soft_core_lj_potential())
+        aa_na_custom_nonbonded_force.setEnergyFunction(
+            _soft_core_lj_potential() + _lorentz_berthelot()
+        )
 
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
         )
-        # and each alchemical molecule so that things ion pairs interactions are disabled
+        # and each alchemical molecule so that things like ion pair interactions are
+        # disabled
         for pair in itertools.combinations(alchemical_indices, r=2):
             aa_na_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         # Make sure that each alchemical molecule can also interact with themselves
-        # excluding any 1-2, 1-3, and 1-4 interactions
-        aa_aa_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
-        aa_aa_custom_nonbonded_force.setEnergyFunction(_lj_potential())
+        found_exclusions = {
+            tuple(sorted(original_force.getExceptionParameters(index)[:2]))
+            for index in range(original_force.getNumExceptions())
+        }
+        intramolecular_exclusions = {
+            tuple(sorted(pair))
+            for atom_indices in alchemical_indices
+            for pair in itertools.combinations(atom_indices, r=2)
+            if pair not in found_exclusions
+        }
 
-        for atom_indices in alchemical_indices:
-            aa_aa_custom_nonbonded_force.addInteractionGroup(atom_indices, atom_indices)
+        aa_aa_custom_bond_force = openmm.CustomBondForce(_lj_potential())
+        aa_aa_custom_bond_force.addPerBondParameter("epsilon")
+        aa_aa_custom_bond_force.addPerBondParameter("sigma")
 
-        return aa_na_custom_nonbonded_force, aa_aa_custom_nonbonded_force
+        for pair in intramolecular_exclusions:
+
+            sigma_1, epsilon_1 = original_parameters[pair[0]]
+            sigma_2, epsilon_2 = original_parameters[pair[1]]
+
+            aa_aa_custom_bond_force.addBond(
+                pair[0],
+                pair[1],
+                [numpy.sqrt(epsilon_1 * epsilon_2), 0.5 * (sigma_1 + sigma_2)],
+            )
+
+        return aa_na_custom_nonbonded_force, aa_aa_custom_bond_force
 
     @classmethod
     def _add_custom_vdw_lambda(
@@ -344,14 +371,15 @@ class OpenMMAlchemicalFactory:
         persistent_indices: List[Set[int]],
     ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomNonbondedForce]:
         """Modifies a custom non-bonded force so that only the interactions between
-        persistent (chemical) particles are retained, and splits out all alchemical
-        (both chemical-alchemical and alchemical-alchemical) interactions into two
-        custom non-bonded forces.
+        persistent (chemical) particles and all intramolecular interactions (including
+        those in alchemical molecules) are retained, and splits out all intermolecular
+        alchemical (both chemical-alchemical and alchemical-alchemical) interactions into
+        a separate custom non-bonded force.
 
         Notes:
-            The alchemical-alchemical custom non-bonded force will use a modified energy
-            expression so that it can be linearly scaled by a global `lambda_sterics`
-            parameter.
+            * The chemical-alchemical custom non-bonded force will use a modified energy
+              expression so that it can be linearly scaled by a global `lambda_sterics`
+              parameter.
 
         Args:
             original_force: The force to modify.
@@ -366,14 +394,16 @@ class OpenMMAlchemicalFactory:
             bond force.
         """
 
-        assert original_force.getNumInteractionGroups() == 0, (
-            "the custom force should not contain " "any interaction groups"
-        )
+        assert (
+            original_force.getNumInteractionGroups() == 0
+        ), "the custom force should not contain any interaction groups"
 
         custom_nonbonded_template = copy.deepcopy(original_force)
 
         alchemical_atom_indices = {i for values in alchemical_indices for i in values}
         persistent_atom_indices = {i for values in persistent_indices for i in values}
+
+        assert alchemical_atom_indices.isdisjoint(persistent_atom_indices)
 
         # Modify the original force so it only targets the chemical-chemical interactions
         original_force.addInteractionGroup(
@@ -401,6 +431,12 @@ class OpenMMAlchemicalFactory:
         # Make sure that each alchemical molecule can also interact with themselves
         # excluding any 1-2, 1-3, and 1-4 interactions
         aa_aa_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
+        aa_aa_custom_nonbonded_force.setNonbondedMethod(
+            openmm.CustomNonbondedForce.NoCutoff
+            if custom_nonbonded_template.getNonbondedMethod()
+            == openmm.CustomNonbondedForce.NoCutoff
+            else openmm.CustomNonbondedForce.CutoffNonPeriodic
+        )
 
         for atom_indices in alchemical_indices:
             aa_aa_custom_nonbonded_force.addInteractionGroup(atom_indices, atom_indices)
