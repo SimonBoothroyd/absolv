@@ -389,8 +389,8 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
         )
 
         integrator: openmm.LangevinIntegrator = self._context.getIntegrator()
-        integrator.setStepSize(protocol.timestep)
-        integrator.setFriction(protocol.thermostat_friction)
+        integrator.setStepSize(protocol.timestep * unit.femtoseconds)
+        integrator.setFriction(protocol.thermostat_friction / unit.picoseconds)
 
         self._protocol = protocol
 
@@ -433,7 +433,7 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
 
         lambda_electrostatics = (
             0.0
-            if time_frame >= n_electrostatic_timesteps
+            if time_frame >= n_electrostatic_timesteps or n_electrostatic_timesteps == 0
             else (
                 (time_electrostatics + time_total * (lambda_global - 1.0))
                 / time_electrostatics
@@ -483,7 +483,7 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
             stages if not reverse_direction else reversed(stages)
         ):
 
-            for _ in range(n_lambda_steps - int(i + 1 == len(stages))):
+            for _ in tqdm(range(n_lambda_steps - int(i + 1 == len(stages)))):
 
                 reduced_potential_old = self._compute_reduced_potential()
 
@@ -519,18 +519,32 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
         if directory is not None and len(directory) > 0:
             os.makedirs(directory, exist_ok=True)
 
-        if not os.path.isfile("forward-potentials.csv"):
+        with temporary_cd(directory):
 
-            forward_potentials = self._simulate(*self._state_0, reverse_direction=False)
-            numpy.savetxt("forward-potentials.csv", forward_potentials, delimiter=" ")
+            if not os.path.isfile("forward-potentials.csv"):
 
-        if not os.path.isfile("reverse-potentials.csv"):
+                forward_potentials = self._simulate(
+                    *self._state_0, reverse_direction=False
+                )
+                numpy.savetxt(
+                    "forward-potentials.csv", forward_potentials, delimiter=" "
+                )
 
-            reverse_potentials = self._simulate(*self._state_1, reverse_direction=True)
-            numpy.savetxt("reverse-potentials.csv", reverse_potentials, delimiter=" ")
+            if not os.path.isfile("reverse-potentials.csv"):
 
-        forward_potentials = numpy.genfromtxt("forward-potentials.csv", delimiter=" ")
-        reverse_potentials = numpy.genfromtxt("reverse-potentials.csv", delimiter=" ")
+                reverse_potentials = self._simulate(
+                    *self._state_1, reverse_direction=True
+                )
+                numpy.savetxt(
+                    "reverse-potentials.csv", reverse_potentials, delimiter=" "
+                )
+
+            forward_potentials = numpy.genfromtxt(
+                "forward-potentials.csv", delimiter=" "
+            )
+            reverse_potentials = numpy.genfromtxt(
+                "reverse-potentials.csv", delimiter=" "
+            )
 
         forward_work = (forward_potentials[:, 1] - forward_potentials[:, 0]).sum()
         reverse_work = (reverse_potentials[:, 1] - reverse_potentials[:, 0]).sum()
