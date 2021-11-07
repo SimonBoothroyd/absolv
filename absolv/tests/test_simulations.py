@@ -390,3 +390,7 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
         assert all_close(
             lambda_potentials, numpy.array([expected_reduced_potential, 0.0])
         )
+
+
+class TestNonEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
+    pass

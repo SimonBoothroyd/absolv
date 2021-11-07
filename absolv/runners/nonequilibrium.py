@@ -78,7 +78,10 @@ class NonEquilibriumRunner(BaseRunner):
 
             simulation = NonEquilibriumOpenMMSimulation(
                 alchemical_system,
-                state,
+                State(
+                    temperature=state.temperature,
+                    pressure=None if box_vectors_0 is None else state.pressure,
+                ),
                 coordinates_0,
                 box_vectors_0,
                 coordinates_1,

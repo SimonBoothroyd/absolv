@@ -231,3 +231,26 @@ def aq_meoh_de_nonbonded(aq_meoh_de_system) -> openmm.CustomNonbondedForce:
     assert len(nonbonded_forces) == 1
 
     return nonbonded_forces[0]
+
+
+@pytest.fixture()
+def argon_force_field() -> ForceField:
+
+    force_field = ForceField()
+
+    force_field.get_parameter_handler("Electrostatics")
+    force_field.get_parameter_handler(
+        "ChargeIncrementModel",
+        {"version": "0.3", "partial_charge_method": "formal_charge"},
+    )
+
+    vdw_handler = force_field.get_parameter_handler("vdW")
+    vdw_handler.add_parameter(
+        {
+            "smirks": "[#18:1]",
+            "epsilon": 125.7 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R,
+            "sigma": 0.3345 * unit.nanometers,
+        }
+    )
+
+    return force_field
