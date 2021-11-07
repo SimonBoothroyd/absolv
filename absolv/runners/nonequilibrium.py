@@ -3,6 +3,7 @@ from typing import Callable
 
 import mdtraj
 import numpy
+import pymbar
 from openff.toolkit.topology import Topology
 from openff.utilities import temporary_cd
 from openmm import openmm, unit
@@ -27,48 +28,6 @@ class NonEquilibriumRunner(BaseRunner):
     """
 
     @classmethod
-    def run_equilibrium(
-        cls,
-        schema: TransferFreeEnergySchema,
-        directory: str = "absolv-experiment",
-        platform: OpenMMPlatform = "CUDA",
-    ):
-        """Perform an **equilibrium** simulation at the two end states (i.e. fully
-        interaction and fully de-coupled solute) for each solvent.
-
-        Notes:
-            This method assumes ``setup`` as already been run.
-
-        Args:
-            schema: The schema defining the calculation to perform.
-            directory: The directory containing the input files.
-            platform: The OpenMM platform to run using.
-        """
-
-        solvent_indices = ["solvent-a", "solvent-b"]
-
-        for solvent_index, protocol in zip(
-            solvent_indices,
-            (schema.alchemical_protocol_a, schema.alchemical_protocol_b),
-        ):
-
-            assert isinstance(protocol, NonEquilibriumProtocol)
-
-            with temporary_cd(os.path.join(directory, solvent_index)):
-
-                cls._run_solvent(
-                    EquilibriumProtocol(
-                        minimization_protocol=protocol.minimization_protocol,
-                        equilibration_protocol=protocol.equilibration_protocol,
-                        production_protocol=protocol.production_protocol,
-                        lambda_sterics=[1.0, 0.0],
-                        lambda_electrostatics=[1.0, 0.0],
-                    ),
-                    schema.state,
-                    platform,
-                )
-
-    @classmethod
     def _run_switching(
         cls,
         protocol: NonEquilibriumProtocol,
@@ -91,15 +50,21 @@ class NonEquilibriumRunner(BaseRunner):
             trajectory_1
         ), "trajectories ran in the two end states must have the same length"
 
+        if os.path.isfile("forward-work.csv") and os.path.isfile("reverse-work.csv"):
+
+            forward_work = numpy.genfromtxt("forward-work.csv", delimiter=" ")
+            reverse_work = numpy.genfromtxt("reverse-work.csv", delimiter=" ")
+
+            return forward_work, reverse_work
+
         forward_work = numpy.zeros(len(trajectory_0))
         reverse_work = numpy.zeros(len(trajectory_0))
 
         for frame_index in tqdm(
             range(len(trajectory_0)),
-            desc=f" NEQ frame",
+            desc=" NEQ frame",
             ncols=80,
         ):
-
             coordinates_0 = trajectory_0.xyz[frame_index] * unit.nanometers
             box_vectors_0 = trajectory_0.unitcell_vectors[frame_index] * unit.nanometers
 
@@ -117,42 +82,98 @@ class NonEquilibriumRunner(BaseRunner):
                 platform,
             )
 
-            forward_work[frame_index], reverse_work[frame_index] = simulation.run(
-                os.path.join(f"neq-frame-{frame_index}")
-            )
+            forward_work[frame_index], reverse_work[frame_index] = simulation.run()
 
-        numpy.savetxt(
-            "forward-work.csv", forward_work, delimiter=" "
-        )
-        numpy.savetxt(
-            "reverse-work.csv", reverse_work, delimiter=" "
-        )
+        numpy.savetxt("forward-work.csv", forward_work, delimiter=" ")
+        numpy.savetxt("reverse-work.csv", reverse_work, delimiter=" ")
 
     @classmethod
-    def run_switching(
+    def run(
         cls,
-        schema: TransferFreeEnergySchema,
         directory: str = "absolv-experiment",
         platform: OpenMMPlatform = "CUDA",
     ):
-        """Perform an **equilibrium** simulation at the two end states (i.e. fully
-        interaction and fully de-coupled solute) for each solvent.
+        """Performs an **equilibrium** simulation at the two end states (i.e. fully
+        interaction and fully de-coupled solute) for each solvent followed by
+        non-equilibrium switching simulations between each end states to compute the
+        forward and reverse work values.
 
         Notes:
             This method assumes ``setup`` as already been run.
 
         Args:
-            schema: The schema defining the calculation to perform.
             directory: The directory containing the input files.
             platform: The OpenMM platform to run using.
         """
 
-        solvent_indices = ["solvent-a", "solvent-b"]
+        schema = TransferFreeEnergySchema.parse_file(
+            os.path.join(directory, "schema.json")
+        )
 
         for solvent_index, protocol in zip(
-            solvent_indices,
+            ("solvent-a", "solvent-b"),
             (schema.alchemical_protocol_a, schema.alchemical_protocol_b),
         ):
 
+            assert isinstance(protocol, NonEquilibriumProtocol)
+
             with temporary_cd(os.path.join(directory, solvent_index)):
+
+                cls._run_solvent(
+                    EquilibriumProtocol(
+                        minimization_protocol=protocol.minimization_protocol,
+                        equilibration_protocol=protocol.equilibration_protocol,
+                        production_protocol=protocol.production_protocol,
+                        lambda_sterics=[1.0, 0.0],
+                        lambda_electrostatics=[1.0, 0.0],
+                    ),
+                    schema.state,
+                    platform,
+                )
+
                 cls._run_switching(protocol, schema.state, platform)
+
+    @classmethod
+    def analyze(
+        cls,
+        directory: str = "absolv-experiment",
+    ):
+        """Analyze the outputs of the non-equilibrium simulations to compute the transfer
+        free energy using the Crooks relation.
+
+        Notes:
+            This method assumes ``setup`` and ``run`` have already been successfully run.
+
+        Args:
+            directory: The directory containing the input and simulation files.
+        """
+
+        free_energies = {}
+
+        for solvent_index, protocol in zip(
+            ("solvent-a", "solvent-b"),
+        ):
+
+            forward_work = numpy.genfromtxt(
+                os.path.join(directory, solvent_index, "forward-work.csv"),
+                delimiter=" ",
+            )
+            reverse_work = numpy.genfromtxt(
+                os.path.join(directory, solvent_index, "reverse-work.csv"),
+                delimiter=" ",
+            )
+
+            value, std_error = pymbar.BAR(forward_work, reverse_work)
+
+            free_energies[solvent_index] = {"value": value, "std_error": std_error}
+
+        free_energies["a->b"] = {
+            "value": free_energies["solvent-b"]["value"]
+            - free_energies["solvent-a"]["value"],
+            "std_error": numpy.sqrt(
+                free_energies["solvent-a"]["std_error"] ** 2
+                + free_energies["solvent-b"]["std_error"] ** 2
+            ),
+        }
+
+        return free_energies

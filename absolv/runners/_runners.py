@@ -133,12 +133,12 @@ class BaseRunner:
         n_solute_molecules = schema.system.n_solute_molecules
 
         for solvent_index, components, n_solvent_molecules in zip(
-            ("a", "b"),
+            ("solvent-a", "solvent-b"),
             schema.system.to_components(),
             (schema.system.n_solvent_molecules_a, schema.system.n_solvent_molecules_b),
         ):
 
-            solvent_directory = os.path.join(directory, f"solvent-{solvent_index}")
+            solvent_directory = os.path.join(directory, solvent_index)
             os.makedirs(solvent_directory, exist_ok=False)
 
             with temporary_cd(solvent_directory):
@@ -146,6 +146,9 @@ class BaseRunner:
                 cls._setup_solvent(
                     components, force_field, n_solute_molecules, n_solvent_molecules
                 )
+
+        with open(os.path.join(directory, "schema.json"), "w") as file:
+            file.write(schema.json(indent=4))
 
     @classmethod
     def _run_solvent(

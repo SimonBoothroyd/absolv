@@ -506,45 +506,13 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
 
         return numpy.array(reduced_potentials)
 
-    def run(self, directory: Optional[str]) -> Tuple[float, float]:
+    def run(self) -> Tuple[float, float]:
         """Run the full simulation, restarting from where it left off if a previous
         attempt to run had already been made.
-
-        Args:
-            directory: The (optional) directory to run in. If no directory is specified
-                the outputs will be stored in a temporary directory and no restarts will
-                be possible.
         """
 
-        if directory is not None and len(directory) > 0:
-            os.makedirs(directory, exist_ok=True)
-
-        with temporary_cd(directory):
-
-            if not os.path.isfile("forward-potentials.csv"):
-
-                forward_potentials = self._simulate(
-                    *self._state_0, reverse_direction=False
-                )
-                numpy.savetxt(
-                    "forward-potentials.csv", forward_potentials, delimiter=" "
-                )
-
-            if not os.path.isfile("reverse-potentials.csv"):
-
-                reverse_potentials = self._simulate(
-                    *self._state_1, reverse_direction=True
-                )
-                numpy.savetxt(
-                    "reverse-potentials.csv", reverse_potentials, delimiter=" "
-                )
-
-            forward_potentials = numpy.genfromtxt(
-                "forward-potentials.csv", delimiter=" "
-            )
-            reverse_potentials = numpy.genfromtxt(
-                "reverse-potentials.csv", delimiter=" "
-            )
+        forward_potentials = self._simulate(*self._state_0, reverse_direction=False)
+        reverse_potentials = self._simulate(*self._state_1, reverse_direction=True)
 
         forward_work = (forward_potentials[:, 1] - forward_potentials[:, 0]).sum()
         reverse_work = (reverse_potentials[:, 1] - reverse_potentials[:, 0]).sum()

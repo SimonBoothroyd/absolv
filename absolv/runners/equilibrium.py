@@ -19,7 +19,6 @@ class EquilibriumRunner(BaseRunner):
     @classmethod
     def run(
         cls,
-        schema: TransferFreeEnergySchema,
         directory: str = "absolv-experiment",
         platform: OpenMMPlatform = "CUDA",
         states: Optional[
@@ -41,6 +40,10 @@ class EquilibriumRunner(BaseRunner):
                 All lambda windows for a solvent can be run by specifying ``None``, e.g.
                 ``{"solvent-a": None, "solvent-b": [0, 1, 2]}``
         """
+
+        schema = TransferFreeEnergySchema.parse_file(
+            os.path.join(directory, "schema.json")
+        )
 
         states = (
             states if states is not None else {"solvent-a": None, "solvent-b": None}
@@ -100,7 +103,6 @@ class EquilibriumRunner(BaseRunner):
     @classmethod
     def analyze(
         cls,
-        schema: TransferFreeEnergySchema,
         directory: str = "absolv-experiment",
     ):
         """Analyze the outputs of the simulations to compute the transfer free energy
@@ -114,20 +116,21 @@ class EquilibriumRunner(BaseRunner):
             directory: The directory containing the input and simulation files.
         """
 
+        schema = TransferFreeEnergySchema.parse_file(
+            os.path.join(directory, "schema.json")
+        )
+
         free_energies = {}
 
         for solvent_index, protocol in zip(
-            ("a", "b"), (schema.alchemical_protocol_a, schema.alchemical_protocol_b)
+            ("solvent-a", "solvent-b"),
+            (schema.alchemical_protocol_a, schema.alchemical_protocol_b),
         ):
 
-            with temporary_cd(os.path.join(directory, f"solvent-{solvent_index}")):
+            with temporary_cd(os.path.join(directory, solvent_index)):
 
                 value, std_error = cls._analyze_solvent(protocol)
-
-                free_energies[f"solvent-{solvent_index}"] = {
-                    "value": value,
-                    "std_error": std_error,
-                }
+                free_energies[solvent_index] = {"value": value, "std_error": std_error}
 
         free_energies["a->b"] = {
             "value": free_energies["solvent-b"]["value"]
