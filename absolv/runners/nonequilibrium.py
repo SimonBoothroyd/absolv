@@ -60,16 +60,21 @@ class NonEquilibriumRunner(BaseRunner):
         forward_work = numpy.zeros(len(trajectory_0))
         reverse_work = numpy.zeros(len(trajectory_0))
 
-        for frame_index in tqdm(
-            range(len(trajectory_0)),
-            desc=" NEQ frame",
-            ncols=80,
-        ):
+        for frame_index in tqdm(range(len(trajectory_0)), desc=" NEQ frame", ncols=80):
+
             coordinates_0 = trajectory_0.xyz[frame_index] * unit.nanometers
-            box_vectors_0 = trajectory_0.unitcell_vectors[frame_index] * unit.nanometers
+            box_vectors_0 = (
+                (trajectory_0.unitcell_vectors[frame_index] * unit.nanometers)
+                if trajectory_0.unitcell_vectors is not None
+                else None
+            )
 
             coordinates_1 = trajectory_1.xyz[frame_index] * unit.nanometers
-            box_vectors_1 = trajectory_1.unitcell_vectors[frame_index] * unit.nanometers
+            box_vectors_1 = (
+                (trajectory_1.unitcell_vectors[frame_index] * unit.nanometers)
+                if trajectory_1.unitcell_vectors is not None
+                else None
+            )
 
             simulation = NonEquilibriumOpenMMSimulation(
                 alchemical_system,
@@ -150,9 +155,7 @@ class NonEquilibriumRunner(BaseRunner):
 
         free_energies = {}
 
-        for solvent_index, protocol in zip(
-            ("solvent-a", "solvent-b"),
-        ):
+        for solvent_index in ("solvent-a", "solvent-b"):
 
             forward_work = numpy.genfromtxt(
                 os.path.join(directory, solvent_index, "forward-work.csv"),
