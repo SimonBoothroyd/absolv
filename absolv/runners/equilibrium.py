@@ -31,7 +31,6 @@ class EquilibriumRunner(BaseRunner):
             This method assumes ``setup`` as already been run.
 
         Args:
-            schema: The schema defining the calculation to perform.
             directory: The directory containing the input files.
             platform: The OpenMM platform to run using.
             states: An optional dictionary of the specific solvent and states to run.
@@ -112,7 +111,6 @@ class EquilibriumRunner(BaseRunner):
             This method assumes ``setup`` and ``run`` have already been successfully run.
 
         Args:
-            schema: The schema defining the calculation to perform.
             directory: The directory containing the input and simulation files.
         """
 
