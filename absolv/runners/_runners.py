@@ -25,6 +25,34 @@ class BaseRunner:
     """
 
     @classmethod
+    def _load_solvent_inputs(
+        cls, directory: str
+    ) -> Tuple[Topology, unit.Quantity, openmm.System, openmm.System]:
+        """Loads the inputs created using the ``_setup_solvent`` function.
+
+        Args:
+            directory: The directory that the inputs were created in.
+
+        Returns:
+            The loaded topology, coordinates and chemical and alchemical systems.
+        """
+
+        with temporary_cd(directory):
+
+            with open("system-chemical.xml", "r") as file:
+                chemical_system = openmm.XmlSerializer.deserializeSystem(file.read())
+
+            with open("system-alchemical.xml", "r") as file:
+                alchemical_system = openmm.XmlSerializer.deserializeSystem(file.read())
+
+            with open("topology.pkl", "rb") as file:
+                topology = pickle.load(file)
+
+            coordinates = numpy.load("coords-initial.npy") * unit.angstrom
+
+        return topology, coordinates, chemical_system, alchemical_system
+
+    @classmethod
     def _setup_solvent(
         cls,
         components: List[Tuple[str, int]],
@@ -105,12 +133,12 @@ class BaseRunner:
         n_solute_molecules = schema.system.n_solute_molecules
 
         for solvent_index, components, n_solvent_molecules in zip(
-            ("a", "b"),
+            ("solvent-a", "solvent-b"),
             schema.system.to_components(),
             (schema.system.n_solvent_molecules_a, schema.system.n_solvent_molecules_b),
         ):
 
-            solvent_directory = os.path.join(directory, f"solvent-{solvent_index}")
+            solvent_directory = os.path.join(directory, solvent_index)
             os.makedirs(solvent_directory, exist_ok=False)
 
             with temporary_cd(solvent_directory):
@@ -118,6 +146,9 @@ class BaseRunner:
                 cls._setup_solvent(
                     components, force_field, n_solute_molecules, n_solvent_molecules
                 )
+
+        with open(os.path.join(directory, "schema.json"), "w") as file:
+            file.write(schema.json(indent=4))
 
     @classmethod
     def _run_solvent(
@@ -130,13 +161,7 @@ class BaseRunner:
 
         states = states if states is not None else list(range(protocol.n_states))
 
-        with open("system-alchemical.xml", "r") as file:
-            alchemical_system = openmm.XmlSerializer.deserializeSystem(file.read())
-
-        with open("topology.pkl", "rb") as file:
-            topology = pickle.load(file)
-
-        coordinates = numpy.load("coords-initial.npy") * unit.angstrom
+        topology, coordinates, _, alchemical_system = cls._load_solvent_inputs("")
 
         for state_index in tqdm(states, desc="state", ncols=80):
 

@@ -105,7 +105,7 @@ class MinimizationProtocol(BaseModel):
         10.0,
         description="How precisely the energy minimum must be located [kj / mol / nm]",
     )
-    max_iterations: PositiveInt = Field(
+    max_iterations: NonNegativeInt = Field(
         0,
         description="The maximum number of iterations to perform. If this is 0, "
         "minimization is continued until the results converge.",

@@ -17,10 +17,12 @@ from absolv.models import (
     MinimizationProtocol,
     SimulationProtocol,
     State,
+    SwitchingProtocol,
 )
 from absolv.simulations import (
     AlchemicalOpenMMSimulation,
     EquilibriumOpenMMSimulation,
+    NonEquilibriumOpenMMSimulation,
     _BaseOpenMMSimulation,
     _OpenMMTopology,
 )
@@ -81,7 +83,7 @@ def alchemical_argon_system(
 
 
 @pytest.fixture()
-def alchemical_argon_simulation(alchemical_argon_system):
+def alchemical_argon_eq_simulation(alchemical_argon_system):
 
     topology, coordinates, system = alchemical_argon_system
 
@@ -103,6 +105,34 @@ def alchemical_argon_simulation(alchemical_argon_system):
         protocol,
         1,
         "CPU",
+    )
+    yield simulation
+    del simulation._context
+
+
+@pytest.fixture()
+def alchemical_argon_neq_simulation(alchemical_argon_system):
+
+    topology, coordinates, system = alchemical_argon_system
+
+    protocol = SwitchingProtocol(
+        n_electrostatic_steps=1,
+        n_steps_per_electrostatic_step=1,
+        n_steric_steps=2,
+        n_steps_per_steric_step=2,
+        timestep=2.0 * unit.femtosecond,
+        thermostat_friction=1.0 / unit.picosecond,
+    )
+
+    simulation = NonEquilibriumOpenMMSimulation(
+        system,
+        State(temperature=85.5, pressure=1.0),
+        coordinates,
+        topology.box_vectors,
+        coordinates,
+        topology.box_vectors,
+        protocol,
+        "Reference",
     )
     yield simulation
     del simulation._context
@@ -138,25 +168,25 @@ class TestBaseOpenMMSimulation(BaseTemporaryDirTest):
         expected_pressure = 0.5 * unit.atmosphere
         assert is_close(expected_pressure, simulation._pressure)
 
-    def test_save_restore_state(self, alchemical_argon_simulation):
+    def test_save_restore_state(self, alchemical_argon_eq_simulation):
 
         initial_coordinates, initial_box_vectors = extract_coordinates(
-            alchemical_argon_simulation._context
+            alchemical_argon_eq_simulation._context
         )
 
-        assert alchemical_argon_simulation._restore_state("test") is False
-        alchemical_argon_simulation._save_state("test")
+        assert alchemical_argon_eq_simulation._restore_state("test") is False
+        alchemical_argon_eq_simulation._save_state("test")
         assert os.path.isfile("test-state.xml")
 
         set_coordinates(
-            alchemical_argon_simulation._context,
+            alchemical_argon_eq_simulation._context,
             initial_coordinates + 1.0 * unit.angstrom,
             initial_box_vectors,
         )
 
-        assert alchemical_argon_simulation._restore_state("test") is True
+        assert alchemical_argon_eq_simulation._restore_state("test") is True
         coordinates, box_vectors = extract_coordinates(
-            alchemical_argon_simulation._context
+            alchemical_argon_eq_simulation._context
         )
         assert all_close(initial_coordinates, coordinates)
         assert all_close(initial_box_vectors, box_vectors)
@@ -229,19 +259,19 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
             simulation._context.getParameter("lambda_electrostatics"), 1.0
         )
 
-    def test_minimize(self, alchemical_argon_simulation):
+    def test_minimize(self, alchemical_argon_eq_simulation):
 
         initial_coordinates, initial_box_vectors = extract_coordinates(
-            alchemical_argon_simulation._context
+            alchemical_argon_eq_simulation._context
         )
-        initial_energy = alchemical_argon_simulation._context.getState(
+        initial_energy = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
         assert not os.path.isfile("minimized-state.xml")
-        alchemical_argon_simulation._minimize()
+        alchemical_argon_eq_simulation._minimize()
 
-        final_energy = alchemical_argon_simulation._context.getState(
+        final_energy = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
@@ -249,14 +279,14 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
         assert os.path.isfile("minimized-state.xml")
 
         set_coordinates(
-            alchemical_argon_simulation._context,
+            alchemical_argon_eq_simulation._context,
             initial_coordinates,
             initial_box_vectors,
         )
 
-        alchemical_argon_simulation._minimize()
+        alchemical_argon_eq_simulation._minimize()
 
-        final_energy_2 = alchemical_argon_simulation._context.getState(
+        final_energy_2 = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
@@ -264,23 +294,23 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
         # be the same.
         assert is_close(final_energy, final_energy_2)
 
-    def test_simulate(self, alchemical_argon_system, alchemical_argon_simulation):
+    def test_simulate(self, alchemical_argon_system, alchemical_argon_eq_simulation):
 
         topology, coordinates, _ = alchemical_argon_system
         topology.to_file("topology.pdb", coordinates)
 
-        initial_energy = alchemical_argon_simulation._context.getState(
+        initial_energy = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
         assert not os.path.isfile("test-final-state.xml")
         assert not os.path.isfile("test-chk-state.xml")
 
-        alchemical_argon_simulation._simulate(
-            alchemical_argon_simulation._protocol.equilibration_protocol, "test"
+        alchemical_argon_eq_simulation._simulate(
+            alchemical_argon_eq_simulation._protocol.equilibration_protocol, "test"
         )
 
-        final_energy_1 = alchemical_argon_simulation._context.getState(
+        final_energy_1 = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
@@ -294,11 +324,11 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
 
         shutil.move("test-final-state.xml", "test-chk-state.xml")
 
-        alchemical_argon_simulation._simulate(
+        alchemical_argon_eq_simulation._simulate(
             SimulationProtocol(n_iterations=2, n_steps_per_iteration=1), "test"
         )
 
-        final_energy_2 = alchemical_argon_simulation._context.getState(
+        final_energy_2 = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
@@ -309,15 +339,15 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
 
         assert all_close(trajectory_1.xyz[0], trajectory_2.xyz[0])
 
-        final_energy_3 = alchemical_argon_simulation._context.getState(
+        final_energy_3 = alchemical_argon_eq_simulation._context.getState(
             getEnergy=True
         ).getPotentialEnergy()
 
         assert is_close(final_energy_2, final_energy_3)
 
-    def test_run(self, alchemical_argon_simulation):
+    def test_run(self, alchemical_argon_eq_simulation):
 
-        alchemical_argon_simulation.run(os.path.curdir)
+        alchemical_argon_eq_simulation.run(os.path.curdir)
 
         assert os.path.isfile("minimized-state.xml")
         assert os.path.isfile("equilibration-final-state.xml")
@@ -391,3 +421,197 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
         assert all_close(
             lambda_potentials, numpy.array([expected_reduced_potential, 0.0])
         )
+
+
+class TestNonEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
+    def test_init(self, alchemical_argon_system):
+
+        topology, coordinates, system = alchemical_argon_system
+
+        protocol = SwitchingProtocol(
+            n_electrostatic_steps=1,
+            n_steps_per_electrostatic_step=10,
+            n_steric_steps=2,
+            n_steps_per_steric_step=20,
+            timestep=0.5 * unit.femtosecond,
+            thermostat_friction=2.0 / unit.picosecond,
+        )
+
+        simulation = NonEquilibriumOpenMMSimulation(
+            system,
+            State(temperature=85.5, pressure=1.0),
+            coordinates,
+            topology.box_vectors,
+            -coordinates,
+            topology.box_vectors * 2.0,
+            protocol,
+            "Reference",
+        )
+
+        # Sanity check super was called
+        assert isinstance(simulation._context, openmm.Context)
+
+        integrator = simulation._context.getIntegrator()
+        assert is_close(integrator.getStepSize(), protocol.timestep * unit.femtoseconds)
+        assert is_close(
+            integrator.getFriction(), protocol.thermostat_friction / unit.picoseconds
+        )
+
+        assert simulation._protocol == protocol
+
+        assert numpy.allclose(simulation._state_0[0], coordinates)
+        assert numpy.allclose(simulation._state_1[0], -coordinates)
+
+        assert numpy.allclose(simulation._state_0[1], topology.box_vectors)
+        assert numpy.allclose(simulation._state_1[1], topology.box_vectors * 2.0)
+
+    @pytest.mark.parametrize(
+        "time_frame, reverse_direction, expected_lambda_global, "
+        "expected_lambda_electrostatics, expected_lambda_sterics",
+        [
+            (0, False, 1.0, 1.0, 1.0),
+            (10, False, 6.0 / 7.0, 2.0 / 3.0, 1.0),
+            (20, False, 5.0 / 7.0, 1.0 / 3.0, 1.0),
+            (30, False, 4.0 / 7.0, 0.0, 1.0),
+            (50, False, 2.0 / 7.0, 0.0, 0.5),
+            (70, False, 0.0 / 7.0, 0.0, 0.0),
+            (0, True, 0.0, 0.0, 0.0),
+            (20, True, 2.0 / 7.0, 0.0, 0.5),
+            (40, True, 4.0 / 7.0, 0.0, 1.0),
+            (50, True, 5.0 / 7.0, 1.0 / 3.0, 1.0),
+            (60, True, 6.0 / 7.0, 2.0 / 3.0, 1.0),
+            (70, True, 7.0 / 7.0, 1.0, 1.0),
+        ],
+    )
+    def test_compute_lambdas(
+        self,
+        alchemical_argon_eq_simulation,
+        time_frame,
+        reverse_direction,
+        expected_lambda_global,
+        expected_lambda_electrostatics,
+        expected_lambda_sterics,
+    ):
+
+        simulation = NonEquilibriumOpenMMSimulation.__new__(
+            NonEquilibriumOpenMMSimulation
+        )
+        simulation._protocol = SwitchingProtocol(
+            n_electrostatic_steps=3,
+            n_steps_per_electrostatic_step=10,
+            n_steric_steps=2,
+            n_steps_per_steric_step=20,
+            timestep=0.5 * unit.femtosecond,
+            thermostat_friction=2.0 / unit.picosecond,
+        )
+
+        (
+            actual_lambda_global,
+            actual_lambda_electrostatics,
+            actual_lambda_sterics,
+        ) = simulation._compute_lambdas(time_frame, reverse_direction)
+
+        print(expected_lambda_global, actual_lambda_global)
+
+        assert numpy.isclose(expected_lambda_global, actual_lambda_global)
+        assert numpy.isclose(
+            expected_lambda_electrostatics, actual_lambda_electrostatics
+        )
+        assert numpy.isclose(expected_lambda_sterics, actual_lambda_sterics)
+
+    @pytest.mark.parametrize(
+        "reverse_direction, expected_frame_indices",
+        [
+            (False, [(0, 10), (10, 10), (20, 10), (30, 20), (50, 20)]),
+            (True, [(0, 20), (20, 20), (40, 10), (50, 10), (60, 10)]),
+        ],
+    )
+    def test_enumerate_frames(
+        self, alchemical_argon_neq_simulation, reverse_direction, expected_frame_indices
+    ):
+
+        simulation = alchemical_argon_neq_simulation
+
+        simulation._protocol = SwitchingProtocol(
+            n_electrostatic_steps=3,
+            n_steps_per_electrostatic_step=10,
+            n_steric_steps=2,
+            n_steps_per_steric_step=20,
+        )
+
+        frame_indices = [*simulation._enumerate_frames(reverse_direction)]
+        assert frame_indices == expected_frame_indices
+
+    @pytest.mark.parametrize(
+        "reverse_direction, expected_lambda_values",
+        [
+            (
+                False,
+                [
+                    (1.0, 1.0),
+                    (1.0, 0.0),
+                    (1.0, 0.0),
+                    (0.5, 0.0),
+                    (0.5, 0.0),
+                    (0.0, 0.0),
+                ],
+            ),
+            (
+                True,
+                [
+                    (0.0, 0.0),
+                    (0.5, 0.0),
+                    (0.5, 0.0),
+                    (1.0, 0.0),
+                    (1.0, 0.0),
+                    (1.0, 1.0),
+                ],
+            ),
+        ],
+    )
+    def test_simulate(
+        self,
+        alchemical_argon_system,
+        alchemical_argon_neq_simulation,
+        monkeypatch,
+        reverse_direction,
+        expected_lambda_values,
+    ):
+
+        topology, coordinates, system = alchemical_argon_system
+
+        lambda_values = []
+
+        original_compute_reduced_potential = (
+            alchemical_argon_neq_simulation._compute_reduced_potential
+        )
+
+        def mock_compute_reduced_potential():
+
+            lambda_values.append(
+                tuple(
+                    alchemical_argon_neq_simulation._context.getParameter(lambda_name)
+                    for lambda_name in ("lambda_sterics", "lambda_electrostatics")
+                )
+            )
+
+            return original_compute_reduced_potential()
+
+        monkeypatch.setattr(
+            alchemical_argon_neq_simulation,
+            "_compute_reduced_potential",
+            mock_compute_reduced_potential,
+        )
+
+        reduced_potentials = alchemical_argon_neq_simulation._simulate(
+            coordinates, topology.box_vectors, reverse_direction
+        )
+        assert reduced_potentials.shape == (3, 2)
+        assert lambda_values == expected_lambda_values
+
+    def test_run(self, alchemical_argon_neq_simulation):
+
+        forward_work, reverse_work = alchemical_argon_neq_simulation.run()
+
+        assert not is_close(forward_work, 0.0)
+        assert not is_close(reverse_work, 0.0)
