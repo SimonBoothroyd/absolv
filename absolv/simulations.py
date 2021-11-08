@@ -1,5 +1,5 @@
 import os.path
-from typing import IO, Optional, Tuple
+from typing import IO, Iterable, Optional, Tuple
 
 import numpy
 import openmm
@@ -447,6 +447,32 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
 
         return lambda_global, lambda_electrostatics, lambda_sterics
 
+    def _enumerate_frames(self, reverse_direction: bool) -> Iterable[Tuple[int, int]]:
+        """An iterator that enumerates all frame indices."""
+
+        stages = (
+            (
+                self._protocol.n_electrostatic_steps
+                + (0 if not reverse_direction else 1),
+                self._protocol.n_steps_per_electrostatic_step,
+            ),
+            (
+                self._protocol.n_steric_steps + (0 if reverse_direction else 1),
+                self._protocol.n_steps_per_steric_step,
+            ),
+        )
+
+        frame_index = 0
+
+        for i, (n_lambda_steps, n_steps_per_lambda) in enumerate(
+            stages if not reverse_direction else reversed(stages)
+        ):
+
+            for _ in tqdm(range(n_lambda_steps - int(i + 1 == len(stages)))):
+
+                yield frame_index, n_steps_per_lambda
+                frame_index += n_steps_per_lambda
+
     def _simulate(
         self,
         coordinates: unit.Quantity,
@@ -464,45 +490,25 @@ class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
 
         integrator: openmm.LangevinIntegrator = self._context.getIntegrator()
 
-        frame_index = 0
-
         reduced_potentials = []
 
-        stages = (
-            (
-                self._protocol.n_electrostatic_steps,
-                self._protocol.n_steps_per_electrostatic_step,
-            ),
-            (
-                self._protocol.n_steric_steps + 1,
-                self._protocol.n_steps_per_steric_step,
-            ),
-        )
-
-        for i, (n_lambda_steps, n_steps_per_lambda) in enumerate(
-            stages if not reverse_direction else reversed(stages)
+        for frame_index, n_steps_per_lambda in self._enumerate_frames(
+            reverse_direction
         ):
 
-            for _ in tqdm(range(n_lambda_steps - int(i + 1 == len(stages)))):
+            reduced_potential_old = self._compute_reduced_potential()
 
-                reduced_potential_old = self._compute_reduced_potential()
+            (_, lambda_electrostatics, lambda_sterics) = self._compute_lambdas(
+                frame_index + n_steps_per_lambda, reverse_direction
+            )
 
-                (_, lambda_electrostatics, lambda_sterics) = self._compute_lambdas(
-                    frame_index + 1, reverse_direction
-                )
+            set_alchemical_lambdas(self._context, lambda_sterics, lambda_electrostatics)
 
-                set_alchemical_lambdas(
-                    self._context, lambda_sterics, lambda_electrostatics
-                )
+            reduced_potential_new = self._compute_reduced_potential()
 
-                reduced_potential_new = self._compute_reduced_potential()
+            reduced_potentials.append((reduced_potential_old, reduced_potential_new))
 
-                reduced_potentials.append(
-                    (reduced_potential_old, reduced_potential_new)
-                )
-
-                integrator.step(n_steps_per_lambda)
-                frame_index += n_steps_per_lambda
+            integrator.step(n_steps_per_lambda)
 
         return numpy.array(reduced_potentials)
 
