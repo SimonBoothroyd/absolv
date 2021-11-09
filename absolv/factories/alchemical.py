@@ -7,15 +7,15 @@ import openmm
 from openmm import unit
 
 
-def _lorentz_berthelot() -> str:
+def lorentz_berthelot() -> str:
     return "sigma = 0.5*(sigma1+sigma2); epsilon = sqrt(epsilon1*epsilon2);"
 
 
-def _lj_potential() -> str:
+def lj_potential() -> str:
     return "4.0*epsilon*x*(x-1.0); x = (sigma/r)^6;"
 
 
-def _soft_core_lj_potential() -> str:
+def soft_core_lj_potential() -> str:
     return (
         "lambda_sterics*4.0*epsilon*x*(x-1.0);"
         "x = (sigma/reff_sterics)^6;"
@@ -242,6 +242,7 @@ class OpenMMAlchemicalFactory:
         original_force: openmm.NonbondedForce,
         alchemical_indices: List[Set[int]],
         persistent_indices: List[Set[int]],
+        custom_alchemical_potential: Optional[str],
     ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomBondForce]:
         """Modifies a standard non-bonded force so that only the interactions between
         persistent (chemical) particles and all intramolecular interactions (including
@@ -250,9 +251,9 @@ class OpenMMAlchemicalFactory:
         into a separate custom non-bonded force.
 
         Notes:
-            * The custom non-bonded force will use a soft-core version of the LJ
-              potential with a-b-c of 1-1-6 and alpha=0.5 that can be scaled by a global
-              `lambda_sterics` parameter.
+            * By default the custom non-bonded force will use a soft-core version of the
+              LJ potential with a-b-c of 1-1-6 and alpha=0.5 that can be scaled by a
+              global `lambda_sterics` parameter.
             * All of the intramolecular vdW interactions of alchemical molecules
               (excluding 1-2, 1-3 and 1-4 interactions) will be replaced with explicit
               exceptions in a new custom bond force. This ensures that the decoupled
@@ -263,6 +264,11 @@ class OpenMMAlchemicalFactory:
             original_force: The force to modify.
             alchemical_indices: The indices of the alchemical particles in the force.
             persistent_indices: The indices of the chemical particles in the force.
+            custom_alchemical_potential: A custom expression to use for the potential
+                energy function that describes the chemical-alchemical intermolecular
+                interactions. See the Notes for information about the default value.
+
+                The expression **must** include ``"lambda_sterics"``.
 
         Returns:
             A custom non-bonded force that contains all of the chemical-alchemical and
@@ -320,11 +326,12 @@ class OpenMMAlchemicalFactory:
             custom_nonbonded_template.addExclusion(index_a, index_b)
 
         # Make sure that each alchemical molecule interacts with each chemical molecule
+        if custom_alchemical_potential is None:
+            custom_alchemical_potential = soft_core_lj_potential() + lorentz_berthelot()
+
         aa_na_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
         aa_na_custom_nonbonded_force.addGlobalParameter("lambda_sterics", 1.0)
-        aa_na_custom_nonbonded_force.setEnergyFunction(
-            _soft_core_lj_potential() + _lorentz_berthelot()
-        )
+        aa_na_custom_nonbonded_force.setEnergyFunction(custom_alchemical_potential)
 
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
@@ -346,7 +353,7 @@ class OpenMMAlchemicalFactory:
             if pair not in found_exclusions
         }
 
-        aa_aa_custom_bond_force = openmm.CustomBondForce(_lj_potential())
+        aa_aa_custom_bond_force = openmm.CustomBondForce(lj_potential())
         aa_aa_custom_bond_force.addPerBondParameter("epsilon")
         aa_aa_custom_bond_force.addPerBondParameter("sigma")
 
@@ -369,6 +376,7 @@ class OpenMMAlchemicalFactory:
         original_force: openmm.CustomNonbondedForce,
         alchemical_indices: List[Set[int]],
         persistent_indices: List[Set[int]],
+        custom_alchemical_potential: Optional[str],
     ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomNonbondedForce]:
         """Modifies a custom non-bonded force so that only the interactions between
         persistent (chemical) particles and all intramolecular interactions (including
@@ -377,14 +385,19 @@ class OpenMMAlchemicalFactory:
         a separate custom non-bonded force.
 
         Notes:
-            * The chemical-alchemical custom non-bonded force will use a modified energy
-              expression so that it can be linearly scaled by a global `lambda_sterics`
-              parameter.
+            * By default the chemical-alchemical custom non-bonded force will use a
+              modified energy expression so that it can be linearly scaled by a global
+              `lambda_sterics` parameter.
 
         Args:
             original_force: The force to modify.
             alchemical_indices: The indices of the alchemical particles in the force.
             persistent_indices: The indices of the chemical particles in the force.
+            custom_alchemical_potential: A custom expression to use for the potential
+                energy function that describes the chemical-alchemical intermolecular
+                interactions. See the Notes for information about the default value.
+
+                The expression **must** include ``"lambda_sterics"``.
 
         Returns:
             A custom non-bonded forces that contain all of the chemical-alchemical and
@@ -414,12 +427,20 @@ class OpenMMAlchemicalFactory:
         aa_na_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
         aa_na_custom_nonbonded_force.addGlobalParameter("lambda_sterics", 1.0)
 
-        energy_expression = aa_na_custom_nonbonded_force.getEnergyFunction().split(";")
-        for i, expression in enumerate(energy_expression):
-            if "=" not in expression:
-                energy_expression[i] = f"lambda_sterics*({expression})"
-                break
-        aa_na_custom_nonbonded_force.setEnergyFunction(";".join(energy_expression))
+        if custom_alchemical_potential is None:
+
+            energy_expression = aa_na_custom_nonbonded_force.getEnergyFunction().split(
+                ";"
+            )
+
+            for i, expression in enumerate(energy_expression):
+                if "=" not in expression:
+                    energy_expression[i] = f"lambda_sterics*({expression})"
+                    break
+
+            custom_alchemical_potential = ";".join(energy_expression)
+
+        aa_na_custom_nonbonded_force.setEnergyFunction(custom_alchemical_potential)
 
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
@@ -449,9 +470,17 @@ class OpenMMAlchemicalFactory:
         system: openmm.System,
         alchemical_indices: List[Set[int]],
         persistent_indices: List[Set[int]],
+        custom_alchemical_potential: Optional[str] = None,
     ) -> openmm.System:
         """Generate a system whereby a number of the molecules can be alchemically
          transformed from a base chemical system.
+
+        Notes:
+            * By default the a soft-core version of the LJ potential with a-b-c of 1-1-6
+              and alpha=0.5 that can be scaled by a global `lambda_sterics` parameter
+              will be used for vdW interactions embedded in an OpenMM ``NonbondedForce``
+              while the energy expression set on a ``CustomNonbondedForce`` will be be
+              modified to have the form ``"lambda_sterics*({original_expression})"``.
 
         Args:
             system: The chemical system to generate the alchemical system from
@@ -461,6 +490,12 @@ class OpenMMAlchemicalFactory:
                 transforming part of a molecule is not supported.
             persistent_indices: The atom indices corresponding to each molecule that
                 should **not** be alchemically transformable.
+            custom_alchemical_potential: A custom expression to use for the potential
+                energy function that describes the chemical-alchemical intermolecular
+                interactions. See the Notes for information about the default value.
+
+                The expression **must** include ``"lambda_sterics"``.
+
         """
 
         system = copy.deepcopy(system)
@@ -486,14 +521,20 @@ class OpenMMAlchemicalFactory:
         if custom_nonbonded_force is not None:
 
             for alchemical_force in cls._add_custom_vdw_lambda(
-                custom_nonbonded_force, alchemical_indices, persistent_indices
+                custom_nonbonded_force,
+                alchemical_indices,
+                persistent_indices,
+                custom_alchemical_potential,
             ):
                 system.addForce(alchemical_force)
 
         elif nonbonded_force is not None:
 
             for alchemical_force in cls._add_lj_vdw_lambda(
-                nonbonded_force, alchemical_indices, persistent_indices
+                nonbonded_force,
+                alchemical_indices,
+                persistent_indices,
+                custom_alchemical_potential,
             ):
                 system.addForce(alchemical_force)
 

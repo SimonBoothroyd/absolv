@@ -58,6 +58,7 @@ class BaseRunner:
         force_field: Union[ForceField, SystemGenerator],
         n_solute_molecules: int,
         n_solvent_molecules: int,
+        custom_alchemical_potential: Optional[str] = None,
     ):
         """Creates the input files for a particular solvent phase.
 
@@ -80,6 +81,11 @@ class BaseRunner:
                 ``"solvent-b"``.
             n_solute_molecules: The number of solute molecule.
             n_solvent_molecules: The number of solvent molecule.
+            custom_alchemical_potential: A custom expression to use for the potential
+                energy function that describes the chemical-alchemical intermolecular
+                interactions.
+
+                See the ``OpenMMAlchemicalFactory.generate`` function for more details.
         """
 
         is_vacuum = n_solvent_molecules == 0
@@ -98,7 +104,10 @@ class BaseRunner:
             original_system: openmm.System = force_field(topology, solvent_index)
 
         alchemical_system = OpenMMAlchemicalFactory.generate(
-            original_system, alchemical_indices, persistent_indices
+            original_system,
+            alchemical_indices,
+            persistent_indices,
+            custom_alchemical_potential,
         )
 
         topology.to_file("coords-initial.pdb", coordinates)
@@ -119,6 +128,7 @@ class BaseRunner:
         schema: TransferFreeEnergySchema,
         force_field: Union[ForceField, SystemGenerator],
         directory: str = "absolv-experiment",
+        custom_alchemical_potential: Optional[str] = None,
     ):
         """Prepare the input files needed to compute the free energy and store them
         in the specified directory.
@@ -131,6 +141,11 @@ class BaseRunner:
             force_field: The force field (or system generator) to use to generate
                 the chemical system object.
             directory: The directory to create the input files in.
+            custom_alchemical_potential: A custom expression to use for the potential
+                energy function that describes the chemical-alchemical intermolecular
+                interactions.
+
+                See the ``OpenMMAlchemicalFactory.generate`` function for more details.
         """
 
         n_solute_molecules = schema.system.n_solute_molecules
@@ -152,6 +167,7 @@ class BaseRunner:
                     force_field,
                     n_solute_molecules,
                     n_solvent_molecules,
+                    custom_alchemical_potential,
                 )
 
         with open(os.path.join(directory, "schema.json"), "w") as file:
