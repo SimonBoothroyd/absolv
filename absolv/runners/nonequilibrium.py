@@ -1,12 +1,10 @@
 import os
-from typing import Callable
 
 import mdtraj
 import numpy
 import pymbar
-from openff.toolkit.topology import Topology
 from openff.utilities import temporary_cd
-from openmm import openmm, unit
+from openmm import unit
 from tqdm import tqdm
 
 from absolv.models import (
@@ -20,8 +18,6 @@ from absolv.models import (
 from absolv.runners._runners import BaseRunner
 from absolv.simulations import NonEquilibriumOpenMMSimulation
 from absolv.utilities.openmm import OpenMMPlatform
-
-SystemGenerator = Callable[[Topology, unit.Quantity], openmm.System]
 
 
 class NonEquilibriumRunner(BaseRunner):

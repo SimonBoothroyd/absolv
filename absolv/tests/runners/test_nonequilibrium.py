@@ -27,7 +27,11 @@ class TestNonEquilibriumRunner(BaseTemporaryDirTest):
             with temporary_cd(solvent_index):
 
                 NonEquilibriumRunner._setup_solvent(
-                    [("[Ar]", n_particles)], argon_force_field, 1, n_particles - 1
+                    solvent_index,
+                    [("[Ar]", n_particles)],
+                    argon_force_field,
+                    1,
+                    n_particles - 1,
                 )
 
                 with open("topology.pkl", "rb") as file:

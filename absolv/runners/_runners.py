@@ -1,6 +1,6 @@
 import os
 import pickle
-from typing import Callable, List, Optional, Tuple, Union
+from typing import List, Literal, Optional, Tuple, Union
 
 import numpy
 from openff.toolkit.topology import Topology
@@ -13,10 +13,8 @@ from absolv.factories.alchemical import OpenMMAlchemicalFactory
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.models import EquilibriumProtocol, State, TransferFreeEnergySchema
 from absolv.simulations import AlchemicalOpenMMSimulation
-from absolv.utilities.openmm import OpenMMPlatform
+from absolv.utilities.openmm import OpenMMPlatform, SystemGenerator
 from absolv.utilities.topology import topology_to_atom_indices
-
-SystemGenerator = Callable[[Topology, unit.Quantity], openmm.System]
 
 
 class BaseRunner:
@@ -55,6 +53,7 @@ class BaseRunner:
     @classmethod
     def _setup_solvent(
         cls,
+        solvent_index: Literal["solvent-a", "solvent-b"],
         components: List[Tuple[str, int]],
         force_field: Union[ForceField, SystemGenerator],
         n_solute_molecules: int,
@@ -73,8 +72,12 @@ class BaseRunner:
                 and the remaining ``n_solvent_molecules`` entries correspond to molecules
                 that will not.
             force_field: The force field, or a callable that transforms an OpenFF
-                topology and a set of coordinates into an OpenMM system **without**
-                any alchemical modifications, to run the calculations using.
+                topology into an OpenMM system **without** any alchemical modifications,
+                to run the calculations using.
+
+                If a callable is specified, it should take arguments of an OpenFF
+                topology and a string literal with a value of either ``"solvent-a"`` or
+                ``"solvent-b"``.
             n_solute_molecules: The number of solute molecule.
             n_solvent_molecules: The number of solvent molecule.
         """
@@ -92,7 +95,7 @@ class BaseRunner:
         if isinstance(force_field, ForceField):
             original_system = force_field.create_openmm_system(topology)
         else:
-            original_system: openmm.System = force_field(topology, coordinates)
+            original_system: openmm.System = force_field(topology, solvent_index)
 
         alchemical_system = OpenMMAlchemicalFactory.generate(
             original_system, alchemical_indices, persistent_indices
@@ -144,7 +147,11 @@ class BaseRunner:
             with temporary_cd(solvent_directory):
 
                 cls._setup_solvent(
-                    components, force_field, n_solute_molecules, n_solvent_molecules
+                    solvent_index,
+                    components,
+                    force_field,
+                    n_solute_molecules,
+                    n_solvent_molecules,
                 )
 
         with open(os.path.join(directory, "schema.json"), "w") as file:

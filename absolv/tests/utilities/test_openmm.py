@@ -1,15 +1,20 @@
 import copy
+import os
 
 import numpy.random
 import openmm
+import openmm.app
 import pytest
+from openff.toolkit.topology import Molecule, Topology
 from openmm import unit
+from pkg_resources import resource_filename
 
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.tests import all_close, is_close
 from absolv.utilities.openmm import (
     array_to_vectors,
     build_context,
+    create_system_generator,
     evaluate_energy,
     extract_coordinates,
     minimize,
@@ -179,3 +184,55 @@ def test_evaluate_energy():
     )
 
     assert is_close(energy, 4.0 / 2.0 * (2.0 - 1.0) ** 2 * unit.kilojoule_per_mole)
+
+
+def test_create_system():
+
+    force_field = openmm.app.ForceField(
+        *(
+            resource_filename(
+                "absolv", os.path.join("tests", "data", "force-fields", file_name)
+            )
+            for file_name in ("tip3p.xml", "methylindole.xml")
+        )
+    )
+
+    system_generator = create_system_generator(
+        force_field,
+        openmm.app.PME,
+        openmm.app.NoCutoff,
+    )
+
+    topology = Topology.from_molecules(
+        [Molecule.from_smiles("CC1=CC2=CC=CC=C2N1"), Molecule.from_smiles("O")]
+    )
+    topology.box_vectors = numpy.eye(3) * 30.21 * unit.angstrom
+
+    system_a = system_generator(topology, "solvent-a")
+    assert isinstance(system_a, openmm.System)
+    assert is_close(
+        system_a.getDefaultPeriodicBoxVectors()[0][0], 30.21 * unit.angstrom
+    )
+    # Make sure the water constraints are properly applied
+    assert system_a.getNumConstraints() == 3
+
+    nonbonded_force_a = [
+        force
+        for force in system_a.getForces()
+        if isinstance(force, openmm.NonbondedForce)
+    ][0]
+    assert nonbonded_force_a.getNonbondedMethod() == openmm.NonbondedForce.PME
+
+    topology.box_vectors = None
+
+    system_b = system_generator(topology, "solvent-b")
+    assert isinstance(system_b, openmm.System)
+    assert is_close(system_b.getDefaultPeriodicBoxVectors()[0][0], 20.0 * unit.angstrom)
+    assert system_b.getNumConstraints() == 3
+
+    nonbonded_force_b = [
+        force
+        for force in system_b.getForces()
+        if isinstance(force, openmm.NonbondedForce)
+    ][0]
+    assert nonbonded_force_b.getNonbondedMethod() == openmm.NonbondedForce.NoCutoff
