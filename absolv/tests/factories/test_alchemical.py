@@ -2,13 +2,14 @@ import copy
 
 import numpy
 import openmm
+import pytest
 from openmm import unit
 
 from absolv.factories.alchemical import (
     OpenMMAlchemicalFactory,
-    _lj_potential,
-    _lorentz_berthelot,
-    _soft_core_lj_potential,
+    lj_potential,
+    lorentz_berthelot,
+    soft_core_lj_potential,
 )
 from absolv.tests import is_close
 
@@ -103,12 +104,13 @@ class TestOpenMMAlchemicalFactory:
             charge, *_ = nonbonded_force.getParticleParameters(i)
             assert not numpy.isclose(charge.value_in_unit(unit.elementary_charge), 0.0)
 
-    def test_add_lj_vdw_lambda(self, aq_nacl_lj_nonbonded):
+    @pytest.mark.parametrize("custom_potential", [None, "lambda_sterics*2.0"])
+    def test_add_lj_vdw_lambda(self, aq_nacl_lj_nonbonded, custom_potential):
 
         nonbonded_force = copy.deepcopy(aq_nacl_lj_nonbonded)
 
         custom_forces = OpenMMAlchemicalFactory._add_lj_vdw_lambda(
-            nonbonded_force, [{0}, {1}], [{2, 3, 4}, {5, 6, 7}]
+            nonbonded_force, [{0}, {1}], [{2, 3, 4}, {5, 6, 7}], custom_potential
         )
 
         assert nonbonded_force.getNumGlobalParameters() == 0
@@ -143,14 +145,18 @@ class TestOpenMMAlchemicalFactory:
         aa_na_custom_force, aa_aa_custom_force = custom_forces
 
         # Make sure only the alchemical-chemical interactions are transformed
-        assert (
-            aa_na_custom_force.getEnergyFunction()
-            == _soft_core_lj_potential() + _lorentz_berthelot()
-        )
+        if custom_potential is None:
+            assert (
+                aa_na_custom_force.getEnergyFunction()
+                == soft_core_lj_potential() + lorentz_berthelot()
+            )
+        else:
+            assert aa_na_custom_force.getEnergyFunction() == custom_potential
+
         assert aa_na_custom_force.getNumGlobalParameters() == 1
         assert aa_na_custom_force.getGlobalParameterName(0) == "lambda_sterics"
 
-        assert aa_aa_custom_force.getEnergyFunction() == _lj_potential()
+        assert aa_aa_custom_force.getEnergyFunction() == lj_potential()
         assert aa_aa_custom_force.getNumGlobalParameters() == 0
 
         # Make sure the alchemical-chemical interaction groups are correctly set-up
@@ -163,12 +169,16 @@ class TestOpenMMAlchemicalFactory:
 
         assert aa_aa_custom_force.getNumBonds() == 0
 
-    def test_add_custom_vdw_lambda(self, aq_meoh_de_nonbonded):
+    @pytest.mark.parametrize("custom_potential", [None, "lambda_sterics*2.0"])
+    def test_add_custom_vdw_lambda(self, aq_meoh_de_nonbonded, custom_potential):
 
         original_force = copy.deepcopy(aq_meoh_de_nonbonded)
 
         custom_forces = OpenMMAlchemicalFactory._add_custom_vdw_lambda(
-            original_force, [{0, 1, 2, 3, 4, 5}], [{6, 7, 8}, {9, 10, 11}]
+            original_force,
+            [{0, 1, 2, 3, 4, 5}],
+            [{6, 7, 8}, {9, 10, 11}],
+            custom_potential,
         )
 
         assert (
@@ -191,7 +201,15 @@ class TestOpenMMAlchemicalFactory:
         aa_na_custom_force, aa_aa_custom_force = custom_forces
 
         # Make sure only the alchemical-chemical interactions are transformed
-        # assert aa_na_custom_force.getEnergyFunction() == aq_meoh_de_nonbonded.getEnergyFunction()
+        if custom_potential is None:
+            expected_expression = (
+                f"lambda_sterics*({aq_meoh_de_nonbonded.getEnergyFunction()}"
+            ).replace("AttractionExp;", "AttractionExp);")
+
+            assert aa_na_custom_force.getEnergyFunction() == expected_expression
+        else:
+            assert aa_na_custom_force.getEnergyFunction() == custom_potential
+
         assert (
             aa_na_custom_force.getNumGlobalParameters()
             == aq_meoh_de_nonbonded.getNumGlobalParameters() + 1
