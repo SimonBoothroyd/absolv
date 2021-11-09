@@ -94,8 +94,8 @@ EquilibriumRunner.run(schema, platform="CUDA")
 and analyze the calculations
 
 ```python
-free_energies = EquilibriumRunner.analyze(schema)
-print(free_energies)
+result = EquilibriumRunner.analyze(schema)
+print(result)
 ```
 
 ## Theory

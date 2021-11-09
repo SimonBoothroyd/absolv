@@ -7,6 +7,7 @@ import numpy
 import pytest
 from openff.utilities import temporary_cd
 
+from absolv.models import TransferFreeEnergyResult
 from absolv.runners.nonequilibrium import NonEquilibriumRunner
 from absolv.simulations import NonEquilibriumOpenMMSimulation
 from absolv.tests import BaseTemporaryDirTest
@@ -100,7 +101,10 @@ class TestNonEquilibriumRunner(BaseTemporaryDirTest):
             assert reverse_work.shape == (2,)
             assert not numpy.allclose(reverse_work, 0.0)
 
-    def test_analyze(self):
+    def test_analyze(self, argon_eq_schema):
+
+        with open("schema.json", "w") as file:
+            file.write(argon_eq_schema.json())
 
         expected_forward_work = numpy.array([1.0, 2.0, 3.0])
         expected_reverse_work = numpy.array([3.0, 2.0, 1.0])
@@ -118,11 +122,7 @@ class TestNonEquilibriumRunner(BaseTemporaryDirTest):
                 delimiter=" ",
             )
 
-        free_energies = NonEquilibriumRunner.analyze("")
+        result = NonEquilibriumRunner.analyze("")
 
-        assert all(
-            phase in free_energies for phase in ("solvent-a", "solvent-b", "a->b")
-        )
-
-        assert numpy.isclose(free_energies["a->b"]["value"], 0.0)
-        assert not numpy.isclose(free_energies["a->b"]["std_error"], 0.0)
+        assert isinstance(result, TransferFreeEnergyResult)
+        assert result.input_schema.json() == argon_eq_schema.json()

@@ -3,10 +3,14 @@ from typing import Dict, List, Literal, Optional, Tuple
 
 import numpy
 from openff.utilities import temporary_cd
-from openmm import unit
 from pymbar import MBAR, timeseries
 
-from absolv.models import EquilibriumProtocol, TransferFreeEnergySchema
+from absolv.models import (
+    DeltaG,
+    EquilibriumProtocol,
+    TransferFreeEnergyResult,
+    TransferFreeEnergySchema,
+)
 from absolv.runners._runners import BaseRunner
 from absolv.utilities.openmm import OpenMMPlatform
 
@@ -62,7 +66,7 @@ class EquilibriumRunner(BaseRunner):
     def _analyze_solvent(
         cls,
         protocol: EquilibriumProtocol,
-    ) -> Tuple[unit.Quantity, unit.Quantity]:
+    ) -> Tuple[float, float]:
 
         n_iterations = protocol.production_protocol.n_iterations
         n_states = protocol.n_states
@@ -103,7 +107,7 @@ class EquilibriumRunner(BaseRunner):
     def analyze(
         cls,
         directory: str = "absolv-experiment",
-    ):
+    ) -> TransferFreeEnergyResult:
         """Analyze the outputs of the simulations to compute the transfer free energy
         using MBAR.
 
@@ -130,13 +134,14 @@ class EquilibriumRunner(BaseRunner):
                 value, std_error = cls._analyze_solvent(protocol)
                 free_energies[solvent_index] = {"value": value, "std_error": std_error}
 
-        free_energies["a->b"] = {
-            "value": free_energies["solvent-b"]["value"]
-            - free_energies["solvent-a"]["value"],
-            "std_error": numpy.sqrt(
-                free_energies["solvent-a"]["std_error"] ** 2
-                + free_energies["solvent-b"]["std_error"] ** 2
+        return TransferFreeEnergyResult(
+            input_schema=schema,
+            delta_g_solvent_a=DeltaG(
+                value=free_energies["solvent-a"]["value"],
+                std_error=free_energies["solvent-a"]["std_error"],
             ),
-        }
-
-        return free_energies
+            delta_g_solvent_b=DeltaG(
+                value=free_energies["solvent-b"]["value"],
+                std_error=free_energies["solvent-b"]["std_error"],
+            ),
+        )

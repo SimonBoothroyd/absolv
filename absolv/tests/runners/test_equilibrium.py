@@ -2,8 +2,9 @@ import os.path
 
 import numpy
 
+from absolv.models import TransferFreeEnergyResult
 from absolv.runners.equilibrium import EquilibriumRunner
-from absolv.tests import BaseTemporaryDirTest, is_close
+from absolv.tests import BaseTemporaryDirTest
 
 
 class TestEquilibriumRunner(BaseTemporaryDirTest):
@@ -43,13 +44,7 @@ class TestEquilibriumRunner(BaseTemporaryDirTest):
                     numpy.random.random((1, len(state_indices[solvent_index]))),
                 )
 
-        free_energies = EquilibriumRunner.analyze("")
+        result = EquilibriumRunner.analyze("")
 
-        assert all(
-            phase_name in free_energies
-            for phase_name in ("solvent-a", "solvent-b", "a->b")
-        )
-        assert is_close(
-            free_energies["a->b"]["value"],
-            free_energies["solvent-b"]["value"] - free_energies["solvent-a"]["value"],
-        )
+        assert isinstance(result, TransferFreeEnergyResult)
+        assert result.input_schema.json() == argon_eq_schema.json()
