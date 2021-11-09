@@ -7,7 +7,9 @@ import openmm.app
 from openff.toolkit.topology import Topology
 from openmm import unit
 
-SystemGenerator = Callable[[Topology, Literal["solvent-a", "solvent-b"]], openmm.System]
+SystemGenerator = Callable[
+    [Topology, unit.Quantity, Literal["solvent-a", "solvent-b"]], openmm.System
+]
 
 OpenMMPlatform = Literal["Reference", "OpenCL", "CUDA", "CPU"]
 
@@ -294,7 +296,9 @@ def create_system_generator(
     """
 
     def system_generator(
-        topology: Topology, solvent_index: Literal["solvent-a", "solvent-b"]
+        topology: Topology,
+        coordinates: unit.Quantity,
+        solvent_index: Literal["solvent-a", "solvent-b"],
     ) -> openmm.System:
 
         openmm_topology = topology.to_openmm()
@@ -318,8 +322,20 @@ def create_system_generator(
 
                 residue.name = "HOH"
 
-        system = force_field.createSystem(
+        from openmm.app import Modeller
+
+        modeller = Modeller(
             openmm_topology,
+            [
+                openmm.Vec3(coordinate[0], coordinate[1], coordinate[2])
+                for coordinate in coordinates.value_in_unit(unit.nanometers)
+            ]
+            * unit.nanometers,
+        )
+        modeller.addExtraParticles(force_field)
+
+        system = force_field.createSystem(
+            modeller.getTopology(),
             nonbondedMethod=(
                 solvent_a_nonbonded_method
                 if solvent_index == "solvent-a"

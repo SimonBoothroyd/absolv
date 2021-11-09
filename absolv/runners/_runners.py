@@ -73,12 +73,12 @@ class BaseRunner:
                 and the remaining ``n_solvent_molecules`` entries correspond to molecules
                 that will not.
             force_field: The force field, or a callable that transforms an OpenFF
-                topology into an OpenMM system **without** any alchemical modifications,
+                topology into an OpenMM system, **without** any alchemical modifications
                 to run the calculations using.
 
                 If a callable is specified, it should take arguments of an OpenFF
-                topology and a string literal with a value of either ``"solvent-a"`` or
-                ``"solvent-b"``.
+                topology, a unit wrapped numpy array of atom coordinates, and a string
+                literal with a value of either ``"solvent-a"`` or ``"solvent-b"``.
             n_solute_molecules: The number of solute molecule.
             n_solvent_molecules: The number of solvent molecule.
             custom_alchemical_potential: A custom expression to use for the potential
@@ -101,7 +101,9 @@ class BaseRunner:
         if isinstance(force_field, ForceField):
             original_system = force_field.create_openmm_system(topology)
         else:
-            original_system: openmm.System = force_field(topology, solvent_index)
+            original_system: openmm.System = force_field(
+                topology, coordinates, solvent_index
+            )
 
         alchemical_system = OpenMMAlchemicalFactory.generate(
             original_system,
@@ -136,10 +138,12 @@ class BaseRunner:
         Args:
             schema: The schema defining the calculation to perform.
             force_field: The force field, or a callable that transforms an OpenFF
-                topology and a set of coordinates into an OpenMM system **without**
-                any alchemical modifications, to run the calculations using.
-            force_field: The force field (or system generator) to use to generate
-                the chemical system object.
+                topology into an OpenMM system, **without** any alchemical modifications
+                to run the calculations using.
+
+                If a callable is specified, it should take arguments of an OpenFF
+                topology, a unit wrapped numpy array of atom coordinates, and a string
+                literal with a value of either ``"solvent-a"`` or ``"solvent-b"``.
             directory: The directory to create the input files in.
             custom_alchemical_potential: A custom expression to use for the potential
                 energy function that describes the chemical-alchemical intermolecular
