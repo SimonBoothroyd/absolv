@@ -1,9 +1,13 @@
 import copy
-from typing import List, Literal, Optional, Tuple, Union, overload
+from typing import Callable, List, Literal, Optional, Tuple, Union, overload
 
 import numpy
 import openmm
+import openmm.app
+from openff.toolkit.topology import Topology
 from openmm import unit
+
+SystemGenerator = Callable[[Topology, Literal["solvent-a", "solvent-b"]], openmm.System]
 
 OpenMMPlatform = Literal["Reference", "OpenCL", "CUDA", "CPU"]
 
@@ -256,3 +260,79 @@ def evaluate_energy(
     set_alchemical_lambdas(context, lambda_sterics, lambda_electrostatics)
 
     return context.getState(getEnergy=True).getPotentialEnergy()
+
+
+def create_system_generator(
+    force_field: openmm.app.ForceField,
+    solvent_a_nonbonded_method: int,
+    solvent_b_nonbonded_method: int,
+    nonbonded_cutoff: unit.Quantity = 1.0 * unit.nanometer,
+    constraints: Optional[int] = None,
+    rigid_water: Optional[bool] = None,
+    remove_cmm_motion: bool = True,
+    hydrogen_mass: Optional[unit.Quantity] = None,
+    switch_distance: Optional[unit.Quantity] = None,
+) -> SystemGenerator:
+    """Creates a 'system generator' that can be used when setting up an alchemical
+    free energy calculation from an OpenMM force field.
+
+    Args:
+        force_field: The OpenMM force field to parameterize the topology using.
+        solvent_a_nonbonded_method: The non-bonded method to use in solvent a.
+        solvent_b_nonbonded_method: The non-bonded method to use in solvent b.
+        nonbonded_cutoff: The non-bonded cutoff to use.
+        constraints: The type of constraints to apply to the system.
+        rigid_water: Whether to force rigid water.
+        remove_cmm_motion: Whether to remove any CMM motion.
+        hydrogen_mass: The mass to use for hydrogens.
+        switch_distance: The switch distance to use.
+
+    Returns:
+        A callable that will create an OpenMM system from an OpenFF topology and the
+        name of the solvent (i.e. ``"solvent-a"`` or ``"solvent-b"``) the system will
+        be used for.
+    """
+
+    def system_generator(
+        topology: Topology, solvent_index: Literal["solvent-a", "solvent-b"]
+    ) -> openmm.System:
+
+        openmm_topology = topology.to_openmm()
+
+        if topology.box_vectors is not None:
+            openmm_topology.setPeriodicBoxVectors(topology.box_vectors)
+
+        # We need to fix the special case of water in order for OMM to correctly apply
+        # a constraint between H atoms.
+        for chain in openmm_topology.chains():
+
+            for residue in chain.residues():
+
+                if len(residue) != 3:
+                    continue
+
+                symbols = sorted(atom.element.symbol for atom in residue.atoms())
+
+                if symbols != ["H", "H", "O"]:
+                    continue
+
+                residue.name = "HOH"
+
+        system = force_field.createSystem(
+            openmm_topology,
+            nonbondedMethod=(
+                solvent_a_nonbonded_method
+                if solvent_index == "solvent-a"
+                else solvent_b_nonbonded_method
+            ),
+            nonbondedCutoff=nonbonded_cutoff,
+            constraints=constraints,
+            rigidWater=rigid_water,
+            removeCMMotion=remove_cmm_motion,
+            hydrogenMass=hydrogen_mass,
+            switchDistance=switch_distance,
+        )
+
+        return system
+
+    return system_generator

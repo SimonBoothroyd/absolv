@@ -22,7 +22,9 @@ class TestBaseRunner(BaseTemporaryDirTest):
         os.makedirs("test-dir")
 
         with temporary_cd("test-dir"):
-            BaseRunner._setup_solvent([("[Ar]", 10)], argon_force_field, 1, 9)
+            BaseRunner._setup_solvent(
+                "solvent-a", [("[Ar]", 10)], argon_force_field, 1, 9
+            )
 
         (
             topology,
@@ -53,7 +55,9 @@ class TestBaseRunner(BaseTemporaryDirTest):
     )
     def test_setup_solvent(self, force_field):
 
-        BaseRunner._setup_solvent([("CO", 1), ("O", 10)], force_field, 1, 10)
+        BaseRunner._setup_solvent(
+            "solvent-a", [("CO", 1), ("O", 10)], force_field, 1, 10
+        )
 
         for expected_file in [
             "coords-initial.pdb",
@@ -123,7 +127,9 @@ class TestBaseRunner(BaseTemporaryDirTest):
 
         monkeypatch.setattr(AlchemicalOpenMMSimulation, "run", mock_run)
 
-        BaseRunner._setup_solvent([("[Ar]", 128)], argon_force_field, 1, 127)
+        BaseRunner._setup_solvent(
+            "solvent-a", [("[Ar]", 128)], argon_force_field, 1, 127
+        )
         BaseRunner._run_solvent(
             argon_eq_schema.alchemical_protocol_a,
             State(temperature=88.5, pressure=1.0),
