@@ -59,6 +59,16 @@ class OpenMMAlchemicalFactory:
             for atom_index in indices
         }
 
+        particle_to_atom_index = {}
+        atom_index = 0
+
+        for particle_index in range(system.getNumParticles()):
+            if system.isVirtualSite(particle_index):
+                continue
+
+            particle_to_atom_index[particle_index] = atom_index
+            atom_index += 1
+
         atom_index = 0
 
         remapped_atom_indices: List[Set[int]] = [
@@ -75,7 +85,7 @@ class OpenMMAlchemicalFactory:
             else:
 
                 v_site = system.getVirtualSite(particle_index)
-                parent_atom_index = v_site.getParticle(0)
+                parent_atom_index = particle_to_atom_index[v_site.getParticle(0)]
 
                 molecule_index = atom_to_molecule_index[parent_atom_index]
 

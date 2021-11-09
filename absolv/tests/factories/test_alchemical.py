@@ -15,17 +15,25 @@ from absolv.tests import is_close
 
 
 class TestOpenMMAlchemicalFactory:
-    def test_find_v_sites(self, aq_nacl_lj_system):
+    def test_find_v_sites(self):
         """Ensure that v-sites are correctly detected from an OMM system and assigned
         to the right parent molecule."""
 
-        atom_indices = [{0}, {1}, {2, 3, 4}, {5, 6, 7}]
+        # Construct a mock system of V A A A V A A where (0, 5, 6), (3,), (4, 1, 2)
+        # are the core molecules.
+        system = openmm.System()
 
-        particle_indices = OpenMMAlchemicalFactory._find_v_sites(
-            aq_nacl_lj_system, atom_indices
-        )
+        for i in range(7):
+            system.addParticle(1.0)
 
-        assert particle_indices == [{0}, {1}, {2, 3, 4, 8}, {5, 6, 7, 9}]
+        system.setVirtualSite(0, openmm.TwoParticleAverageSite(5, 6, 0.5, 0.5))
+        system.setVirtualSite(4, openmm.TwoParticleAverageSite(1, 2, 0.5, 0.5))
+
+        atom_indices = [{0, 1}, {2}, {3, 4}]
+
+        particle_indices = OpenMMAlchemicalFactory._find_v_sites(system, atom_indices)
+
+        assert particle_indices == [{1, 2, 4}, {3}, {0, 5, 6}]
 
     def test_find_nonbonded_forces_lj_only(self, aq_nacl_lj_system):
 
