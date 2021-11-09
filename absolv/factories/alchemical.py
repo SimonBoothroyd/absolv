@@ -476,11 +476,12 @@ class OpenMMAlchemicalFactory:
          transformed from a base chemical system.
 
         Notes:
-            * By default the a soft-core version of the LJ potential with a-b-c of 1-1-6
+            * By default a soft-core version of the LJ potential with a-b-c of 1-1-6
               and alpha=0.5 that can be scaled by a global `lambda_sterics` parameter
-              will be used for vdW interactions embedded in an OpenMM ``NonbondedForce``
-              while the energy expression set on a ``CustomNonbondedForce`` will be be
-              modified to have the form ``"lambda_sterics*({original_expression})"``.
+              will be used for alchemical-chemical vdW interactions embedded in an
+              OpenMM ``NonbondedForce`` while the energy expression set on a
+              ``CustomNonbondedForce`` will be be modified to have the form
+              ``"lambda_sterics*({original_expression})"``.
 
         Args:
             system: The chemical system to generate the alchemical system from
