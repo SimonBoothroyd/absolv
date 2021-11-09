@@ -64,6 +64,31 @@ class TestPACKMOLCoordinateFactory:
 
         assert actual_input_file == expected_input_file
 
+    def test_build_input_file_with_seed(self, monkeypatch):
+
+        monkeypatch.setenv("ABSOLV_PACKMOL_SEED", "1234")
+
+        actual_input_file = PACKMOLCoordinateFactory._build_input_file(
+            [("CO.xyz", 1)], 1.0 * unit.angstrom, 0.1 * unit.nanometers
+        )
+
+        expected_input_file = "\n".join(
+            [
+                "tolerance 1.000000",
+                "filetype xyz",
+                "output output.xyz",
+                "seed 1234",
+                "",
+                "structure CO.xyz",
+                "  number 1",
+                "  inside box 0. 0. 0. 1.0 1.0 1.0",
+                "end structure",
+                "",
+            ]
+        )
+
+        assert actual_input_file == expected_input_file
+
     def test_generate_packmol_missing(self, monkeypatch):
 
         monkeypatch.setattr(shutil, "which", lambda *_: None)

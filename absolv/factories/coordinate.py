@@ -90,11 +90,14 @@ class PACKMOLCoordinateFactory:
         box_size = box_size.value_in_unit(unit.angstrom)
         tolerance = tolerance.value_in_unit(unit.angstrom)
 
+        seed = os.getenv("ABSOLV_PACKMOL_SEED")
+
         return "\n".join(
             [
                 f"tolerance {tolerance:f}",
                 "filetype xyz",
                 "output output.xyz",
+                *([] if seed is None else [f"seed {seed}"]),
                 "",
                 *[
                     f"structure {file_name}\n"
