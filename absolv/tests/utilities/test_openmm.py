@@ -208,7 +208,9 @@ def test_create_system():
     )
     topology.box_vectors = numpy.eye(3) * 30.21 * unit.angstrom
 
-    system_a = system_generator(topology, "solvent-a")
+    coordinates = numpy.zeros((topology.n_topology_atoms, 3)) * unit.angstrom
+
+    system_a = system_generator(topology, coordinates, "solvent-a")
     assert isinstance(system_a, openmm.System)
     assert is_close(
         system_a.getDefaultPeriodicBoxVectors()[0][0], 30.21 * unit.angstrom
@@ -225,7 +227,7 @@ def test_create_system():
 
     topology.box_vectors = None
 
-    system_b = system_generator(topology, "solvent-b")
+    system_b = system_generator(topology, coordinates, "solvent-b")
     assert isinstance(system_b, openmm.System)
     assert is_close(system_b.getDefaultPeriodicBoxVectors()[0][0], 20.0 * unit.angstrom)
     assert system_b.getNumConstraints() == 3

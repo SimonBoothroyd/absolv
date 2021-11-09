@@ -48,7 +48,7 @@ class TestBaseRunner(BaseTemporaryDirTest):
         "force_field",
         [
             ForceField("openff-2.0.0.offxml"),
-            lambda topology, _: ForceField("openff-2.0.0.offxml").create_openmm_system(
+            lambda topology, *_: ForceField("openff-2.0.0.offxml").create_openmm_system(
                 topology
             ),
         ],

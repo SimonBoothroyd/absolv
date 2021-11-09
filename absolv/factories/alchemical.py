@@ -39,14 +39,18 @@ class OpenMMAlchemicalFactory:
     """
 
     @classmethod
-    def _find_v_sites(cls, system: openmm.System, atom_indices: List[Set[int]]):
+    def _find_v_sites(
+        cls, system: openmm.System, atom_indices: List[Set[int]]
+    ) -> List[Set[int]]:
         """Finds any virtual sites in the system and ensures their indices get appended
         to the atom index list.
 
         Args:
             system: The system that may contain v-sites.
-            atom_indices: A list of per-molecule atom indices to add the virtual site
-                indices to.
+            atom_indices: A list of per-molecule atom indices
+
+        Returns:
+            A list of the per molecule **particle** indices.
         """
 
         atom_to_molecule_index = {
@@ -55,18 +59,29 @@ class OpenMMAlchemicalFactory:
             for atom_index in indices
         }
 
-        for i in range(system.getNumParticles()):
+        atom_index = 0
 
-            if not system.isVirtualSite(i):
+        remapped_atom_indices: List[Set[int]] = [
+            set() for _ in range(len(atom_indices))
+        ]
 
-                assert i in atom_to_molecule_index, "the atom indices are invalid"
-                continue
+        for particle_index in range(system.getNumParticles()):
 
-            v_site = system.getVirtualSite(i)
-            parent_atom_index = v_site.getParticle(0)
+            if not system.isVirtualSite(particle_index):
 
-            molecule_index = atom_to_molecule_index[parent_atom_index]
-            atom_indices[molecule_index].add(i)
+                molecule_index = atom_to_molecule_index[atom_index]
+                atom_index += 1
+
+            else:
+
+                v_site = system.getVirtualSite(particle_index)
+                parent_atom_index = v_site.getParticle(0)
+
+                molecule_index = atom_to_molecule_index[parent_atom_index]
+
+            remapped_atom_indices[molecule_index].add(particle_index)
+
+        return remapped_atom_indices
 
     @classmethod
     def _find_nonbonded_forces(
@@ -505,7 +520,7 @@ class OpenMMAlchemicalFactory:
         # turned off. We do this as a post-process step as the OpenFF toolkit does not
         # currently expose a clean way to access this information.
         atom_indices = alchemical_indices + persistent_indices
-        cls._find_v_sites(system, atom_indices)
+        atom_indices = cls._find_v_sites(system, atom_indices)
 
         alchemical_indices = atom_indices[: len(alchemical_indices)]
         persistent_indices = atom_indices[len(alchemical_indices) :]

@@ -19,11 +19,13 @@ class TestOpenMMAlchemicalFactory:
         """Ensure that v-sites are correctly detected from an OMM system and assigned
         to the right parent molecule."""
 
-        initial_atom_indices = [{0}, {1}, {2, 3, 4}, {5, 6, 7}]
+        atom_indices = [{0}, {1}, {2, 3, 4}, {5, 6, 7}]
 
-        OpenMMAlchemicalFactory._find_v_sites(aq_nacl_lj_system, initial_atom_indices)
+        particle_indices = OpenMMAlchemicalFactory._find_v_sites(
+            aq_nacl_lj_system, atom_indices
+        )
 
-        assert initial_atom_indices == [{0}, {1}, {2, 3, 4, 8}, {5, 6, 7, 9}]
+        assert particle_indices == [{0}, {1}, {2, 3, 4, 8}, {5, 6, 7, 9}]
 
     def test_find_nonbonded_forces_lj_only(self, aq_nacl_lj_system):
 
