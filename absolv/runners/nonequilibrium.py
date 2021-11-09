@@ -10,9 +10,11 @@ from openmm import openmm, unit
 from tqdm import tqdm
 
 from absolv.models import (
+    DeltaG,
     EquilibriumProtocol,
     NonEquilibriumProtocol,
     State,
+    TransferFreeEnergyResult,
     TransferFreeEnergySchema,
 )
 from absolv.runners._runners import BaseRunner
@@ -156,6 +158,10 @@ class NonEquilibriumRunner(BaseRunner):
             directory: The directory containing the input and simulation files.
         """
 
+        schema = TransferFreeEnergySchema.parse_file(
+            os.path.join(directory, "schema.json")
+        )
+
         free_energies = {}
 
         for solvent_index in ("solvent-a", "solvent-b"):
@@ -173,13 +179,14 @@ class NonEquilibriumRunner(BaseRunner):
 
             free_energies[solvent_index] = {"value": value, "std_error": std_error}
 
-        free_energies["a->b"] = {
-            "value": free_energies["solvent-b"]["value"]
-            - free_energies["solvent-a"]["value"],
-            "std_error": numpy.sqrt(
-                free_energies["solvent-a"]["std_error"] ** 2
-                + free_energies["solvent-b"]["std_error"] ** 2
+        return TransferFreeEnergyResult(
+            input_schema=schema,
+            delta_g_solvent_a=DeltaG(
+                value=free_energies["solvent-a"]["value"],
+                std_error=free_energies["solvent-a"]["std_error"],
             ),
-        }
-
-        return free_energies
+            delta_g_solvent_b=DeltaG(
+                value=free_energies["solvent-b"]["value"],
+                std_error=free_energies["solvent-b"]["std_error"],
+            ),
+        )

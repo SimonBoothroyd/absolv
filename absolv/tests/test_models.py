@@ -1,14 +1,17 @@
+import numpy
 import pytest
 from openmm import unit
 from pydantic import ValidationError
 
 from absolv.models import (
+    DeltaG,
     EquilibriumProtocol,
     MinimizationProtocol,
     SimulationProtocol,
     State,
     SwitchingProtocol,
     System,
+    TransferFreeEnergyResult,
 )
 from absolv.tests import is_close
 
@@ -124,3 +127,65 @@ class TestSwitchingProtocol:
 
         assert is_close(protocol.timestep, 2.0)
         assert is_close(protocol.thermostat_friction, 3.0)
+
+
+class TestDeltaG:
+    def test_add(self):
+
+        value_a = DeltaG(value=1.0, std_error=2.0)
+        value_b = DeltaG(value=3.0, std_error=4.0)
+
+        result = value_a + value_b
+
+        assert is_close(result.value, 4.0)
+        assert is_close(result.std_error, numpy.sqrt(20))
+
+    def test_sub(self):
+
+        value_a = DeltaG(value=1.0, std_error=2.0)
+        value_b = DeltaG(value=3.0, std_error=4.0)
+
+        result = value_b - value_a
+
+        assert is_close(result.value, 2.0)
+        assert is_close(result.std_error, numpy.sqrt(20))
+
+
+class TestTransferFreeEnergyResult:
+    @pytest.fixture()
+    def free_energy_result(self, argon_eq_schema):
+
+        return TransferFreeEnergyResult(
+            input_schema=argon_eq_schema,
+            delta_g_solvent_a=DeltaG(value=1.0, std_error=2.0),
+            delta_g_solvent_b=DeltaG(value=3.0, std_error=4.0),
+        )
+
+    def test_delta_g(self, free_energy_result):
+
+        delta_g = free_energy_result.delta_g
+
+        assert is_close(delta_g.value, 2.0)
+        assert is_close(delta_g.std_error, numpy.sqrt(20))
+
+    def test_boltzmann_temperature(self, free_energy_result):
+
+        value = free_energy_result._boltzmann_temperature
+        assert is_close(value, 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R)
+
+    def test_delta_g_with_units(self, free_energy_result):
+
+        value, std_error = free_energy_result.delta_g_with_units
+
+        assert is_close(value, 2.0 * 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R)
+        assert is_close(
+            std_error, numpy.sqrt(20) * 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R
+        )
+
+    def test_str(self, free_energy_result):
+        assert str(free_energy_result) == "ΔG=0.340 kcal/mol ΔG std=0.760 kcal/mol"
+
+    def test_repr(self, free_energy_result):
+        assert repr(free_energy_result) == (
+            "TransferFreeEnergyResult(ΔG=0.340 kcal/mol ΔG std=0.760 kcal/mol)"
+        )

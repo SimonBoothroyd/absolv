@@ -1,5 +1,6 @@
-from typing import Dict, List, Literal, Optional, Tuple, Union
+from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
+import numpy
 from openmm import unit
 from pydantic import (
     BaseModel,
@@ -320,3 +321,89 @@ class TransferFreeEnergySchema(BaseModel):
         description="The protocol that describes the alchemical pathway to transform "
         "the solute along in the second solvent.",
     )
+
+
+class DeltaG(BaseModel):
+
+    value: float = Field(..., description="The value of the free energy in units of kT")
+    std_error: float = Field(
+        ..., description="The standard error of the value in units of kT"
+    )
+
+    def __add__(self, other: "DeltaG") -> "DeltaG":
+
+        if not isinstance(other, DeltaG):
+            raise NotImplementedError
+
+        return DeltaG(
+            value=self.value + other.value,
+            std_error=numpy.sqrt(self.std_error ** 2 + other.std_error ** 2),
+        )
+
+    def __sub__(self, other: "DeltaG") -> "DeltaG":
+
+        if not isinstance(other, DeltaG):
+            raise NotImplementedError
+
+        return DeltaG(
+            value=self.value - other.value,
+            std_error=numpy.sqrt(self.std_error ** 2 + other.std_error ** 2),
+        )
+
+
+class TransferFreeEnergyResult(BaseModel):
+
+    input_schema: TransferFreeEnergySchema = Field(
+        ..., description="The schema that was used to generate this result."
+    )
+
+    delta_g_solvent_a: DeltaG = Field(
+        ...,
+        description="The change in free energy of alchemically transforming the solute "
+        "from an interacting to a non-interacting state in `solvent-a`.",
+    )
+    delta_g_solvent_b: DeltaG = Field(
+        ...,
+        description="The change in free energy of alchemically transforming the solute "
+        "from an interacting to a non-interacting state in `solvent-b`.",
+    )
+
+    provenance: Dict[str, Any] = Field(
+        {}, description="Extra provenance about how this result was generated."
+    )
+
+    @property
+    def delta_g(self) -> DeltaG:
+        """The change in free energy of transferring the solute from `solvent-a` to
+        `solvent-b` in units of kT."""
+        return self.delta_g_solvent_b - self.delta_g_solvent_a
+
+    @property
+    def _boltzmann_temperature(self) -> unit.Quantity:
+        return (
+            unit.MOLAR_GAS_CONSTANT_R
+            * unit.kelvin
+            * self.input_schema.state.temperature
+        ).in_units_of(unit.kilocalories_per_mole)
+
+    @property
+    def delta_g_with_units(self) -> Tuple[unit.Quantity, unit.Quantity]:
+        """The change in free energy of transferring the solute from `solvent-a` to
+        `solvent-b`, as well as the error in that change."""
+
+        return (
+            self.delta_g.value * self._boltzmann_temperature,
+            self.delta_g.std_error * self._boltzmann_temperature,
+        )
+
+    def __str__(self):
+
+        value, std_error = self.delta_g_with_units
+
+        return (
+            f"ΔG={value.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol "
+            f"ΔG std={std_error.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol"
+        )
+
+    def __repr__(self):
+        return f"{self.__repr_name__()}({self.__str__()})"
