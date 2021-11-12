@@ -1,0 +1,30 @@
+name: absolv-docs
+channels:
+  - conda-forge
+
+dependencies:
+
+  # Base depends
+  - python
+  - pip
+  - setuptools
+
+  # Sphinx specific
+  - sphinx =>4.3
+  - nbsphinx
+  - nbsphinx-link
+  - sphinxcontrib-bibtex
+  - pandoc
+  - ipython
+  - libsass
+
+    # Standard dependencies
+  - python
+  - pydantic
+  - tqdm
+  - pymbar
+  - openmm >=7.6
+
+  - pip:
+      - autodoc_pydantic
+      - git+git://github.com/SimonBoothroyd/sphinx-immaterial.git@sphinx-4-3-compat

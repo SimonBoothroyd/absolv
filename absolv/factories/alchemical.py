@@ -498,7 +498,7 @@ class OpenMMAlchemicalFactory:
         custom_alchemical_potential: Optional[str] = None,
     ) -> openmm.System:
         """Generate a system whereby a number of the molecules can be alchemically
-         transformed from a base chemical system.
+        transformed from a base chemical system.
 
         Notes:
             * By default a soft-core version of the LJ potential with a-b-c of 1-1-6

@@ -1,0 +1,57 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  docs:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.4.0
+
+    - name: Setup Conda Environment
+      uses: conda-incubator/setup-miniconda@v2.1.1
+      with:
+        python-version: ${{ matrix.python-version }}
+        environment-file: docs/environment.yml
+
+        channels: conda-forge
+
+        activate-environment: test
+        auto-update-conda: true
+        auto-activate-base: false
+        show-channel-urls: true
+
+    - name: Install Package
+      shell: bash -l {0}
+      run: |
+        python setup.py develop --no-deps
+
+    - name: Environment Information
+      shell: bash -l {0}
+      run: |
+        conda info
+        conda list
+
+    - name: Build 🔧
+      shell: bash -l {0}
+      run: |
+
+        cd docs
+
+        python compile-sass.py
+        make html
+
+    - name: Deploy 🚀
+      if: github.ref == 'refs/heads/main'
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        branch: gh-pages
+        folder: docs/_build/html

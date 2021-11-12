@@ -9,7 +9,7 @@ The `absolv` framework aims to offer a simple API for computing the change in fr
 from one solvent to another, or to vacuum in the case of solvation free energy calculations.
 
 It offers two routes to this end: standard equilibrium calculations and non-equilibrium switching type calculations, 
-where the latter is the main focus of this framework.
+where the latter will be the main focus of this framework.
 
 ***Warning**: This code is currently experimental and under active development. If you are using this it, please be 
 aware that it is not guaranteed to provide correct results, the documentation and testing is incomplete, and the
@@ -97,34 +97,6 @@ and analyze the calculations
 result = EquilibriumRunner.analyze(schema)
 print(result)
 ```
-
-## Theory
-
-...
-
-### Equilibrium Calculations
-
-...
-
-### Non-equilibrium Calculations
-
-...
-
-### Alchemical Transformations
-
-...
-
-#### Electrostatics
-
-...
-
-#### LJ Soft Core
-
-...
-
-#### Custom vdW Forms
-
-...
 
 ## References
 
