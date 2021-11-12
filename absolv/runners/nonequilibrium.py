@@ -1,8 +1,6 @@
 import os
 
-import mdtraj
 import numpy
-import pymbar
 from openff.utilities import temporary_cd
 from openmm import unit
 from tqdm import tqdm
@@ -32,6 +30,8 @@ class NonEquilibriumRunner(BaseRunner):
         state: State,
         platform: OpenMMPlatform,
     ):
+
+        import mdtraj
 
         topology, coordinates, _, alchemical_system = cls._load_solvent_inputs("")
 
@@ -153,6 +153,8 @@ class NonEquilibriumRunner(BaseRunner):
         Args:
             directory: The directory containing the input and simulation files.
         """
+
+        import pymbar
 
         schema = TransferFreeEnergySchema.parse_file(
             os.path.join(directory, "schema.json")

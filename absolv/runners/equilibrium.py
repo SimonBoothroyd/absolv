@@ -3,7 +3,6 @@ from typing import Dict, List, Literal, Optional, Tuple
 
 import numpy
 from openff.utilities import temporary_cd
-from pymbar import MBAR, timeseries
 
 from absolv.models import (
     DeltaG,
@@ -67,6 +66,8 @@ class EquilibriumRunner(BaseRunner):
         cls,
         protocol: EquilibriumProtocol,
     ) -> Tuple[float, float]:
+
+        from pymbar import MBAR, timeseries
 
         n_iterations = protocol.production_protocol.n_iterations
         n_states = protocol.n_states
