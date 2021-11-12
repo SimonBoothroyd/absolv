@@ -1,0 +1,806 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../../_static/">
+    
+    
+      
+        <title>absolv.utilities.openmm - ABSOLV  documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../_static/stylesheets/main.91c34c39.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../_static/stylesheets/palette.89291e57.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+        <link rel="stylesheet" href="../../../_static/basic.css">
+        <link rel="stylesheet" href="../../../_static/overrides.css">
+        <link rel="stylesheet" href="../../../_static/api.css">
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ABSOLV  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              absolv.utilities.openmm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    ABSOLV  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation.html" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        <a class="" href="../../../user-guide/theory.html">User Guide</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-guide/theory.html" class="md-nav__link">
+        Theory
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-guide/transformations.html" class="md-nav__link">
+        Alchemical Transformations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        <a class="" href="../../../examples/equilibrium.html">Examples</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/equilibrium.html" class="md-nav__link">
+        Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/non-equilibrium.html" class="md-nav__link">
+        Non-Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" data-md-state="indeterminate" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        <a class="" href="../../../api/absolv.html">API</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/absolv.html" class="md-nav__link">
+        absolv
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset" role="main">
+              
+                
+                
+  <h1>Source code for absolv.utilities.openmm</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">openmm</span>
+<span class="kn">import</span> <span class="nn">openmm.app</span>
+<span class="kn">from</span> <span class="nn">openff.toolkit.topology</span> <span class="kn">import</span> <span class="n">Topology</span>
+<span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
+
+<span class="n">SystemGenerator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span>
+    <span class="p">[</span><span class="n">Topology</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solvent-a&quot;</span><span class="p">,</span> <span class="s2">&quot;solvent-b&quot;</span><span class="p">]],</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span>
+<span class="p">]</span>
+
+<span class="n">OpenMMPlatform</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;Reference&quot;</span><span class="p">,</span> <span class="s2">&quot;OpenCL&quot;</span><span class="p">,</span> <span class="s2">&quot;CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;CPU&quot;</span><span class="p">]</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">array_to_vectors</span><span class="p">(</span><span class="n">box_vectors</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">]:</span>
+    <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">array_to_vectors</span><span class="p">(</span><span class="n">box_vectors</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<div class="viewcode-block" id="array_to_vectors"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.array_to_vectors.html#absolv.utilities.openmm.array_to_vectors">[docs]</a><span class="k">def</span> <span class="nf">array_to_vectors</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A utility to convert numpy arrays into lists of OpenMM vectors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array: The array to convert with shape=(n_items, 3)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of three ``Vec3`` objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">original_units</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span> <span class="k">else</span> <span class="n">array</span><span class="o">.</span><span class="n">unit</span>
+
+    <span class="k">if</span> <span class="n">original_units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">original_units</span><span class="p">)</span>
+
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">array</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">vectors</span> <span class="k">if</span> <span class="n">original_units</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">vectors</span> <span class="o">*</span> <span class="n">original_units</span></div>
+
+
+<div class="viewcode-block" id="build_context"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.build_context.html#absolv.utilities.openmm.build_context">[docs]</a><span class="k">def</span> <span class="nf">build_context</span><span class="p">(</span>
+    <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span>
+    <span class="n">coordinates</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+    <span class="n">box_vectors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">],</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">],</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">OpenMMPlatform</span> <span class="o">=</span> <span class="s2">&quot;Reference&quot;</span><span class="p">,</span>
+    <span class="n">timestep</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span><span class="p">,</span>
+    <span class="n">thermostat_friction</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">picosecond</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Builds a new OpenMM context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        system: The system encoding the potential energy function.</span>
+<span class="sd">        coordinates: The atom coordinates stored in a unit wrapped array with</span>
+<span class="sd">            shape=(n_atoms, 3).</span>
+<span class="sd">        box_vectors: The (optional) box vectors stored in a unit wrapped array with</span>
+<span class="sd">            shape=(3, 3).</span>
+<span class="sd">        temperature: The temperature to simulate at.</span>
+<span class="sd">        pressure: The (optional) pressure to simulate at.</span>
+<span class="sd">        platform: The platform to simulate on.</span>
+<span class="sd">        timestep: The default timestep to use.</span>
+<span class="sd">        thermostat_friction: The default thermostat friction to set.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">system</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">pressure</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span>
+        <span class="n">pressure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">box_vectors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">),</span> <span class="s2">&quot;box vectors must be provided when the pressure is specified.&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">force</span>
+                <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">getForces</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">MonteCarloBarostat</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">),</span> <span class="s2">&quot;the system should not already contain a barostat&quot;</span>
+
+    <span class="k">if</span> <span class="n">pressure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">addForce</span><span class="p">(</span><span class="n">openmm</span><span class="o">.</span><span class="n">MonteCarloBarostat</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
+
+    <span class="n">integrator</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">LangevinIntegrator</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span>
+        <span class="n">system</span><span class="p">,</span>
+        <span class="n">integrator</span><span class="p">,</span>
+        <span class="n">openmm</span><span class="o">.</span><span class="n">Platform</span><span class="o">.</span><span class="n">getPlatformByName</span><span class="p">(</span><span class="n">platform</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">set_coordinates</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">)</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">setVelocitiesToTemperature</span><span class="p">(</span><span class="n">temperature</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="set_alchemical_lambdas"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.set_alchemical_lambdas.html#absolv.utilities.openmm.set_alchemical_lambdas">[docs]</a><span class="k">def</span> <span class="nf">set_alchemical_lambdas</span><span class="p">(</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span>
+    <span class="n">lambda_sterics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lambda_electrostatics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set the values of the alchemical lambdas on an OpenMM context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        context: The context to update.</span>
+<span class="sd">        lambda_sterics: The (optional) value of the steric lambda.</span>
+<span class="sd">        lambda_electrostatics: The (optional) value of the electrostatics lambda.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">lambda_sterics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">lambda_sterics</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;`lambda_sterics` must be between 0 and 1&quot;</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span><span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span> <span class="n">lambda_sterics</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">lambda_electrostatics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">lambda_electrostatics</span> <span class="o">&lt;=</span> <span class="mf">1.0</span>
+        <span class="p">),</span> <span class="s2">&quot;`lambda_electrostatics` must be between 0 and 1&quot;</span>
+
+        <span class="n">context</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span><span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">,</span> <span class="n">lambda_electrostatics</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_coordinates"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.set_coordinates.html#absolv.utilities.openmm.set_coordinates">[docs]</a><span class="k">def</span> <span class="nf">set_coordinates</span><span class="p">(</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span>
+    <span class="n">coordinates</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+    <span class="n">box_vectors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates an OpenMM context with a new set of coordinates and box vectors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        context: The context to update.</span>
+<span class="sd">        coordinates: The new coordinates stored in a unit wrapped array with</span>
+<span class="sd">            shape=(n_atoms, 3).</span>
+<span class="sd">        box_vectors: The (optional) box vectors stored in a unit wrapped array with</span>
+<span class="sd">            shape=(3, 3) or list of three ``Vec3`` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">box_vectors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">box_vectors</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">box_vectors</span> <span class="o">=</span> <span class="n">array_to_vectors</span><span class="p">(</span><span class="n">box_vectors</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="o">.</span><span class="n">setPeriodicBoxVectors</span><span class="p">(</span><span class="o">*</span><span class="n">box_vectors</span><span class="p">)</span>
+
+    <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">getSystem</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span> <span class="o">!=</span> <span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">():</span>
+
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">)</span>
+
+        <span class="n">n_v_sites</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">())</span> <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">isVirtualSite</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()</span> <span class="o">-</span> <span class="n">n_v_sites</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_atoms</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;coordinates must either have shape=(n_atoms, 3) &quot;</span>
+            <span class="s2">&quot;or (n_atoms + n_v_sites, 3)&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">full_coordinates</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">(),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+
+            <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">isVirtualSite</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">full_coordinates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="n">counter</span><span class="p">]</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">full_coordinates</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">setPositions</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">computeVirtualSites</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="extract_coordinates"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.extract_coordinates.html#absolv.utilities.openmm.extract_coordinates">[docs]</a><span class="k">def</span> <span class="nf">extract_coordinates</span><span class="p">(</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">State</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Extracts the current coordinates and box vectors from an OpenMM context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state: The state (or context) to extract from.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The current coordinates and box vectors stored in unit wrapped arrays with</span>
+<span class="sd">        shape=(n_atoms, 3) and shape=(3, 3) respectively.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getPositions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">box_vectors</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">getPeriodicBoxVectors</span><span class="p">()</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">getPositions</span><span class="p">(</span><span class="n">asNumpy</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">box_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">z</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">box_vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">z</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">box_vectors</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">z</span><span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="minimize"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.minimize.html#absolv.utilities.openmm.minimize">[docs]</a><span class="k">def</span> <span class="nf">minimize</span><span class="p">(</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kilojoules_per_mole</span> <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+    <span class="n">max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Energy minimize an OpenMM context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        context: The context to minimize.</span>
+<span class="sd">        tolerance: How precisely the energy minimum must be located</span>
+<span class="sd">        max_iterations: The maximum number of iterations to perform. If this is 0,</span>
+<span class="sd">            minimization is continued until the results converge.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">openmm</span><span class="o">.</span><span class="n">LocalEnergyMinimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">max_iterations</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="evaluate_energy"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.evaluate_energy.html#absolv.utilities.openmm.evaluate_energy">[docs]</a><span class="k">def</span> <span class="nf">evaluate_energy</span><span class="p">(</span>
+    <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span>
+    <span class="n">coordinates</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+    <span class="n">box_vectors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lambda_sterics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lambda_electrostatics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">OpenMMPlatform</span> <span class="o">=</span> <span class="s2">&quot;Reference&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Evaluates the energy of a given system at a particular set of coordinates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        system: The openmm system that should be used to evaluate the energies.</span>
+<span class="sd">        coordinates: The coordinates that should be used when evaluating the energies.</span>
+<span class="sd">        box_vectors: The (optional) periodic box vectors that should be used when</span>
+<span class="sd">            evaluating the energies.</span>
+<span class="sd">        lambda_sterics: The value of `lambda_sterics` to evaluate the energies at.</span>
+<span class="sd">        lambda_electrostatics: The value of `lambda_electrostatics` to evaluate the</span>
+<span class="sd">            energies at.</span>
+<span class="sd">        platform: The OpenMM platform to simulate using.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The energy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="n">build_context</span><span class="p">(</span>
+        <span class="n">system</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">box_vectors</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">platform</span>
+    <span class="p">)</span>
+    <span class="n">set_alchemical_lambdas</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">lambda_sterics</span><span class="p">,</span> <span class="n">lambda_electrostatics</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getEnergy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">getPotentialEnergy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="create_system_generator"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.create_system_generator.html#absolv.utilities.openmm.create_system_generator">[docs]</a><span class="k">def</span> <span class="nf">create_system_generator</span><span class="p">(</span>
+    <span class="n">force_field</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">ForceField</span><span class="p">,</span>
+    <span class="n">solvent_a_nonbonded_method</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">solvent_b_nonbonded_method</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">nonbonded_cutoff</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rigid_water</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">remove_cmm_motion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">hydrogen_mass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">switch_distance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SystemGenerator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Creates a &#39;system generator&#39; that can be used when setting up an alchemical</span>
+<span class="sd">    free energy calculation from an OpenMM force field.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        force_field: The OpenMM force field to parameterize the topology using.</span>
+<span class="sd">        solvent_a_nonbonded_method: The non-bonded method to use in solvent a.</span>
+<span class="sd">        solvent_b_nonbonded_method: The non-bonded method to use in solvent b.</span>
+<span class="sd">        nonbonded_cutoff: The non-bonded cutoff to use.</span>
+<span class="sd">        constraints: The type of constraints to apply to the system.</span>
+<span class="sd">        rigid_water: Whether to force rigid water.</span>
+<span class="sd">        remove_cmm_motion: Whether to remove any CMM motion.</span>
+<span class="sd">        hydrogen_mass: The mass to use for hydrogens.</span>
+<span class="sd">        switch_distance: The switch distance to use.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A callable that will create an OpenMM system from an OpenFF topology and the</span>
+<span class="sd">        name of the solvent (i.e. ``&quot;solvent-a&quot;`` or ``&quot;solvent-b&quot;``) the system will</span>
+<span class="sd">        be used for.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">system_generator</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">:</span> <span class="n">Topology</span><span class="p">,</span>
+        <span class="n">coordinates</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+        <span class="n">solvent_index</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solvent-a&quot;</span><span class="p">,</span> <span class="s2">&quot;solvent-b&quot;</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">:</span>
+
+        <span class="n">openmm_topology</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">to_openmm</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">box_vectors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">openmm_topology</span><span class="o">.</span><span class="n">setPeriodicBoxVectors</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">box_vectors</span><span class="p">)</span>
+
+        <span class="c1"># We need to fix the special case of water in order for OMM to correctly apply</span>
+        <span class="c1"># a constraint between H atoms.</span>
+        <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">openmm_topology</span><span class="o">.</span><span class="n">chains</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">residues</span><span class="p">():</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">residue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">symbols</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">symbol</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">residue</span><span class="o">.</span><span class="n">atoms</span><span class="p">())</span>
+
+                <span class="k">if</span> <span class="n">symbols</span> <span class="o">!=</span> <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">]:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">residue</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;HOH&quot;</span>
+
+        <span class="kn">from</span> <span class="nn">openmm.app</span> <span class="kn">import</span> <span class="n">Modeller</span>
+
+        <span class="n">modeller</span> <span class="o">=</span> <span class="n">Modeller</span><span class="p">(</span>
+            <span class="n">openmm_topology</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">(</span><span class="n">coordinate</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coordinate</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">coordinate</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">coordinate</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">modeller</span><span class="o">.</span><span class="n">addExtraParticles</span><span class="p">(</span><span class="n">force_field</span><span class="p">)</span>
+
+        <span class="n">system</span> <span class="o">=</span> <span class="n">force_field</span><span class="o">.</span><span class="n">createSystem</span><span class="p">(</span>
+            <span class="n">modeller</span><span class="o">.</span><span class="n">getTopology</span><span class="p">(),</span>
+            <span class="n">nonbondedMethod</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">solvent_a_nonbonded_method</span>
+                <span class="k">if</span> <span class="n">solvent_index</span> <span class="o">==</span> <span class="s2">&quot;solvent-a&quot;</span>
+                <span class="k">else</span> <span class="n">solvent_b_nonbonded_method</span>
+            <span class="p">),</span>
+            <span class="n">nonbondedCutoff</span><span class="o">=</span><span class="n">nonbonded_cutoff</span><span class="p">,</span>
+            <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+            <span class="n">rigidWater</span><span class="o">=</span><span class="n">rigid_water</span><span class="p">,</span>
+            <span class="n">removeCMMotion</span><span class="o">=</span><span class="n">remove_cmm_motion</span><span class="p">,</span>
+            <span class="n">hydrogenMass</span><span class="o">=</span><span class="n">hydrogen_mass</span><span class="p">,</span>
+            <span class="n">switchDistance</span><span class="o">=</span><span class="n">switch_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">system</span>
+
+    <span class="k">return</span> <span class="n">system_generator</span></div>
+</pre></div>
+
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../_static/javascripts/bundle.270123a5.min.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
+</html>

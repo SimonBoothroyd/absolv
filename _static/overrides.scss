@@ -1,0 +1,45 @@
+// Cleanup the API tables
+table.docutils {
+  text-align: left;
+
+  td:nth-child(1) p {
+    a code, code {
+      word-break: normal;
+    }
+  }
+}
+
+// Fix the first nav item being close to the header when not highlighted.
+.md-nav__list {
+    > .md-nav__item:nth-child(1) {
+        margin-top: 0.625em;
+    }
+}
+// Disable highlighting of API fields selected by the mini TOC.
+dt:target, span.highlighted {
+	background-color: inherit;
+}
+
+// Hide the API table on the index page
+#absolute-solvantion-free-energy-calculations {
+  table {display: none;}
+}
+
+// Fix centering images
+figure.align-center {
+  a {
+    img {
+      margin: 0 auto;
+    }
+  }
+}
+
+section {
+  > .highlight-python {
+    background-color: #f5f5f5;
+    padding: 0.5em;
+
+    font-size: 0.7rem;
+    line-height: 1.35rem;
+  }
+}

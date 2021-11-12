@@ -1,0 +1,861 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../_static/">
+    
+    
+      
+        <title>absolv.models - ABSOLV  documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../_static/stylesheets/main.91c34c39.min.css">
+      
+        
+        <link rel="stylesheet" href="../../_static/stylesheets/palette.89291e57.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+        <link rel="stylesheet" href="../../_static/basic.css">
+        <link rel="stylesheet" href="../../_static/overrides.css">
+        <link rel="stylesheet" href="../../_static/api.css">
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ABSOLV  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              absolv.models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    ABSOLV  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation.html" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        <a class="" href="../../user-guide/theory.html">User Guide</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/theory.html" class="md-nav__link">
+        Theory
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/transformations.html" class="md-nav__link">
+        Alchemical Transformations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        <a class="" href="../../examples/equilibrium.html">Examples</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/equilibrium.html" class="md-nav__link">
+        Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/non-equilibrium.html" class="md-nav__link">
+        Non-Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" data-md-state="indeterminate" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        <a class="" href="../../api/absolv.html">API</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/absolv.html" class="md-nav__link">
+        absolv
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset" role="main">
+              
+                
+                
+  <h1>Source code for absolv.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseModel</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">,</span>
+    <span class="n">NonNegativeInt</span><span class="p">,</span>
+    <span class="n">PositiveFloat</span><span class="p">,</span>
+    <span class="n">PositiveInt</span><span class="p">,</span>
+    <span class="n">confloat</span><span class="p">,</span>
+    <span class="n">root_validator</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="float_validator"><a class="viewcode-back" href="../../api/absolv.models.float_validator.html#absolv.models.float_validator">[docs]</a><span class="k">def</span> <span class="nf">float_validator</span><span class="p">(</span><span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected_units</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Unit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">validator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">validate_unit</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">expected_units</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">validator</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">allow_reuse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">validate_unit</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="System"><a class="viewcode-back" href="../../api/absolv.models.System.html#absolv.models.System">[docs]</a><span class="k">class</span> <span class="nc">System</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that describes the contents of the two solvents that the solutes will</span>
+<span class="sd">    be transferred between (a -&gt; b) as well as the solutes themselves.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">solutes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A dictionary containing the SMILES patterns of each solute in the &quot;</span>
+        <span class="s2">&quot;system as well as how many instances of each there should be.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">solvent_a</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A dictionary containing the SMILES patterns of each component &quot;</span>
+        <span class="s2">&quot;in the first solvent as well as how many instances of each there should be.&quot;</span>
+        <span class="s2">&quot;A value of ``None`` should be used to indicate vacuum.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">solvent_b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A dictionary containing the SMILES patterns of each component &quot;</span>
+        <span class="s2">&quot;in the second solvent as well as how many instances of each there should be. &quot;</span>
+        <span class="s2">&quot;A value of ``None`` should be used to indicate vacuum.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_solute_molecules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the total number of solute molecules that will be present.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_solvent_molecules_a</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the total number of solvent molecules that will be present in the</span>
+<span class="sd">        first solution.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvent_a</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solvent_a</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_solvent_molecules_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the total number of solvent molecules that will be present in the</span>
+<span class="sd">        second solution.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<div class="viewcode-block" id="System.to_components"><a class="viewcode-back" href="../../api/absolv.models.System.html#absolv.models.System.to_components">[docs]</a>    <span class="k">def</span> <span class="nf">to_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;Converts this object into two lists: one containing the identities and amounts</span>
+<span class="sd">        of the molecules present in the first solution, and one the containg the same for</span>
+<span class="sd">        the second solution.</span>
+
+<span class="sd">        The identity and amount is stored in a tuple as a SMILES pattern and integer</span>
+<span class="sd">        count.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">components_a</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">solutes</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvent_a</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">solvent_a</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="p">)</span>
+        <span class="n">components_b</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">solutes</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">components_a</span><span class="p">,</span> <span class="n">components_b</span></div></div>
+
+
+<div class="viewcode-block" id="State"><a class="viewcode-back" href="../../api/absolv.models.State.html#absolv.models.State">[docs]</a><span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that defines the temperature and (optionally) the pressure of</span>
+<span class="sd">    a thermodynamic state.&quot;&quot;&quot;</span>
+
+    <span class="n">temperature</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The temperature [K].&quot;</span><span class="p">)</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PositiveFloat</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The pressure [atm].&quot;</span><span class="p">)</span>
+
+    <span class="n">_validate_temperature</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
+    <span class="n">_validate_pressure</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span><span class="s2">&quot;pressure&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">atmosphere</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MinimizationProtocol"><a class="viewcode-back" href="../../api/absolv.models.MinimizationProtocol.html#absolv.models.MinimizationProtocol">[docs]</a><span class="k">class</span> <span class="nc">MinimizationProtocol</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that encodes how a system should be energy minimized.&quot;&quot;&quot;</span>
+
+    <span class="n">tolerance</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;How precisely the energy minimum must be located [kj / mol / nm]&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">max_iterations</span><span class="p">:</span> <span class="n">NonNegativeInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The maximum number of iterations to perform. If this is 0, &quot;</span>
+        <span class="s2">&quot;minimization is continued until the results converge.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_validate_tolerance</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span>
+        <span class="s2">&quot;tolerance&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">kilojoule_per_mole</span> <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">nanometers</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SimulationProtocol"><a class="viewcode-back" href="../../api/absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol">[docs]</a><span class="k">class</span> <span class="nc">SimulationProtocol</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that encodes how a system should be evolved by molecular simulation.&quot;&quot;&quot;</span>
+
+    <span class="n">n_steps_per_iteration</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of steps to evolve the system by at each iteration. &quot;</span>
+        <span class="s2">&quot;The total number of steps performed will be equal to the &quot;</span>
+        <span class="s2">&quot;`total_number_of_iterations * steps_per_iteration`.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">n_iterations</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of times to evolve the system forward by &quot;</span>
+        <span class="s2">&quot;`n_steps_per_iteration` time steps.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">timestep</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mf">2.0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The timestep [fs] to evolve the system by at each step.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">thermostat_friction</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The friction coefficient [1/ps] to use for the Langevin &quot;</span>
+        <span class="s2">&quot;thermostat.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_validate_timestep</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span><span class="p">)</span>
+    <span class="n">_validate_thermostat_friction</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span>
+        <span class="s2">&quot;thermostat_friction&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">picoseconds</span> <span class="o">**</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EquilibriumProtocol"><a class="viewcode-back" href="../../api/absolv.models.EquilibriumProtocol.html#absolv.models.EquilibriumProtocol">[docs]</a><span class="k">class</span> <span class="nc">EquilibriumProtocol</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR)</span>
+<span class="sd">    alchemical free energy calculation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;equilibrium&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;equilibrium&quot;</span>
+
+    <span class="n">minimization_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MinimizationProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">MinimizationProtocol</span><span class="p">(),</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether to minimize the energy of the system prior to any &quot;</span>
+        <span class="s2">&quot;simulations.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">equilibration_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SimulationProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>  <span class="c1"># 200 ps</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The (optional) protocol that describes the equilibration &quot;</span>
+        <span class="s2">&quot;simulation to run prior to the production one.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">production_protocol</span><span class="p">:</span> <span class="n">SimulationProtocol</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">),</span>  <span class="c1"># 2 ns</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol that describes the production to run.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">lambda_sterics</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">confloat</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The alchemical pathway to transform the vdW interactions along. A &quot;</span>
+        <span class="s2">&quot;value of 1.0 represents a fully interacting system while a value of 0.0 &quot;</span>
+        <span class="s2">&quot;represents a system with the solute-solute and solute-solvent vdW interactions &quot;</span>
+        <span class="s2">&quot;disabled.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">lambda_electrostatics</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">confloat</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The alchemical pathway to transform the electrostatic interactions &quot;</span>
+        <span class="s2">&quot;along. A value of 1.0 represents a fully interacting system while a value of &quot;</span>
+        <span class="s2">&quot;0.0 represents a system with the solute-solute and solute-solvent &quot;</span>
+        <span class="s2">&quot;electrostatic interactions disabled.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_states</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the number of lambda states that will be sampled at.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lambda_sterics</span><span class="p">)</span>
+
+    <span class="nd">@root_validator</span>
+    <span class="k">def</span> <span class="nf">_validate_lambda_lengths</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+
+        <span class="n">lambda_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">]</span>
+        <span class="n">lambda_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lambda_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">lambda_name</span> <span class="ow">in</span> <span class="n">lambda_names</span><span class="p">]</span>
+
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">lambda_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">lambda_lists</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">lambda_list</span> <span class="ow">in</span> <span class="n">lambda_lists</span>
+        <span class="p">),</span> <span class="s2">&quot;lambda lists must be the same length&quot;</span>
+
+        <span class="k">return</span> <span class="n">values</span></div>
+
+
+<div class="viewcode-block" id="SwitchingProtocol"><a class="viewcode-back" href="../../api/absolv.models.SwitchingProtocol.html#absolv.models.SwitchingProtocol">[docs]</a><span class="k">class</span> <span class="nc">SwitchingProtocol</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that encodes the protocol for non-reversibly driving a system between</span>
+<span class="sd">    to alchemical states.&quot;&quot;&quot;</span>
+
+    <span class="n">n_electrostatic_steps</span><span class="p">:</span> <span class="n">NonNegativeInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of steps to annihilate the electrostatics interactions &quot;</span>
+        <span class="s2">&quot;over. The total time needed to annihilate the electrostatics interactions will &quot;</span>
+        <span class="s2">&quot;be ``n_electrostatic_steps * n_steps_per_electrostatic_step * timestep``&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">n_steps_per_electrostatic_step</span><span class="p">:</span> <span class="n">NonNegativeInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of timesteps to evolve the system by each time the &quot;</span>
+        <span class="s2">&quot;electrostatics interactions are modified. A value of 1 will give a &#39;smooth&#39; &quot;</span>
+        <span class="s2">&quot;transition between the each discrete lambda value whereas a value greater than &quot;</span>
+        <span class="s2">&quot;1 will yield a stepwise transition as shown in Figure 3 of &quot;</span>
+        <span class="s2">&quot;doi:10.1063/1.4712028.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">n_steric_steps</span><span class="p">:</span> <span class="n">NonNegativeInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of steps to decouple the sterics interactions over once &quot;</span>
+        <span class="s2">&quot;the electrostatics interactions have been annihilated. The total time needed &quot;</span>
+        <span class="s2">&quot;to annihilate the sterics interactions will be &quot;</span>
+        <span class="s2">&quot;``n_steric_steps * n_steps_per_steric_step * timestep``&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">n_steps_per_steric_step</span><span class="p">:</span> <span class="n">NonNegativeInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of timesteps to evolve the system by each time the &quot;</span>
+        <span class="s2">&quot;sterics interactions are modified. A value of 1 will give a &#39;smooth&#39; &quot;</span>
+        <span class="s2">&quot;transition between the each discrete lambda value whereas a value greater than &quot;</span>
+        <span class="s2">&quot;1 will yield a stepwise transition as shown in Figure 3 of &quot;</span>
+        <span class="s2">&quot;doi:10.1063/1.4712028.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">timestep</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mf">2.0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The timestep [fs] to evolve the system by at each step.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">thermostat_friction</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The friction coefficient [1/ps] to use for the Langevin &quot;</span>
+        <span class="s2">&quot;thermostat.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_validate_timestep</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span><span class="p">)</span>
+    <span class="n">_validate_thermostat_friction</span> <span class="o">=</span> <span class="n">float_validator</span><span class="p">(</span>
+        <span class="s2">&quot;thermostat_friction&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">picoseconds</span> <span class="o">**</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NonEquilibriumProtocol"><a class="viewcode-back" href="../../api/absolv.models.NonEquilibriumProtocol.html#absolv.models.NonEquilibriumProtocol">[docs]</a><span class="k">class</span> <span class="nc">NonEquilibriumProtocol</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A model that encodes the protocol for performing a non-equilibrium switching</span>
+<span class="sd">    like alchemical free energy calculation [1, 2].</span>
+
+<span class="sd">    It is expected that first the electrostatics interactions will be annihilated</span>
+<span class="sd">    followed by a decoupling of the sterics interactions.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1] Ballard, Andrew J., and Christopher Jarzynski. &quot;Replica exchange with</span>
+<span class="sd">            nonequilibrium switches: Enhancing equilibrium sampling by increasing replica</span>
+<span class="sd">            overlap.&quot; The Journal of chemical physics 136.19 (2012): 194101.</span>
+
+<span class="sd">        [2] Gapsys, Vytautas, et al. &quot;Large scale relative protein ligand binding</span>
+<span class="sd">            affinities using non-equilibrium alchemy.&quot; Chemical Science 11.4 (2020):</span>
+<span class="sd">            1140-1152.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;non-equilibrium&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;non-equilibrium&quot;</span>
+
+    <span class="n">minimization_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MinimizationProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">MinimizationProtocol</span><span class="p">(),</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The (optional) protocol to follow when minimizing the system in &quot;</span>
+        <span class="s2">&quot;both the end states prior to running the equilibrium simulations.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">equilibration_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SimulationProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>  <span class="c1"># 200 ps</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The (optional) protocol to follow when equilibrating the system in &quot;</span>
+        <span class="s2">&quot;both the end states prior to running the production equilibrium simulations.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">production_protocol</span><span class="p">:</span> <span class="n">SimulationProtocol</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">),</span>  <span class="c1"># 2 ns</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol to follow when running the production equilibrium &quot;</span>
+        <span class="s2">&quot;simulation in both the end states. The snapshots generated at the end of each &quot;</span>
+        <span class="s2">&quot;iteration will be used for each non-equilibrium switch.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">switching_protocol</span><span class="p">:</span> <span class="n">SwitchingProtocol</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol that describes how each snapshot generated during the &quot;</span>
+        <span class="s2">&quot;production simulation should be driven from state 0 -&gt; 1 and likewise 1 -&gt; 0 &quot;</span>
+        <span class="s2">&quot;in order to compute the non-equilibrium work distributions.&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransferFreeEnergySchema"><a class="viewcode-back" href="../../api/absolv.models.TransferFreeEnergySchema.html#absolv.models.TransferFreeEnergySchema">[docs]</a><span class="k">class</span> <span class="nc">TransferFreeEnergySchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A schema that fully defines the inputs needed to compute the transfer free energy</span>
+<span class="sd">    of a solvent between to solvents, or between a solvent and vacuum.&quot;&quot;&quot;</span>
+
+    <span class="n">system</span><span class="p">:</span> <span class="n">System</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A description of the system under investigation, including the &quot;</span>
+        <span class="s2">&quot;identity of the solute and the two solvent phases.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">State</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The thermodynamic state to perform the calculation at.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">alchemical_protocol_a</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EquilibriumProtocol</span><span class="p">,</span> <span class="n">NonEquilibriumProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol that describes the alchemical pathway to transform &quot;</span>
+        <span class="s2">&quot;the solute along in the first solvent.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">alchemical_protocol_b</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EquilibriumProtocol</span><span class="p">,</span> <span class="n">NonEquilibriumProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol that describes the alchemical pathway to transform &quot;</span>
+        <span class="s2">&quot;the solute along in the second solvent.&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DeltaG"><a class="viewcode-back" href="../../api/absolv.models.DeltaG.html#absolv.models.DeltaG">[docs]</a><span class="k">class</span> <span class="nc">DeltaG</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The value of the free energy in units of kT&quot;</span><span class="p">)</span>
+    <span class="n">std_error</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The standard error of the value in units of kT&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;DeltaG&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DeltaG&quot;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">DeltaG</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">return</span> <span class="n">DeltaG</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">std_error</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">std_error</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">std_error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;DeltaG&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DeltaG&quot;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">DeltaG</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">return</span> <span class="n">DeltaG</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">std_error</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">std_error</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">std_error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransferFreeEnergyResult"><a class="viewcode-back" href="../../api/absolv.models.TransferFreeEnergyResult.html#absolv.models.TransferFreeEnergyResult">[docs]</a><span class="k">class</span> <span class="nc">TransferFreeEnergyResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+    <span class="n">input_schema</span><span class="p">:</span> <span class="n">TransferFreeEnergySchema</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The schema that was used to generate this result.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">delta_g_solvent_a</span><span class="p">:</span> <span class="n">DeltaG</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The change in free energy of alchemically transforming the solute &quot;</span>
+        <span class="s2">&quot;from an interacting to a non-interacting state in `solvent-a`.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">delta_g_solvent_b</span><span class="p">:</span> <span class="n">DeltaG</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The change in free energy of alchemically transforming the solute &quot;</span>
+        <span class="s2">&quot;from an interacting to a non-interacting state in `solvent-b`.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">provenance</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="p">{},</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Extra provenance about how this result was generated.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_g</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeltaG</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from `solvent-a` to</span>
+<span class="sd">        `solvent-b` in units of kT.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_b</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_a</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_boltzmann_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">unit</span><span class="o">.</span><span class="n">MOLAR_GAS_CONSTANT_R</span>
+            <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span>
+            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_schema</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">temperature</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">in_units_of</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_g_with_units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from `solvent-a` to</span>
+<span class="sd">        `solvent-b`, as well as the error in that change.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g</span><span class="o">.</span><span class="n">std_error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">value</span><span class="p">,</span> <span class="n">std_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_with_units</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ΔG=</span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ΔG std=</span><span class="si">{</span><span class="n">std_error</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__repr_name__</span><span class="p">()</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+</pre></div>
+
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../_static/javascripts/bundle.270123a5.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
+</html>

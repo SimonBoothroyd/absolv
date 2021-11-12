@@ -1,0 +1,668 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../_static/">
+    
+    
+      
+        <title>Theory - ABSOLV  documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../_static/stylesheets/main.91c34c39.min.css">
+      
+        
+        <link rel="stylesheet" href="../_static/stylesheets/palette.89291e57.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+        <link rel="stylesheet" href="../_static/basic.css">
+        <link rel="stylesheet" href="../_static/overrides.css">
+        <link rel="stylesheet" href="../_static/api.css">
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ABSOLV  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Theory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    ABSOLV  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation.html" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        <a class="" href="">User Guide</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Theory
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="" class="md-nav__link md-nav__link--active">
+        Theory
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Theory
+      
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#equilibrium-calculations" class="md-nav__link">
+    Equilibrium Calculations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-equilibrium-calculations" class="md-nav__link">
+    Non-equilibrium Calculations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformations.html" class="md-nav__link">
+        Alchemical Transformations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        <a class="" href="../examples/equilibrium.html">Examples</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/equilibrium.html" class="md-nav__link">
+        Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/non-equilibrium.html" class="md-nav__link">
+        Non-Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" data-md-state="indeterminate" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        <a class="" href="../api/absolv.html">API</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/absolv.html" class="md-nav__link">
+        absolv
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Theory
+      
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#equilibrium-calculations" class="md-nav__link">
+    Equilibrium Calculations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-equilibrium-calculations" class="md-nav__link">
+    Non-equilibrium Calculations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset" role="main">
+              
+                
+                
+  <section id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h1>
+<p>The change in free energy of transferring a solute from one solvent to another <span class="math notranslate nohighlight">\(\Delta G_{A-&gt;B}\)</span>, can be readily
+computed by constructing a thermodynamic cycle in which the solute in each solvent is alchemically transformed into a
+non-interacting state as shown below:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/transfer-cycle.svg"><img alt="../_images/transfer-cycle.svg" src="../_images/transfer-cycle.svg" width="70%" /></a>
+</figure>
+<p>Namely,</p>
+<div class="math notranslate nohighlight">
+\[\Delta G_{A-&gt;B} = \Delta G_1 - \Delta G_3\]</div>
+<p>where here <span class="math notranslate nohighlight">\(\Delta G_1\)</span> and <span class="math notranslate nohighlight">\(\Delta G_3\)</span> are the change in free energy of alchemically transforming a solute
+(or perhaps multiple solutes in the case of charged molecules with counter ions) so that it no longer interacts with
+the surrounding corresponding ‘solvent’.</p>
+<p>Computing the solvation (/ hydration) free energy is a special case of this cycle when the first ‘solvent’ is vacuum.</p>
+<p>This framework currently offers two routes to computing such a change in free energy as the solute is being alchemically
+transformed, a more commonly used ‘equilibrium route’ and a ‘non-equilibrium’ route.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about how the different inter- and intramolecular interactions are alchemically modified see the
+<a class="reference internal" href="transformations.html"><span class="doc">Alchemical Transformations</span></a> page.</p>
+</div>
+<section id="equilibrium-calculations">
+<h2>Equilibrium Calculations<a class="headerlink" href="#equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
+<p>Within this framework we refer to free energy calculations that involve dividing the alchemical pathway into discrete
+windows at each value of the coupling parameter <span class="math notranslate nohighlight">\(\lambda\)</span>, collecting equilibrium samples for each such discrete
+state, and using these samples to compute the free energy as ‘equilibrium’ free energy calculations using an approach
+such as thermodynamic integration (TI) <span id="id1">[<a class="reference internal" href="#id6" title="TP Straatsma and JA McCammon. Computational alchemy. Annual Review of Physical Chemistry, 43(1):407–435, 1992.">1</a>]</span>, BAR <span id="id2">[<a class="reference internal" href="#id7" title="Charles H Bennett. Efficient estimation of free energy differences from monte carlo data. Journal of Computational Physics, 22(2):245–268, 1976.">2</a>]</span>, and MBAR
+<span id="id3">[<a class="reference internal" href="#id8" title="Michael R Shirts and John D Chodera. Statistically optimal analysis of samples from multiple equilibrium states. The Journal of chemical physics, 129(12):124105, 2008.">3</a>]</span>.</p>
+<p>At present <cite>absolv</cite> does not offer functionality for computing the derivatives with respect to lambda required for TI,
+and only supports MBAR and technically BAR although this estimator is not recommended.</p>
+<p>See the <a class="reference internal" href="../examples/equilibrium.html"><span class="doc">Equilibrium Calculations</span></a> example for more information on running equilibrium free energy calculations
+using <cite>absolv</cite>.</p>
+</section>
+<section id="non-equilibrium-calculations">
+<h2>Non-equilibrium Calculations<a class="headerlink" href="#non-equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
+<p>Within this framework we refer to free energy calculations that proceed by generating equilibrium configurations at both
+end states (with the solute fully interacting with the solute and with the solute-solvent interactions fully decoupled /
+annihilated), and then driving each configuration non-reverisbly along the alchemical pathway by scaling the coupling
+factor <span class="math notranslate nohighlight">\(\lambda\)</span> as a function of time <span id="id4">[<a class="reference internal" href="#id9" title="Andrew J Ballard and Christopher Jarzynski. Replica exchange with nonequilibrium switches: enhancing equilibrium sampling by increasing replica overlap. The Journal of chemical physics, 136(19):194101, 2012.">4</a>, <a class="reference internal" href="#id10" title="Christoph Dellago and Gerhard Hummer. Computing equilibrium free energies using non-equilibrium molecular dynamics. Entropy, 16(1):41–61, 2014.">5</a>]</span>.</p>
+<p>From a practical perspective it is computationally more efficient and convenient to proceed along the alchemical pathway
+in a stepwise, rather than continuous fashion. More specifically, the protocol proceeds by making a perturbation
+to <span class="math notranslate nohighlight">\(\lambda\)</span>, followed by several relaxation steps, and repeating these two sub-stebs until the
+alchemical transformation is complete.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/neq-steps.svg"><img alt="../_images/neq-steps.svg" src="../_images/neq-steps.svg" width="70%" /></a>
+</figure>
+<p>in this way the required to transform the solute from the interacting to the non-interacting state and likewise from the
+non-interacting to the interacting state can be computed according to</p>
+<div class="math notranslate nohighlight">
+\[W = \sum_{i=0}^{n-1} \left[u_{\lambda_{i+1}}\left(x_i\right) - u_{\lambda_{i}}\left(x_i\right)\right]\]</div>
+<p>where here <span class="math notranslate nohighlight">\(u_{\lambda_i}\left(x_i\right)\)</span> is the reduced potential evaluated at configuration <span class="math notranslate nohighlight">\(i\)</span> and
+<span class="math notranslate nohighlight">\(\lambda_i\)</span>.</p>
+<p>The free energy is then estimated by solving</p>
+<div class="math notranslate nohighlight">
+\[\sum^N_{i=1}\dfrac{1}{1+\exp(\beta(W^f_i-\Delta F))} = \sum^N_{i=1}\dfrac{1}{1+\exp(\beta(W^r_i+\Delta F))}\]</div>
+<p>self consistently where <span class="math notranslate nohighlight">\(W^f_i\)</span> corresponds to work computed along the forward pathway going from the interacting to
+the non-interacting state and <span class="math notranslate nohighlight">\(W^r_i\)</span> to work computed along the reverse pathway going from the non-interacting to
+the interacting state. <span class="math notranslate nohighlight">\(N\)</span> refers to the total number of equilibrium snapshots that were generated at each end
+state.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p id="id5"><dl class="citation">
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>TP Straatsma and JA McCammon. Computational alchemy. <em>Annual Review of Physical Chemistry</em>, 43(1):407–435, 1992.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Charles H Bennett. Efficient estimation of free energy differences from monte carlo data. <em>Journal of Computational Physics</em>, 22(2):245–268, 1976.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Michael R Shirts and John D Chodera. Statistically optimal analysis of samples from multiple equilibrium states. <em>The Journal of chemical physics</em>, 129(12):124105, 2008.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Andrew J Ballard and Christopher Jarzynski. Replica exchange with nonequilibrium switches: enhancing equilibrium sampling by increasing replica overlap. <em>The Journal of chemical physics</em>, 136(19):194101, 2012.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">5</a></span></dt>
+<dd><p>Christoph Dellago and Gerhard Hummer. Computing equilibrium free energies using non-equilibrium molecular dynamics. <em>Entropy</em>, 16(1):41–61, 2014.</p>
+</dd>
+</dl>
+</p>
+</section>
+</section>
+
+
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../installation.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installation" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Installation
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="transformations.html" class="md-footer__link md-footer__link--next" aria-label="Next: Alchemical Transformations" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Alchemical Transformations
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../_static/javascripts/bundle.270123a5.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    
+  </body>
+</html>

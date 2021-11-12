@@ -1,0 +1,1022 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../../_static/">
+    
+    
+      
+        <title>absolv.factories.alchemical - ABSOLV  documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../_static/stylesheets/main.91c34c39.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../_static/stylesheets/palette.89291e57.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+        <link rel="stylesheet" href="../../../_static/basic.css">
+        <link rel="stylesheet" href="../../../_static/overrides.css">
+        <link rel="stylesheet" href="../../../_static/api.css">
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ABSOLV  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              absolv.factories.alchemical
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+    </a>
+    ABSOLV  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SimonBoothroyd/absolv
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation.html" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        <a class="" href="../../../user-guide/theory.html">User Guide</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-guide/theory.html" class="md-nav__link">
+        Theory
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-guide/transformations.html" class="md-nav__link">
+        Alchemical Transformations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        <a class="" href="../../../examples/equilibrium.html">Examples</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/equilibrium.html" class="md-nav__link">
+        Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/non-equilibrium.html" class="md-nav__link">
+        Non-Equilibrium Calculations
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" data-md-state="indeterminate" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        <a class="" href="../../../api/absolv.html">API</a>
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/absolv.html" class="md-nav__link">
+        absolv
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset" role="main">
+              
+                
+                
+  <h1>Source code for absolv.factories.alchemical</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">openmm</span>
+<span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
+
+
+<div class="viewcode-block" id="lorentz_berthelot"><a class="viewcode-back" href="../../../api/absolv.factories.alchemical.lorentz_berthelot.html#absolv.factories.alchemical.lorentz_berthelot">[docs]</a><span class="k">def</span> <span class="nf">lorentz_berthelot</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;sigma = 0.5*(sigma1+sigma2); epsilon = sqrt(epsilon1*epsilon2);&quot;</span></div>
+
+
+<div class="viewcode-block" id="lj_potential"><a class="viewcode-back" href="../../../api/absolv.factories.alchemical.lj_potential.html#absolv.factories.alchemical.lj_potential">[docs]</a><span class="k">def</span> <span class="nf">lj_potential</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;4.0*epsilon*x*(x-1.0); x = (sigma/r)^6;&quot;</span></div>
+
+
+<div class="viewcode-block" id="soft_core_lj_potential"><a class="viewcode-back" href="../../../api/absolv.factories.alchemical.soft_core_lj_potential.html#absolv.factories.alchemical.soft_core_lj_potential">[docs]</a><span class="k">def</span> <span class="nf">soft_core_lj_potential</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s2">&quot;lambda_sterics*4.0*epsilon*x*(x-1.0);&quot;</span>
+        <span class="s2">&quot;x = (sigma/reff_sterics)^6;&quot;</span>
+        <span class="s2">&quot;reff_sterics = sigma*(0.5*(1.0-lambda_sterics) + (r/sigma)^6)^(1/6);&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OpenMMAlchemicalFactory"><a class="viewcode-back" href="../../../api/absolv.factories.alchemical.OpenMMAlchemicalFactory.html#absolv.factories.alchemical.OpenMMAlchemicalFactory">[docs]</a><span class="k">class</span> <span class="nc">OpenMMAlchemicalFactory</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A factory that aids in transforming existing OpenMM systems into ones whose</span>
+<span class="sd">    non-bonded interactions can be alchemically disabled using global context parameters.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        * Currently only OpenMM systems that have:</span>
+
+<span class="sd">          - vdW + electrostatics in a single built-in LJ force</span>
+<span class="sd">          - electrostatics in a built-in LJ force, vdW in a custom **non-bonded**</span>
+<span class="sd">            force and vdW 1-4 interactions in a custom **bond** force</span>
+<span class="sd">          - all of the above sans any electrostatics</span>
+
+<span class="sd">          are supported.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_find_v_sites</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span> <span class="n">atom_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Finds any virtual sites in the system and ensures their indices get appended</span>
+<span class="sd">        to the atom index list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            system: The system that may contain v-sites.</span>
+<span class="sd">            atom_indices: A list of per-molecule atom indices</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of the per molecule **particle** indices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">atom_to_molecule_index</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">atom_index</span><span class="p">:</span> <span class="n">i</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atom_indices</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">atom_index</span> <span class="ow">in</span> <span class="n">indices</span>
+        <span class="p">}</span>
+
+        <span class="n">particle_to_atom_index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">atom_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">particle_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">isVirtualSite</span><span class="p">(</span><span class="n">particle_index</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">particle_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">atom_index</span>
+            <span class="n">atom_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">atom_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">remapped_atom_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atom_indices</span><span class="p">))</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">particle_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">system</span><span class="o">.</span><span class="n">isVirtualSite</span><span class="p">(</span><span class="n">particle_index</span><span class="p">):</span>
+
+                <span class="n">molecule_index</span> <span class="o">=</span> <span class="n">atom_to_molecule_index</span><span class="p">[</span><span class="n">atom_index</span><span class="p">]</span>
+                <span class="n">atom_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">v_site</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">getVirtualSite</span><span class="p">(</span><span class="n">particle_index</span><span class="p">)</span>
+                <span class="n">parent_atom_index</span> <span class="o">=</span> <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">v_site</span><span class="o">.</span><span class="n">getParticle</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
+
+                <span class="n">molecule_index</span> <span class="o">=</span> <span class="n">atom_to_molecule_index</span><span class="p">[</span><span class="n">parent_atom_index</span><span class="p">]</span>
+
+            <span class="n">remapped_atom_indices</span><span class="p">[</span><span class="n">molecule_index</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">particle_index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">remapped_atom_indices</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_find_nonbonded_forces</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">NonbondedForce</span><span class="p">],</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">],</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">],</span>
+    <span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Attempts to find the forces that describe the non-bonded (both vdW and</span>
+<span class="sd">        electrostatic) interactions in the system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            system: The OpenMM system containing the forces.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">normal_nonbonded_forces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">custom_nonbonded_forces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># We assume that if the user has used a custom non-bonded force for the</span>
+        <span class="c1"># vdW interactions then they will also have used a custom bond force to</span>
+        <span class="c1"># define the 1-4 exclusion interactions so we need to track those also.</span>
+        <span class="n">custom_bond_forces</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">getForces</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">NonbondedForce</span><span class="p">):</span>
+                <span class="n">normal_nonbonded_forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">):</span>
+                <span class="n">custom_nonbonded_forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">):</span>
+                <span class="n">custom_bond_forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="c1"># vdW + electrostatics in a single built-in LJ force</span>
+            <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">normal_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># OR electrostatics in a built-in LJ force, vdW in a custom **non-bonded**</span>
+            <span class="c1">#    force and vdW 1-4 interactions in a custom **bond** force</span>
+            <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">normal_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_bond_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="p">)</span>
+            <span class="c1"># OR all of the above sans any electrostatics.</span>
+            <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">normal_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_bond_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="p">)</span>
+        <span class="p">):</span>
+
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;Currently only OpenMM systems that have:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;- vdW + electrostatics in a single built-in LJ force</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;- electrostatics in a built-in LJ force, vdW in a custom **non-&quot;</span>
+                <span class="s2">&quot;bonded** force and vdW 1-4 interactions in a custom **bond** force</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;- all of the above sans any electrostatics</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;are supported. Please raise an issue on the GitHub issue tracker if &quot;</span>
+                <span class="s2">&quot;you&#39;d like your use case supported.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">nonbonded_force</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">normal_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">normal_nonbonded_forces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">custom_nonbonded_force</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_nonbonded_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">custom_nonbonded_forces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">custom_bond_force</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_bond_forces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">custom_bond_forces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">custom_nonbonded_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">nonbonded_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+
+                <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getParticleParameters</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">epsilon</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilojoule_per_mole</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;The system contained both a `CustomNonbondedForce` and a &quot;</span>
+                    <span class="s2">&quot;`NonbondedForce` with non-zero epsilon parameters. Please raise &quot;</span>
+                    <span class="s2">&quot;an issue on the GitHub issue tracker if you&#39;d like your use case &quot;</span>
+                    <span class="s2">&quot;supported.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">nonbonded_force</span><span class="p">,</span> <span class="n">custom_nonbonded_force</span><span class="p">,</span> <span class="n">custom_bond_force</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_add_electrostatics_lambda</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">nonbonded_force</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">NonbondedForce</span><span class="p">,</span>
+        <span class="n">alchemical_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Modifies a standard non-bonded force so that the charges are scaled</span>
+<span class="sd">        by `lambda_electrostatics`. The alchemical-chemical interactions will be linearly</span>
+<span class="sd">        scaled while the alchemical-alchemical interactions will be quadratically scaled.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            nonbonded_force: The force to modify.</span>
+<span class="sd">            alchemical_indices: The indices of the alchemical particles in the force.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumGlobalParameters</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;the non-bonded force should not already contain global parameters&quot;</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumParticleParameterOffsets</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumExceptionParameterOffsets</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;the non-bonded force should not already contain parameter offsets&quot;</span>
+
+        <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="n">alchemical_atom_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">alchemical_indices</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">charge</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getParticleParameters</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">setParticleParameters</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">charge</span> <span class="o">*</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">charge</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">elementary_charge</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">):</span>
+                <span class="c1"># We don&#39;t need to scale already zero charges</span>
+                <span class="k">continue</span>
+
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">addParticleParameterOffset</span><span class="p">(</span>
+                <span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getNumExceptions</span><span class="p">()):</span>
+
+            <span class="p">(</span>
+                <span class="n">index_a</span><span class="p">,</span>
+                <span class="n">index_b</span><span class="p">,</span>
+                <span class="n">charge_product</span><span class="p">,</span>
+                <span class="n">sigma</span><span class="p">,</span>
+                <span class="n">epsilon</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">getExceptionParameters</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">index_a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span>
+                <span class="ow">and</span> <span class="n">index_b</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span>
+                <span class="n">charge_product</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span>
+                    <span class="n">unit</span><span class="o">.</span><span class="n">elementary_charge</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">elementary_charge</span>
+                <span class="p">),</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="c1"># As above we don&#39;t need to scale already zero charge exceptions</span>
+                <span class="k">continue</span>
+
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="n">index_a</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span>
+                <span class="ow">and</span> <span class="n">index_b</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span>
+            <span class="p">),</span> <span class="s2">&quot;both atoms in an exception should be alchemically transformed&quot;</span>
+
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">setExceptionParameters</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">index_a</span><span class="p">,</span> <span class="n">index_b</span><span class="p">,</span> <span class="n">charge_product</span> <span class="o">*</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span>
+            <span class="p">)</span>
+            <span class="n">nonbonded_force</span><span class="o">.</span><span class="n">addExceptionParameterOffset</span><span class="p">(</span>
+                <span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">charge_product</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+            <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_add_lj_vdw_lambda</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">original_force</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">NonbondedForce</span><span class="p">,</span>
+        <span class="n">alchemical_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">persistent_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">custom_alchemical_potential</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Modifies a standard non-bonded force so that only the interactions between</span>
+<span class="sd">        persistent (chemical) particles and all intramolecular interactions (including</span>
+<span class="sd">        those in alchemical molecules) are retained, and splits out all intermolecular</span>
+<span class="sd">        alchemical (both chemical-alchemical and alchemical-alchemical) interactions</span>
+<span class="sd">        into a separate custom non-bonded force.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            * By default the custom non-bonded force will use a soft-core version of the</span>
+<span class="sd">              LJ potential with a-b-c of 1-1-6 and alpha=0.5 that can be scaled by a</span>
+<span class="sd">              global `lambda_sterics` parameter.</span>
+<span class="sd">            * All of the intramolecular vdW interactions of alchemical molecules</span>
+<span class="sd">              (excluding 1-2, 1-3 and 1-4 interactions) will be replaced with explicit</span>
+<span class="sd">              exceptions in a new custom bond force. This ensures that the decoupled</span>
+<span class="sd">              state truly corresponds to a set of alchemical molecules in vacuum with no</span>
+<span class="sd">              periodic effects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            original_force: The force to modify.</span>
+<span class="sd">            alchemical_indices: The indices of the alchemical particles in the force.</span>
+<span class="sd">            persistent_indices: The indices of the chemical particles in the force.</span>
+<span class="sd">            custom_alchemical_potential: A custom expression to use for the potential</span>
+<span class="sd">                energy function that describes the chemical-alchemical intermolecular</span>
+<span class="sd">                interactions. See the Notes for information about the default value.</span>
+
+<span class="sd">                The expression **must** include ``&quot;lambda_sterics&quot;``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A custom non-bonded force that contains all of the chemical-alchemical and</span>
+<span class="sd">            **intermolecular** alchemical-alchemical interactions, and a custom bond</span>
+<span class="sd">            force that contains the intermolecular interactions of the alchemical</span>
+<span class="sd">            molecules excluding any 1-2, 1-3, and 1-4 interactions which are still</span>
+<span class="sd">            handled by the original force.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">custom_nonbonded_template</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">setNonbondedMethod</span><span class="p">(</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">getNonbondedMethod</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getNonbondedMethod</span><span class="p">())</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+            <span class="k">else</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="o">.</span><span class="n">CutoffPeriodic</span>
+        <span class="p">)</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">setCutoffDistance</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getCutoffDistance</span><span class="p">())</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">setSwitchingDistance</span><span class="p">(</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">getSwitchingDistance</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">setUseSwitchingFunction</span><span class="p">(</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">getUseSwitchingFunction</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">setUseLongRangeCorrection</span><span class="p">(</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">getUseDispersionCorrection</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">)</span>
+        <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s2">&quot;epsilon&quot;</span><span class="p">)</span>
+
+        <span class="n">alchemical_atom_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">alchemical_indices</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">}</span>
+        <span class="n">persistent_atom_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">persistent_indices</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">}</span>
+
+        <span class="n">original_parameters</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getNumParticles</span><span class="p">()):</span>
+
+            <span class="n">charge</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="n">original_force</span><span class="o">.</span><span class="n">getParticleParameters</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+            <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">addParticle</span><span class="p">([</span><span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alchemical_atom_indices</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># The vdW intermolecular alchemical interactions will be handled in a custom</span>
+            <span class="c1"># nonbonded force below, while the intramolecular interactions will be</span>
+            <span class="c1"># converted to exceptions so we zero them out here.</span>
+            <span class="n">original_parameters</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">setParticleParameters</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getNumExceptions</span><span class="p">()):</span>
+
+            <span class="n">index_a</span><span class="p">,</span> <span class="n">index_b</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">original_force</span><span class="o">.</span><span class="n">getExceptionParameters</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="c1"># Let the exceptions be handled by the original force as we don&#39;t intend to</span>
+            <span class="c1"># annihilate those while switching off the intermolecular vdW interactions</span>
+            <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">addExclusion</span><span class="p">(</span><span class="n">index_a</span><span class="p">,</span> <span class="n">index_b</span><span class="p">)</span>
+
+        <span class="c1"># Make sure that each alchemical molecule interacts with each chemical molecule</span>
+        <span class="k">if</span> <span class="n">custom_alchemical_potential</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">custom_alchemical_potential</span> <span class="o">=</span> <span class="n">soft_core_lj_potential</span><span class="p">()</span> <span class="o">+</span> <span class="n">lorentz_berthelot</span><span class="p">()</span>
+
+        <span class="n">aa_na_custom_nonbonded_force</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">custom_nonbonded_template</span><span class="p">)</span>
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">setEnergyFunction</span><span class="p">(</span><span class="n">custom_alchemical_potential</span><span class="p">)</span>
+
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">(</span>
+            <span class="n">alchemical_atom_indices</span><span class="p">,</span> <span class="n">persistent_atom_indices</span>
+        <span class="p">)</span>
+        <span class="c1"># and each alchemical molecule so that things like ion pair interactions are</span>
+        <span class="c1"># disabled</span>
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">alchemical_indices</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">({</span><span class="o">*</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="p">{</span><span class="o">*</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+
+        <span class="c1"># Make sure that each alchemical molecule can also interact with themselves</span>
+        <span class="n">found_exclusions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getExceptionParameters</span><span class="p">(</span><span class="n">index</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_force</span><span class="o">.</span><span class="n">getNumExceptions</span><span class="p">())</span>
+        <span class="p">}</span>
+        <span class="n">intramolecular_exclusions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">atom_indices</span> <span class="ow">in</span> <span class="n">alchemical_indices</span>
+            <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">atom_indices</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pair</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found_exclusions</span>
+        <span class="p">}</span>
+
+        <span class="n">aa_aa_custom_bond_force</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">(</span><span class="n">lj_potential</span><span class="p">())</span>
+        <span class="n">aa_aa_custom_bond_force</span><span class="o">.</span><span class="n">addPerBondParameter</span><span class="p">(</span><span class="s2">&quot;epsilon&quot;</span><span class="p">)</span>
+        <span class="n">aa_aa_custom_bond_force</span><span class="o">.</span><span class="n">addPerBondParameter</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">intramolecular_exclusions</span><span class="p">:</span>
+
+            <span class="n">sigma_1</span><span class="p">,</span> <span class="n">epsilon_1</span> <span class="o">=</span> <span class="n">original_parameters</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">sigma_2</span><span class="p">,</span> <span class="n">epsilon_2</span> <span class="o">=</span> <span class="n">original_parameters</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+            <span class="n">aa_aa_custom_bond_force</span><span class="o">.</span><span class="n">addBond</span><span class="p">(</span>
+                <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">epsilon_1</span> <span class="o">*</span> <span class="n">epsilon_2</span><span class="p">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma_1</span> <span class="o">+</span> <span class="n">sigma_2</span><span class="p">)],</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">aa_na_custom_nonbonded_force</span><span class="p">,</span> <span class="n">aa_aa_custom_bond_force</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_add_custom_vdw_lambda</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">original_force</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">,</span>
+        <span class="n">alchemical_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">persistent_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">custom_alchemical_potential</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Modifies a custom non-bonded force so that only the interactions between</span>
+<span class="sd">        persistent (chemical) particles and all intramolecular interactions (including</span>
+<span class="sd">        those in alchemical molecules) are retained, and splits out all intermolecular</span>
+<span class="sd">        alchemical (both chemical-alchemical and alchemical-alchemical) interactions into</span>
+<span class="sd">        a separate custom non-bonded force.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            * By default the chemical-alchemical custom non-bonded force will use a</span>
+<span class="sd">              modified energy expression so that it can be linearly scaled by a global</span>
+<span class="sd">              `lambda_sterics` parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            original_force: The force to modify.</span>
+<span class="sd">            alchemical_indices: The indices of the alchemical particles in the force.</span>
+<span class="sd">            persistent_indices: The indices of the chemical particles in the force.</span>
+<span class="sd">            custom_alchemical_potential: A custom expression to use for the potential</span>
+<span class="sd">                energy function that describes the chemical-alchemical intermolecular</span>
+<span class="sd">                interactions. See the Notes for information about the default value.</span>
+
+<span class="sd">                The expression **must** include ``&quot;lambda_sterics&quot;``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A custom non-bonded forces that contain all of the chemical-alchemical and</span>
+<span class="sd">            intermolecular alchemical-alchemical interactions, and one containing all of</span>
+<span class="sd">            the intramolecular alchemical-alchemical interactions excluding any 1-2, 1-3</span>
+<span class="sd">            and 1-4 interactions which should be instead handled by an un-scaled custom</span>
+<span class="sd">            bond force.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">original_force</span><span class="o">.</span><span class="n">getNumInteractionGroups</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;the custom force should not contain any interaction groups&quot;</span>
+
+        <span class="n">custom_nonbonded_template</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">original_force</span><span class="p">)</span>
+
+        <span class="n">alchemical_atom_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">alchemical_indices</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">}</span>
+        <span class="n">persistent_atom_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">persistent_indices</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">}</span>
+
+        <span class="k">assert</span> <span class="n">alchemical_atom_indices</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">persistent_atom_indices</span><span class="p">)</span>
+
+        <span class="c1"># Modify the original force so it only targets the chemical-chemical interactions</span>
+        <span class="n">original_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">(</span>
+            <span class="n">persistent_atom_indices</span><span class="p">,</span> <span class="n">persistent_atom_indices</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Make sure that each alchemical molecule interacts with each chemical molecule,</span>
+        <span class="n">aa_na_custom_nonbonded_force</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">custom_nonbonded_template</span><span class="p">)</span>
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">custom_alchemical_potential</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">energy_expression</span> <span class="o">=</span> <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">getEnergyFunction</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+                <span class="s2">&quot;;&quot;</span>
+            <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">expression</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">energy_expression</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;=&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">expression</span><span class="p">:</span>
+                    <span class="n">energy_expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;lambda_sterics*(</span><span class="si">{</span><span class="n">expression</span><span class="si">}</span><span class="s2">)&quot;</span>
+                    <span class="k">break</span>
+
+            <span class="n">custom_alchemical_potential</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">energy_expression</span><span class="p">)</span>
+
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">setEnergyFunction</span><span class="p">(</span><span class="n">custom_alchemical_potential</span><span class="p">)</span>
+
+        <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">(</span>
+            <span class="n">alchemical_atom_indices</span><span class="p">,</span> <span class="n">persistent_atom_indices</span>
+        <span class="p">)</span>
+        <span class="c1"># and each alchemical molecule so that things ion pairs interactions are disabled</span>
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">alchemical_indices</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">aa_na_custom_nonbonded_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">({</span><span class="o">*</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="p">{</span><span class="o">*</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+
+        <span class="c1"># Make sure that each alchemical molecule can also interact with themselves</span>
+        <span class="c1"># excluding any 1-2, 1-3, and 1-4 interactions</span>
+        <span class="n">aa_aa_custom_nonbonded_force</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">custom_nonbonded_template</span><span class="p">)</span>
+        <span class="n">aa_aa_custom_nonbonded_force</span><span class="o">.</span><span class="n">setNonbondedMethod</span><span class="p">(</span>
+            <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="o">.</span><span class="n">NoCutoff</span>
+            <span class="k">if</span> <span class="n">custom_nonbonded_template</span><span class="o">.</span><span class="n">getNonbondedMethod</span><span class="p">()</span>
+            <span class="o">==</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="o">.</span><span class="n">NoCutoff</span>
+            <span class="k">else</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="o">.</span><span class="n">CutoffNonPeriodic</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">atom_indices</span> <span class="ow">in</span> <span class="n">alchemical_indices</span><span class="p">:</span>
+            <span class="n">aa_aa_custom_nonbonded_force</span><span class="o">.</span><span class="n">addInteractionGroup</span><span class="p">(</span><span class="n">atom_indices</span><span class="p">,</span> <span class="n">atom_indices</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">aa_na_custom_nonbonded_force</span><span class="p">,</span> <span class="n">aa_aa_custom_nonbonded_force</span>
+
+<div class="viewcode-block" id="OpenMMAlchemicalFactory.generate"><a class="viewcode-back" href="../../../api/absolv.factories.alchemical.OpenMMAlchemicalFactory.html#absolv.factories.alchemical.OpenMMAlchemicalFactory.generate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span>
+        <span class="n">alchemical_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">persistent_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">custom_alchemical_potential</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Generate a system whereby a number of the molecules can be alchemically</span>
+<span class="sd">        transformed from a base chemical system.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            * By default a soft-core version of the LJ potential with a-b-c of 1-1-6</span>
+<span class="sd">              and alpha=0.5 that can be scaled by a global `lambda_sterics` parameter</span>
+<span class="sd">              will be used for alchemical-chemical vdW interactions embedded in an</span>
+<span class="sd">              OpenMM ``NonbondedForce`` while the energy expression set on a</span>
+<span class="sd">              ``CustomNonbondedForce`` will be be modified to have the form</span>
+<span class="sd">              ``&quot;lambda_sterics*({original_expression})&quot;``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            system: The chemical system to generate the alchemical system from</span>
+<span class="sd">            alchemical_indices: The atom indices corresponding to each molecule that</span>
+<span class="sd">                should be alchemically transformable. The atom indices **must**</span>
+<span class="sd">                correspond to  **all** atoms in each molecule as alchemically</span>
+<span class="sd">                transforming part of a molecule is not supported.</span>
+<span class="sd">            persistent_indices: The atom indices corresponding to each molecule that</span>
+<span class="sd">                should **not** be alchemically transformable.</span>
+<span class="sd">            custom_alchemical_potential: A custom expression to use for the potential</span>
+<span class="sd">                energy function that describes the chemical-alchemical intermolecular</span>
+<span class="sd">                interactions. See the Notes for information about the default value.</span>
+
+<span class="sd">                The expression **must** include ``&quot;lambda_sterics&quot;``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">system</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+
+        <span class="c1"># Make sure we track v-sites attached to any solutes that may be alchemically</span>
+        <span class="c1"># turned off. We do this as a post-process step as the OpenFF toolkit does not</span>
+        <span class="c1"># currently expose a clean way to access this information.</span>
+        <span class="n">atom_indices</span> <span class="o">=</span> <span class="n">alchemical_indices</span> <span class="o">+</span> <span class="n">persistent_indices</span>
+        <span class="n">atom_indices</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_find_v_sites</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">atom_indices</span><span class="p">)</span>
+
+        <span class="n">alchemical_indices</span> <span class="o">=</span> <span class="n">atom_indices</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">alchemical_indices</span><span class="p">)]</span>
+        <span class="n">persistent_indices</span> <span class="o">=</span> <span class="n">atom_indices</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">alchemical_indices</span><span class="p">)</span> <span class="p">:]</span>
+
+        <span class="p">(</span>
+            <span class="n">nonbonded_force</span><span class="p">,</span>
+            <span class="n">custom_nonbonded_force</span><span class="p">,</span>
+            <span class="n">custom_bond_force</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_find_nonbonded_forces</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nonbonded_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_add_electrostatics_lambda</span><span class="p">(</span><span class="n">nonbonded_force</span><span class="p">,</span> <span class="n">alchemical_indices</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">custom_nonbonded_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">alchemical_force</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_add_custom_vdw_lambda</span><span class="p">(</span>
+                <span class="n">custom_nonbonded_force</span><span class="p">,</span>
+                <span class="n">alchemical_indices</span><span class="p">,</span>
+                <span class="n">persistent_indices</span><span class="p">,</span>
+                <span class="n">custom_alchemical_potential</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="n">system</span><span class="o">.</span><span class="n">addForce</span><span class="p">(</span><span class="n">alchemical_force</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">nonbonded_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">alchemical_force</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_add_lj_vdw_lambda</span><span class="p">(</span>
+                <span class="n">nonbonded_force</span><span class="p">,</span>
+                <span class="n">alchemical_indices</span><span class="p">,</span>
+                <span class="n">persistent_indices</span><span class="p">,</span>
+                <span class="n">custom_alchemical_potential</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="n">system</span><span class="o">.</span><span class="n">addForce</span><span class="p">(</span><span class="n">alchemical_force</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">return</span> <span class="n">system</span></div></div>
+</pre></div>
+
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../_static/javascripts/bundle.270123a5.min.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
+</html>
