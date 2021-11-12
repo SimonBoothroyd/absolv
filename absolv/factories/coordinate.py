@@ -38,7 +38,7 @@ class PACKMOLCoordinateFactory:
                 to create.
             target_density: Target mass density for final system with units compatible
                 with g / mL.
-                 If `None`, `box_size` must be provided.
+                If ``None``, ``box_size`` must be provided.
              scale_factor: The amount to scale the box size by.
 
         Returns:
@@ -126,7 +126,7 @@ class PACKMOLCoordinateFactory:
                 to create.
             target_density: Target mass density for final system with units compatible
                 with g / mL.
-                 If `None`, `box_size` must be provided.
+                If ``None``, ``box_size`` must be provided.
             tolerance: The minimum spacing between molecules during packing in units
                  compatible with angstroms.
 

@@ -1,0 +1,35 @@
+{{ objname | escape | underline}}
+
+.. currentmodule:: {{ module }}
+
+.. autoclass:: {{ objname }}
+
+   {% block attributes %}
+   {% if attributes %}
+   .. rubric:: {{ _('Attributes') }}
+
+   .. autosummary::
+      :toctree:
+   {% for item in attributes %}
+      ~{{ name }}.{{ item }}
+   {%- endfor %}
+   {% endif %}
+   {% endblock %}
+
+   {% block methods %}
+
+   {% if methods %}
+   .. rubric:: {{ _('Methods') }}
+
+   .. autosummary::
+      :nosignatures:
+   {% for item in methods %}
+      ~{{ name }}.{{ item }}
+   {%- endfor %}
+
+   {% for item in methods %}
+   .. automethod:: {{ item }}
+   {% endfor %}
+
+   {% endif %}
+   {% endblock %}
