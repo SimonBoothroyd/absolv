@@ -14,21 +14,19 @@ sys.path.insert(0, os.path.abspath(os.pardir))
 
 # -- Project information -----------------------------------------------------
 
-project = "ABSOLV"
+project = "AbSolv"
 copyright = "2021, Simon Boothroyd"
 author = "Simon Boothroyd"
 
-# The short X.Y version
-version = ""
-# The full version, including alpha/beta/rc tags
 release = ""
 
+language = "en"
 
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-    "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
@@ -38,30 +36,21 @@ extensions = [
     "nbsphinx_link",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.autodoc_pydantic",
+    "sphinx_immaterial"
 ]
-
-source_suffix = ".rst"
-
-master_doc = "index"
-
-language = "en"
 
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-# The name of the Pygments (syntax highlighting) style to use.
-# pygments_style = 'default'
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
+default_role = "any"
 
 # Autodoc settings
 autosummary_generate = True
 autosummary_imported_members = False
 autosummary_ignore___all__ = False
-autosummary_context = {
-    "exclude_modules": ["absolv.tests"],
-}
-
-autodoc_default_options = {
-    "member-order": "bysource",
-}
+autosummary_context = {"exclude_modules": ["absolv.tests"]}
+autodoc_default_options = {"member-order": "bysource",}
 autodoc_mock_imports = ["openff", "mdtraj"]
 autodoc_typehints = "description"
 
@@ -108,11 +97,20 @@ mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
 
 # -- Options for HTML output -------------------------------------------------
 
+html_static_path = ["_static"]
+
+html_context = {
+    "css_files": [
+        "_static/overrides.css",
+    ]
+}
+
+# -- HTML theme settings ------------------------------------------------
+
+html_title = "AbSolv"
 html_theme = "sphinx_immaterial"
 
 html_theme_options = {
-    # 'logo_svg':
-    #     'logo.svg',
     "site_url": "https://github.com/SimonBoothroyd/absolv/",
     "repo_url": "https://github.com/SimonBoothroyd/absolv/",
     "repo_name": "SimonBoothroyd/absolv",
@@ -138,66 +136,13 @@ html_theme_options = {
             "accent": "light blue",
         },
     ],
+    # "version_dropdown": True,
+    # "version_json": "versions.json",
 }
 
-html_show_sourcelink = False
-html_copy_source = False
+html_last_updated_fmt = ""
+html_use_index = True
+html_domain_indices = True
 
-# Skip unnecessary footer text.
 html_show_sphinx = False
 html_show_copyright = False
-
-html_static_path = ["_static"]
-
-html_context = {
-    "css_files": [
-        "_static/basic.css",
-        "_static/overrides.css",
-        "_static/api.css",
-    ]
-}
-
-# -- Options for HTMLHelp output ---------------------------------------------
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = "absolvdoc"
-
-# -- Options for LaTeX output ------------------------------------------------
-
-latex_elements = {
-    "papersize": "letterpaper",
-    "pointsize": "10pt",
-    "preamble": "",
-    "figure_align": "htbp",
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, "absolv.tex", "ABSOLV Documentation", author, "manual"),
-]
-
-
-# -- Options for manual page output ------------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "absolv", "ABSOLV Documentation", [author], 1)]
-
-# -- Options for Texinfo output ----------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    (
-        master_doc,
-        "absolv",
-        "ABSOLV Documentation",
-        author,
-        "absolv",
-        "Absolute solvation free energy calculations with OpenFF and OpenMM",
-        "Miscellaneous",
-    ),
-]
