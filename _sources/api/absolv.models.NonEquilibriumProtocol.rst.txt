@@ -1,0 +1,6 @@
+NonEquilibriumProtocol
+======================
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: NonEquilibriumProtocol

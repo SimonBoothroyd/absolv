@@ -1,0 +1,6 @@
+State
+=====
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: State

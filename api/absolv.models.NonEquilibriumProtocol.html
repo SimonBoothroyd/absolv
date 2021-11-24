@@ -14,7 +14,7 @@
     
     
       
-        <title>NonEquilibriumProtocol - ABSOLV  documentation</title>
+        <title>NonEquilibriumProtocol - AbSolv</title>
       
     
     
@@ -35,9 +35,7 @@
       
     
     
-        <link rel="stylesheet" href="../_static/basic.css">
         <link rel="stylesheet" href="../_static/overrides.css">
-        <link rel="stylesheet" href="../_static/api.css">
     
       
 
@@ -78,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -90,7 +88,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ABSOLV  documentation
+            AbSolv
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -185,12 +183,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
     </a>
-    ABSOLV  documentation
+    AbSolv
   </label>
   
     <div class="md-nav__source">
@@ -779,11 +777,10 @@
               
                 
                 
-  <section id="nonequilibriumprotocol">
-<h1>NonEquilibriumProtocol<a class="headerlink" href="#nonequilibriumprotocol" title="Permalink to this headline">¶</a></h1>
-<dl class="py pydantic_model">
+  <h1 id="nonequilibriumprotocol">NonEquilibriumProtocol<a class="headerlink" href="#nonequilibriumprotocol" title="Permalink to this headline">¶</a></h1>
+<dl class="py pydantic_model objdesc">
 <dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">absolv.models.</span></span><span class="sig-name descname"><span class="pre">NonEquilibriumProtocol</span></span><a class="reference internal" href="../_modules/absolv/models.html#NonEquilibriumProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">absolv.models.</span></span><span class="sig-name descname"><span class="pre">NonEquilibriumProtocol</span></span><a class="reference internal" href="../_modules/absolv/models.html#NonEquilibriumProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>A model that encodes the protocol for performing a non-equilibrium switching
 like alchemical free energy calculation [1, 2].</p>
 <p>It is expected that first the electrostatics interactions will be annihilated
@@ -798,7 +795,7 @@ overlap.” The Journal of chemical physics 136.19 (2012): 194101.</p>
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><code><span class="p">{</span>
    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;NonEquilibriumProtocol&quot;</span><span class="p">,</span>
    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A model that encodes the protocol for performing a non-equilibrium switching\nlike alchemical free energy calculation [1, 2].\n\nIt is expected that first the electrostatics interactions will be annihilated\nfollowed by a decoupling of the sterics interactions.\n\nReferences:\n    [1] Ballard, Andrew J., and Christopher Jarzynski. \&quot;Replica exchange with\n        nonequilibrium switches: Enhancing equilibrium sampling by increasing replica\n        overlap.\&quot; The Journal of chemical physics 136.19 (2012): 194101.\n\n    [2] Gapsys, Vytautas, et al. \&quot;Large scale relative protein ligand binding\n        affinities using non-equilibrium alchemy.\&quot; Chemical Science 11.4 (2020):\n        1140-1152.&quot;</span><span class="p">,</span>
    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -979,7 +976,7 @@ overlap.” The Journal of chemical physics 136.19 (2012): 194101.</p>
       <span class="p">}</span>
    <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </div>
 </details></p><dl class="field-list simple">
 <dt class="field-odd">Fields</dt>
@@ -992,41 +989,51 @@ overlap.” The Journal of chemical physics 136.19 (2012): 194101.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py pydantic_field">
+<dl class="py pydantic_field objdesc">
 <dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol.type">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">type</span></span><span class="p"> <span class="pre">:</span> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><s><span class="pre">'non-equilibrium'</span></s><span class="p"><span class="pre">]</span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;non-equilibrium&#39;</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><s><span class="pre">'non-equilibrium'</span></s><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;non-equilibrium&#39;</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol.minimization_protocol">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">minimization_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.MinimizationProtocol.html#absolv.models.MinimizationProtocol" title="absolv.models.MinimizationProtocol"><span class="pre">absolv.models.MinimizationProtocol</span></a><span class="p"><span class="pre">]</span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">MinimizationProtocol</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.minimization_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py pydantic_field objdesc">
+<dt class="sig sig-object py sig-wrap" id="absolv.models.NonEquilibriumProtocol.minimization_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimization_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.MinimizationProtocol.html#absolv.models.MinimizationProtocol" title="absolv.models.MinimizationProtocol"><span class="pre">absolv.models.MinimizationProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">MinimizationProtocol</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.minimization_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The (optional) protocol to follow when minimizing the system in both the end states prior to running the equilibrium simulations.</p>
 </dd></dl>
 
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol.equilibration_protocol">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">equilibration_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a><span class="p"><span class="pre">]</span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.equilibration_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py pydantic_field objdesc">
+<dt class="sig sig-object py sig-wrap" id="absolv.models.NonEquilibriumProtocol.equilibration_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equilibration_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.equilibration_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The (optional) protocol to follow when equilibrating the system in both the end states prior to running the production equilibrium simulations.</p>
 </dd></dl>
 
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol.production_protocol">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">production_protocol</span></span><span class="p"> <span class="pre">:</span> </span><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.production_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py pydantic_field objdesc">
+<dt class="sig sig-object py sig-wrap" id="absolv.models.NonEquilibriumProtocol.production_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">production_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.production_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol to follow when running the production equilibrium simulation in both the end states. The snapshots generated at the end of each iteration will be used for each non-equilibrium switch.</p>
 </dd></dl>
 
-<dl class="py pydantic_field">
+<dl class="py pydantic_field objdesc">
 <dt class="sig sig-object py" id="absolv.models.NonEquilibriumProtocol.switching_protocol">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">switching_protocol</span></span><span class="p"> <span class="pre">:</span> </span><a class="reference internal" href="absolv.models.SwitchingProtocol.html#absolv.models.SwitchingProtocol" title="absolv.models.SwitchingProtocol"><span class="pre">absolv.models.SwitchingProtocol</span></a><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.switching_protocol" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">switching_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference internal" href="absolv.models.SwitchingProtocol.html#absolv.models.SwitchingProtocol" title="absolv.models.SwitchingProtocol"><span class="pre">absolv.models.SwitchingProtocol</span></a></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.NonEquilibriumProtocol.switching_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol that describes how each snapshot generated during the production simulation should be driven from state 0 -&gt; 1 and likewise 1 -&gt; 0 in order to compute the non-equilibrium work distributions.</p>
 </dd></dl>
 
 </dd></dl>
 
-</section>
 
 
                 
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: Nov 24, 2021
+    
+  </small>
+</div>
                   
                 
               
@@ -1097,11 +1104,8 @@ overlap.” The Journal of chemical physics 136.19 (2012): 194101.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
     
-      <script src="../_static/javascripts/bundle.270123a5.min.js"></script>
+      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
   </body>

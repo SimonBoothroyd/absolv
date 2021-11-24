@@ -1,0 +1,30 @@
+NonEquilibriumOpenMMSimulation
+==============================
+
+.. currentmodule:: absolv.simulations
+
+.. autoclass:: NonEquilibriumOpenMMSimulation
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NonEquilibriumOpenMMSimulation.__init__
+      ~NonEquilibriumOpenMMSimulation.run
+
+   
+   .. automethod:: __init__
+   
+   .. automethod:: run
+   
+
+   
+   

@@ -1,0 +1,30 @@
+PACKMOLCoordinateFactory
+========================
+
+.. currentmodule:: absolv.factories.coordinate
+
+.. autoclass:: PACKMOLCoordinateFactory
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PACKMOLCoordinateFactory.__init__
+      ~PACKMOLCoordinateFactory.generate
+
+   
+   .. automethod:: __init__
+   
+   .. automethod:: generate
+   
+
+   
+   

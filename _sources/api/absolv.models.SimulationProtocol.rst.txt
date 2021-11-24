@@ -1,0 +1,6 @@
+SimulationProtocol
+==================
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: SimulationProtocol

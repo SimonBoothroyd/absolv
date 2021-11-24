@@ -1,0 +1,30 @@
+EquilibriumOpenMMSimulation
+===========================
+
+.. currentmodule:: absolv.simulations
+
+.. autoclass:: EquilibriumOpenMMSimulation
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~EquilibriumOpenMMSimulation.__init__
+      ~EquilibriumOpenMMSimulation.run
+
+   
+   .. automethod:: __init__
+   
+   .. automethod:: run
+   
+
+   
+   

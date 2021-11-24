@@ -1,0 +1,6 @@
+minimize
+========
+
+.. currentmodule:: absolv.utilities.openmm
+
+.. autofunction:: minimize

@@ -1,0 +1,6 @@
+float\_validator
+================
+
+.. currentmodule:: absolv.models
+
+.. autofunction:: float_validator

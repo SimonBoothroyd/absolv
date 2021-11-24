@@ -14,7 +14,7 @@
     
     
       
-        <title>Non-Equilibrium Calculations - ABSOLV  documentation</title>
+        <title>Non-Equilibrium Calculations - AbSolv</title>
       
     
     
@@ -35,9 +35,7 @@
       
     
     
-        <link rel="stylesheet" href="../_static/basic.css">
         <link rel="stylesheet" href="../_static/overrides.css">
-        <link rel="stylesheet" href="../_static/api.css">
     
       
 
@@ -78,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -90,7 +88,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ABSOLV  documentation
+            AbSolv
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -185,12 +183,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
     </a>
-    ABSOLV  documentation
+    AbSolv
   </label>
   
     <div class="md-nav__source">
@@ -471,8 +469,7 @@
               
                 
                 
-  <section id="non-equilibrium-calculations">
-<h1>Non-Equilibrium Calculations<a class="headerlink" href="#non-equilibrium-calculations" title="Permalink to this headline">¶</a></h1>
+  <h1 id="non-equilibrium-calculations">Non-Equilibrium Calculations<a class="headerlink" href="#non-equilibrium-calculations" title="Permalink to this headline">¶</a></h1>
 <p>To begin with we define a schema that will, for all intents and purposes, encode the entirety of the absolute free
 energy calculation that we will be running.</p>
 <p>In particular, we must specify:</p>
@@ -482,7 +479,7 @@ energy calculation that we will be running.</p>
 <li><p>and finally, the type of free energy calculation to perform as well as the protocol to follow while perform it</p></li>
 </ol>
 <p>This can be compactly done by creating a new <code class="docutils literal notranslate"><span class="pre">TransferFreeEnergySchema</span></code> object:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
 
 <span class="kn">from</span> <span class="nn">absolv.models</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">NonEquilibriumProtocol</span><span class="p">,</span>
@@ -528,7 +525,7 @@ energy calculation that we will be running.</p>
         <span class="p">)</span>
     <span class="p">)</span>
 <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>Here we have specified that we will be computing the solvation free energy of one ethanol molecule in
 895 water molecules at a temperature and pressure of 298.15 K and 1 atm.</p>
@@ -536,29 +533,37 @@ energy calculation that we will be running.</p>
 6250 timesteps (12.5 ps), yielding 160 configurations, and for each of these configurations perform the non-equilibrium
 switching simulations over the coarse of 50 ps.</p>
 <p>We can then trivially set up,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openff.toolkit.typing.engines.smirnoff</span> <span class="kn">import</span> <span class="n">ForceField</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">openff.toolkit.typing.engines.smirnoff</span> <span class="kn">import</span> <span class="n">ForceField</span>
 <span class="n">force_field</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">(</span><span class="s2">&quot;openff-2.0.0.offxml&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">absolv.runners.equilibrium</span> <span class="kn">import</span> <span class="n">NonEquilibriumRunner</span>
 <span class="n">NonEquilibriumRunner</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">force_field</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>run,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">NonEquilibriumRunner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s2">&quot;CUDA&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">NonEquilibriumRunner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s2">&quot;CUDA&quot;</span><span class="p">)</span>
+</code></pre></div>
 </div>
 <p>and analyze the calculations</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">NonEquilibriumRunner</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">NonEquilibriumRunner</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </div>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="id1"></span></section>
-</section>
-
+<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="id1"></span>
 
                 
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: Nov 24, 2021
+    
+  </small>
+</div>
                   
                 
               
@@ -629,11 +634,8 @@ switching simulations over the coarse of 50 ps.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
     
-      <script src="../_static/javascripts/bundle.270123a5.min.js"></script>
+      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
   </body>

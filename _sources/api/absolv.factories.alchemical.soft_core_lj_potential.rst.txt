@@ -1,0 +1,6 @@
+soft\_core\_lj\_potential
+=========================
+
+.. currentmodule:: absolv.factories.alchemical
+
+.. autofunction:: soft_core_lj_potential

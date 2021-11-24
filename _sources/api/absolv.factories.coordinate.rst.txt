@@ -1,0 +1,36 @@
+coordinate
+==========
+
+.. automodule:: absolv.factories.coordinate
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      PACKMOLCoordinateFactory
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+      :nosignatures:
+   
+      PACKMOLRuntimeError
+   
+   

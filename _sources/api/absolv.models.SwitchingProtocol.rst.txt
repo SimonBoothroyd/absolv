@@ -1,0 +1,6 @@
+SwitchingProtocol
+=================
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: SwitchingProtocol

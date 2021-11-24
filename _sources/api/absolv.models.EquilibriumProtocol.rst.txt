@@ -1,0 +1,6 @@
+EquilibriumProtocol
+===================
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: EquilibriumProtocol

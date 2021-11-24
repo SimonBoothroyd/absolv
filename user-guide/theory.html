@@ -14,7 +14,7 @@
     
     
       
-        <title>Theory - ABSOLV  documentation</title>
+        <title>Theory - AbSolv</title>
       
     
     
@@ -35,9 +35,7 @@
       
     
     
-        <link rel="stylesheet" href="../_static/basic.css">
         <link rel="stylesheet" href="../_static/overrides.css">
-        <link rel="stylesheet" href="../_static/api.css">
     
       
 
@@ -78,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -90,7 +88,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ABSOLV  documentation
+            AbSolv
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -185,12 +183,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
     </a>
-    ABSOLV  documentation
+    AbSolv
   </label>
   
     <div class="md-nav__source">
@@ -499,8 +497,7 @@
               
                 
                 
-  <section id="theory">
-<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h1>
+  <h1 id="theory">Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h1>
 <p>The change in free energy of transferring a solute from one solvent to another <span class="math notranslate nohighlight">\(\Delta G_{A-&gt;B}\)</span>, can be readily
 computed by constructing a thermodynamic cycle in which the solute in each solvent is alchemically transformed into a
 non-interacting state as shown below:</p>
@@ -521,20 +518,17 @@ transformed, a more commonly used ‘equilibrium route’ and a ‘non-equilibri
 <p>For more information about how the different inter- and intramolecular interactions are alchemically modified see the
 <a class="reference internal" href="transformations.html"><span class="doc">Alchemical Transformations</span></a> page.</p>
 </div>
-<section id="equilibrium-calculations">
-<h2>Equilibrium Calculations<a class="headerlink" href="#equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
+<h2 id="equilibrium-calculations">Equilibrium Calculations<a class="headerlink" href="#equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
 <p>Within this framework we refer to free energy calculations that involve dividing the alchemical pathway into discrete
 windows at each value of the coupling parameter <span class="math notranslate nohighlight">\(\lambda\)</span>, collecting equilibrium samples for each such discrete
 state, and using these samples to compute the free energy as ‘equilibrium’ free energy calculations using an approach
 such as thermodynamic integration (TI) <span id="id1">[<a class="reference internal" href="#id6" title="TP Straatsma and JA McCammon. Computational alchemy. Annual Review of Physical Chemistry, 43(1):407–435, 1992.">1</a>]</span>, BAR <span id="id2">[<a class="reference internal" href="#id7" title="Charles H Bennett. Efficient estimation of free energy differences from monte carlo data. Journal of Computational Physics, 22(2):245–268, 1976.">2</a>]</span>, and MBAR
 <span id="id3">[<a class="reference internal" href="#id8" title="Michael R Shirts and John D Chodera. Statistically optimal analysis of samples from multiple equilibrium states. The Journal of chemical physics, 129(12):124105, 2008.">3</a>]</span>.</p>
-<p>At present <cite>absolv</cite> does not offer functionality for computing the derivatives with respect to lambda required for TI,
+<p>At present <a class="reference internal" href="../api/absolv.html#module-absolv" title="absolv"><code class="xref any py py-mod docutils literal notranslate"><span class="pre">absolv</span></code></a> does not offer functionality for computing the derivatives with respect to lambda required for TI,
 and only supports MBAR and technically BAR although this estimator is not recommended.</p>
 <p>See the <a class="reference internal" href="../examples/equilibrium.html"><span class="doc">Equilibrium Calculations</span></a> example for more information on running equilibrium free energy calculations
-using <cite>absolv</cite>.</p>
-</section>
-<section id="non-equilibrium-calculations">
-<h2>Non-equilibrium Calculations<a class="headerlink" href="#non-equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
+using <a class="reference internal" href="../api/absolv.html#module-absolv" title="absolv"><code class="xref any py py-mod docutils literal notranslate"><span class="pre">absolv</span></code></a>.</p>
+<h2 id="non-equilibrium-calculations">Non-equilibrium Calculations<a class="headerlink" href="#non-equilibrium-calculations" title="Permalink to this headline">¶</a></h2>
 <p>Within this framework we refer to free energy calculations that proceed by generating equilibrium configurations at both
 end states (with the solute fully interacting with the solute and with the solute-solvent interactions fully decoupled /
 annihilated), and then driving each configuration non-reverisbly along the alchemical pathway by scaling the coupling
@@ -559,9 +553,7 @@ non-interacting to the interacting state can be computed according to</p>
 the non-interacting state and <span class="math notranslate nohighlight">\(W^r_i\)</span> to work computed along the reverse pathway going from the non-interacting to
 the interacting state. <span class="math notranslate nohighlight">\(N\)</span> refers to the total number of equilibrium snapshots that were generated at each end
 state.</p>
-</section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p id="id5"><dl class="citation">
 <dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>TP Straatsma and JA McCammon. Computational alchemy. <em>Annual Review of Physical Chemistry</em>, 43(1):407–435, 1992.</p>
@@ -580,11 +572,20 @@ state.</p>
 </dd>
 </dl>
 </p>
-</section>
-</section>
 
 
                 
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: Nov 24, 2021
+    
+  </small>
+</div>
                   
                 
               
@@ -655,11 +656,8 @@ state.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
     
-      <script src="../_static/javascripts/bundle.270123a5.min.js"></script>
+      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

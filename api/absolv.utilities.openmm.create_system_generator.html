@@ -14,7 +14,7 @@
     
     
       
-        <title>create_system_generator - ABSOLV  documentation</title>
+        <title>create_system_generator - AbSolv</title>
       
     
     
@@ -35,9 +35,7 @@
       
     
     
-        <link rel="stylesheet" href="../_static/basic.css">
         <link rel="stylesheet" href="../_static/overrides.css">
-        <link rel="stylesheet" href="../_static/api.css">
     
       
 
@@ -78,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-header__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -90,7 +88,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ABSOLV  documentation
+            AbSolv
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -185,12 +183,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="ABSOLV  documentation" class="md-nav__button md-logo" aria-label="ABSOLV  documentation" data-md-component="logo">
+    <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
     </a>
-    ABSOLV  documentation
+    AbSolv
   </label>
   
     <div class="md-nav__source">
@@ -702,33 +700,32 @@
               
                 
                 
-  <section id="create-system-generator">
-<h1>create_system_generator<a class="headerlink" href="#create-system-generator" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="absolv.utilities.openmm.create_system_generator">
+  <h1 id="create-system-generator">create_system_generator<a class="headerlink" href="#create-system-generator" title="Permalink to this headline">¶</a></h1>
+<dl class="py function objdesc">
+<dt class="sig sig-object py sig-wrap" id="absolv.utilities.openmm.create_system_generator">
 <span class="sig-prename descclassname"><span class="pre">absolv.utilities.openmm.</span></span><span class="sig-name descname"><span class="pre">create_system_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solvent_a_nonbonded_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solvent_b_nonbonded_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonbonded_cutoff</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="n">Quantity</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">nanometer</span><span class="p">)</span></code></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, <em class="sig-param"><span class="n"><span class="pre">rigid_water</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, <em class="sig-param"><span class="n"><span class="pre">remove_cmm_motion</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, <em class="sig-param"><span class="n"><span class="pre">hydrogen_mass</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, <em class="sig-param"><span class="n"><span class="pre">switch_distance</span></span><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/utilities/openmm.html#create_system_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.utilities.openmm.create_system_generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a ‘system generator’ that can be used when setting up an alchemical
 free energy calculation from an OpenMM force field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="api-field simple">
-<dt><span class="sig-name descname">force_field</span><span class="p"> : </span><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.app.forcefield.ForceField.html#openmm.app.forcefield.ForceField" title="(in OpenMM Python API v7.6.0)">openmm.app.forcefield.ForceField</a></dt><dd><p>The OpenMM force field to parameterize the topology using.</p>
+<dt><span class="sig-name descname">force_field</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.app.forcefield.ForceField.html#openmm.app.forcefield.ForceField" title="(in OpenMM Python API v7.6.0)">openmm.app.forcefield.ForceField</a></span></span></dt><dd><p>The OpenMM force field to parameterize the topology using.</p>
 </dd>
-<dt><span class="sig-name descname">solvent_a_nonbonded_method</span><span class="p"> : </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></dt><dd><p>The non-bonded method to use in solvent a.</p>
+<dt><span class="sig-name descname">solvent_a_nonbonded_method</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p>The non-bonded method to use in solvent a.</p>
 </dd>
-<dt><span class="sig-name descname">solvent_b_nonbonded_method</span><span class="p"> : </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></dt><dd><p>The non-bonded method to use in solvent b.</p>
+<dt><span class="sig-name descname">solvent_b_nonbonded_method</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p>The non-bonded method to use in solvent b.</p>
 </dd>
-<dt><span class="sig-name descname">nonbonded_cutoff</span><span class="p"> : </span><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a></dt><dd><p>The non-bonded cutoff to use.</p>
+<dt><span class="sig-name descname">nonbonded_cutoff</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a></span></span></dt><dd><p>The non-bonded cutoff to use.</p>
 </dd>
-<dt><span class="sig-name descname">constraints</span><span class="p"> : </span>Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</dt><dd><p>The type of constraints to apply to the system.</p>
+<dt><span class="sig-name descname">constraints</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</span></span></dt><dd><p>The type of constraints to apply to the system.</p>
 </dd>
-<dt><span class="sig-name descname">rigid_water</span><span class="p"> : </span>Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a>]</dt><dd><p>Whether to force rigid water.</p>
+<dt><span class="sig-name descname">rigid_water</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a>]</span></span></dt><dd><p>Whether to force rigid water.</p>
 </dd>
-<dt><span class="sig-name descname">remove_cmm_motion</span><span class="p"> : </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></dt><dd><p>Whether to remove any CMM motion.</p>
+<dt><span class="sig-name descname">remove_cmm_motion</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></span></span></dt><dd><p>Whether to remove any CMM motion.</p>
 </dd>
-<dt><span class="sig-name descname">hydrogen_mass</span><span class="p"> : </span>Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</dt><dd><p>The mass to use for hydrogens.</p>
+<dt><span class="sig-name descname">hydrogen_mass</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The mass to use for hydrogens.</p>
 </dd>
-<dt><span class="sig-name descname">switch_distance</span><span class="p"> : </span>Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</dt><dd><p>The switch distance to use.</p>
+<dt><span class="sig-name descname">switch_distance</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The switch distance to use.</p>
 </dd>
 </dl>
 </dd>
@@ -738,15 +735,25 @@ name of the solvent (i.e. <code class="docutils literal notranslate"><span class
 be used for.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Callable[[<a class="reference external" href="https://open-forcefield-toolkit.readthedocs.io/en/latest/api/generated/openff.toolkit.topology.Topology.html#openff.toolkit.topology.Topology" title="(in OpenFF Toolkit v0.10.1+8.g3681e136.dirty)">openff.toolkit.topology.Topology</a>, <a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>, Literal[‘solvent-a’, ‘solvent-b’]], openmm.openmm.System]</p>
+<dd class="field-odd"><p>Callable[[<a class="reference external" href="https://open-forcefield-toolkit.readthedocs.io/en/latest/api/generated/openff.toolkit.topology.Topology.html#openff.toolkit.topology.Topology" title="(in OpenFF Toolkit v0.10.1+16.g04cd6909.dirty)">openff.toolkit.topology.Topology</a>, <a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>, Literal[‘solvent-a’, ‘solvent-b’]], openmm.openmm.System]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</section>
 
 
                 
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: Nov 24, 2021
+    
+  </small>
+</div>
                   
                 
               
@@ -817,11 +824,8 @@ be used for.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
     
-      <script src="../_static/javascripts/bundle.270123a5.min.js"></script>
+      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
   </body>

@@ -1,0 +1,6 @@
+TransferFreeEnergyResult
+========================
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: TransferFreeEnergyResult

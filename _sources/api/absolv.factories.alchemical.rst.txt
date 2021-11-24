@@ -1,0 +1,41 @@
+alchemical
+==========
+
+.. automodule:: absolv.factories.alchemical
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      OpenMMAlchemicalFactory
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :nosignatures:
+      :toctree:
+
+   
+      lj_potential
+      lorentz_berthelot
+      soft_core_lj_potential
+
+   
+   
+
+   
+   
+   

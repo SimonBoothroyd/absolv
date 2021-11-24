@@ -1,0 +1,6 @@
+System
+======
+
+.. currentmodule:: absolv.models
+
+.. autopydantic_model:: System

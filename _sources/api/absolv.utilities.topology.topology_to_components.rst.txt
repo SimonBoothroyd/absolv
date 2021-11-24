@@ -1,0 +1,6 @@
+topology\_to\_components
+========================
+
+.. currentmodule:: absolv.utilities.topology
+
+.. autofunction:: topology_to_components
