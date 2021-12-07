@@ -270,8 +270,7 @@ class OpenMMAlchemicalFactory:
         custom_alchemical_potential: Optional[str],
     ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomBondForce]:
         """Modifies a standard non-bonded force so that only the interactions between
-        persistent (chemical) particles and all intramolecular interactions (including
-        those in alchemical molecules) are retained, and splits out all intermolecular
+        persistent (chemical) particles are retained, and splits out all intermolecular
         alchemical (both chemical-alchemical and alchemical-alchemical) interactions
         into a separate custom non-bonded force.
 
