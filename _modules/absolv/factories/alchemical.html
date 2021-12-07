@@ -673,8 +673,7 @@
         <span class="n">custom_alchemical_potential</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Modifies a standard non-bonded force so that only the interactions between</span>
-<span class="sd">        persistent (chemical) particles and all intramolecular interactions (including</span>
-<span class="sd">        those in alchemical molecules) are retained, and splits out all intermolecular</span>
+<span class="sd">        persistent (chemical) particles are retained, and splits out all intermolecular</span>
 <span class="sd">        alchemical (both chemical-alchemical and alchemical-alchemical) interactions</span>
 <span class="sd">        into a separate custom non-bonded force.</span>
 

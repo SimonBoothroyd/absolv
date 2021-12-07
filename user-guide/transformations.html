@@ -340,13 +340,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    References
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -517,13 +510,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    References
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -538,16 +524,83 @@
                 
                 
   <h1 id="alchemical-transformations">Alchemical Transformations<a class="headerlink" href="#alchemical-transformations" title="Permalink to this headline">¶</a></h1>
-<p>…</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">absolv</span></code> framework supports alchemically transforming the electrostatic and vdW interactions within an OpenMM
+<code class="docutils literal notranslate"><span class="pre">System</span></code> object via the <code class="docutils literal notranslate"><span class="pre">OpenMMAlchemicalFactory</span></code> object.</p>
+<p>Due to the huge flexibility of the OpenMM system, allowing completely custom electrostatic and and vdW forces to be
+implemented, it would be impossible to support all possible combinations of non-bonded forces. As such, the framework
+currently only systems that contain</p>
+<ul class="simple">
+<li><p>vdW + electrostatic interactions in a single built-in <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code> object</p></li>
+<li><p>electrostatic interactions in a built-in <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code> object, vdW interactions in a <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code>
+object and vdW 1-4 interactions in a <code class="docutils literal notranslate"><span class="pre">CustomBondForce</span></code></p></li>
+<li><p>the above combinations sans any electrostatics interactions</p></li>
+</ul>
+<p>are supported.</p>
 <h2 id="electrostatics">Electrostatics<a class="headerlink" href="#electrostatics" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>The electrostatic interactions in the system are alchemically transformed by linearly scaling all partial charges on
+particles in <em>solute molecules</em> by <span class="math notranslate nohighlight">\(\lambda_{elec}\)</span>, corresponding to a <code class="docutils literal notranslate"><span class="pre">&quot;lambda_electrostatics&quot;</span></code> context
+variable that will be added by the factory, such that</p>
+<div class="math notranslate nohighlight">
+\[q^{sol}_i \left(\lambda_{elec}\right) = \lambda_{elec} \times q^{sol}_i\]</div>
+<p>All <em>intramolecular</em> interactions will be switched off during the alchemical transformation. This is referred to as
+‘annihilating’ the electrostatic interactions in other packages and some literature.</p>
+<p>Because the charges are scaled directly, the energy contributions of the alchemically scaled electrostatic interactions
+will be</p>
+<div class="math notranslate nohighlight">
+\[U^E = \lambda_{elec} U^E_{sol-solv} + \lambda_{elec}^2 U^E_{sol-sol} + U^E_{solv-solv}\]</div>
+<p>where <span class="math notranslate nohighlight">\(U^E_{sol-sol}\)</span>, <span class="math notranslate nohighlight">\(U^E_{sol-solv}\)</span> and <span class="math notranslate nohighlight">\(U^E_{solv-solv}\)</span> are the <strong>un-scaled</strong> electrostatic
+contributions to the energies of the solute-solute, solute-solvent and solvent-solvent interactions respectively.</p>
 <h2 id="vdw">vdW<a class="headerlink" href="#vdw" title="Permalink to this headline">¶</a></h2>
+<p>Currently vdW interactions can only be transformed if they are stored in a standard <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code> <strong>OR</strong> if they are
+split between a <code class="docutils literal notranslate"><span class="pre">CustomBondForce</span></code> (<em>1-2</em>, <em>1-3</em>, and <em>1-4</em> interactions) and a <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code> (the remaining
+<em>1-n</em> and intermolecular interactions).</p>
+<p>The interactions will be transformed according to <span class="math notranslate nohighlight">\(\lambda_{vdW}\)</span> which corresponds to a <code class="docutils literal notranslate"><span class="pre">&quot;lambda_sterics&quot;</span></code>
+context variable that will be added by the factory.</p>
+<p>Only <em>intermolecular</em> vdW interactions will be alchemically scaled, while all <em>intramolecular</em>
+interactions will be left un-scaled. This is is referred to as ‘decoupling’ the vdW interactions in other packages and
+some literature.</p>
 <h3 id="lennard-jones">Lennard–Jones<a class="headerlink" href="#lennard-jones" title="Permalink to this headline">¶</a></h3>
-<p>…</p>
+<p>If the vdW interactions are stored in a standard <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code>, then the alchemical factory will split them
+so that</p>
+<ul>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code> force retains all interactions between solvent particles</p></li>
+<li><p>all intermolecular alchemical (both solute-solvent and solute-solute) interactions are moved into a new
+<code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code></p></li>
+<li><p>all solute <em>intramolecular</em> interactions are moved into a new <code class="docutils literal notranslate"><span class="pre">CustomBondForce</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The intramolecular solute-solute interactions won’t use any periodic boundary corrections such that the the
+decoupled state of the solute corresponds to the proper vacuum state without periodicity effects.</p>
+</div>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code> will copy over all settings (including cut-off, long-range correction, etc) from the
+original <code class="docutils literal notranslate"><span class="pre">NonbondedForce</span></code>, but will replace the normal LJ energy expression with a <strong>soft-core</strong> version. By default,
+this takes the form:</p>
+<div class="math notranslate nohighlight">
+\[U^{vdW} \left( \lambda_{vdW} \right) = \lambda_{vdW} \times 4 \varepsilon \left[ \left( \dfrac{\sigma}{r_{eff}}\right)^{12} - \left( \dfrac{\sigma}{r_{eff}}\right)^{6} \right]\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[r_{eff} = \sigma \left( \dfrac{1}{2} \left(1 - \lambda_{vdW}\right) + \left( \dfrac{r}{\sigma} \right) ^ 6 \right) ^ \frac{1}{6}\]</div>
 <h3 id="custom-vdw-forms">Custom vdW Forms<a class="headerlink" href="#custom-vdw-forms" title="Permalink to this headline">¶</a></h3>
-<p>…</p>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="id1"></span>
+<p>If the vdW interactions are split across a <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code> and a <code class="docutils literal notranslate"><span class="pre">CustomBondForce</span></code> then the alchemical
+factory will further split them so that</p>
+<ul>
+<li><p>the original <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code> force will retain all interactions between solvent particles</p></li>
+<li><p>all solute <em>intramolecular</em> interactions are moved into a new <code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The intramolecular solute-solute interactions won’t use any periodic boundary corrections such that the the
+decoupled state of the solute corresponds to the proper vacuum state without periodicity effects.</p>
+</div>
+</li>
+<li><p>all <em>intermolecular</em> alchemical (both solute-solvent and solute-solute) interactions are moved into another new
+<code class="docutils literal notranslate"><span class="pre">CustomNonbondedForce</span></code> with a modified energy expression such that</p>
+<div class="math notranslate nohighlight">
+\[U^{vdW}_{sol-solv} \left( \lambda_{vdW} \right) = \lambda_{vdW} \times U^{vdW}_{sol-solv}\]</div>
+</li>
+</ul>
+
 
                 
                   
@@ -634,6 +687,8 @@
       <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     
   </body>
 </html>

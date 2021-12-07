@@ -490,12 +490,26 @@ energy calculation that we will be running.</p>
 <span class="p">)</span>
 
 <span class="n">schema</span> <span class="o">=</span> <span class="n">TransferFreeEnergySchema</span><span class="p">(</span>
-    <span class="n">system</span><span class="o">=</span><span class="n">System</span><span class="p">(</span><span class="n">solutes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;CCO&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">solvent_a</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;O&quot;</span><span class="p">:</span> <span class="mi">895</span><span class="p">},</span> <span class="n">solvent_b</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">system</span><span class="o">=</span><span class="n">System</span><span class="p">(</span><span class="n">solutes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;CCO&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">solvent_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">solvent_b</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;O&quot;</span><span class="p">:</span> <span class="mi">895</span><span class="p">}),</span>
     <span class="c1"># Define the state that the calculation will be performed at.</span>
     <span class="n">state</span><span class="o">=</span><span class="n">State</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">atmosphere</span><span class="p">),</span>
-    <span class="c1"># Define the alchemical pathway to transform the solute along in the first</span>
-    <span class="c1"># and second (i.e. vacuum) solvent respectively.</span>
+    <span class="c1"># Define the alchemical pathway to transform the solute along in vacuum (&#39;solvent_a&#39;)</span>
+    <span class="c1"># and water (&#39;solvent_b&#39;)</span>
     <span class="n">alchemical_protocol_a</span><span class="o">=</span><span class="n">NonEquilibriumProtocol</span><span class="p">(</span>
+        <span class="n">production_protocol</span><span class="o">=</span><span class="n">SimulationProtocol</span><span class="p">(</span>
+            <span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span>
+            <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span>
+        <span class="p">),</span>
+        <span class="n">switching_protocol</span><span class="o">=</span><span class="n">SwitchingProtocol</span><span class="p">(</span>
+            <span class="n">n_electrostatic_steps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+            <span class="n">n_steps_per_electrostatic_step</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">n_steric_steps</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_steps_per_steric_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">alchemical_protocol_b</span><span class="o">=</span><span class="n">NonEquilibriumProtocol</span><span class="p">(</span>
         <span class="n">production_protocol</span><span class="o">=</span><span class="n">SimulationProtocol</span><span class="p">(</span>
             <span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span>
             <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span>
@@ -508,20 +522,6 @@ energy calculation that we will be running.</p>
             <span class="c1"># followed by decoupling the vdW interactions over the next 38 ps</span>
             <span class="n">n_steric_steps</span><span class="o">=</span><span class="mi">190</span><span class="p">,</span>
             <span class="n">n_steps_per_steric_step</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">),</span>
-    <span class="n">alchemical_protocol_b</span><span class="o">=</span><span class="n">NonEquilibriumProtocol</span><span class="p">(</span>
-        <span class="n">production_protocol</span><span class="o">=</span><span class="n">SimulationProtocol</span><span class="p">(</span>
-            <span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span>
-            <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span>
-            <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span>
-        <span class="p">),</span>
-        <span class="n">switching_protocol</span><span class="o">=</span><span class="n">SwitchingProtocol</span><span class="p">(</span>
-            <span class="n">n_electrostatic_steps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-            <span class="n">n_steps_per_electrostatic_step</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-            <span class="n">n_steric_steps</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">n_steps_per_steric_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span>
         <span class="p">)</span>
     <span class="p">)</span>
 <span class="p">)</span>

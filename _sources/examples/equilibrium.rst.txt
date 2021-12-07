@@ -21,25 +21,25 @@ This can be compactly done by creating a new ``TransferFreeEnergySchema`` object
     schema = TransferFreeEnergySchema(
         # Define the solutes in the system. There may be multiple in the case of,
         # e.g., ion pairs like Na+ + Cl-. Here we use `None` to specify that the solute
-        # will be transferred into a vacuum.
-        system=System(solutes={"CCO": 1}, solvent_a={"O": 895}, solvent_b=None),
+        # will be transferred from vacuum into a water
+        system=System(solutes={"CCO": 1}, solvent_a=None, solvent_b={"O": 895}),
         # Define the state that the calculation will be performed at.
         state=State(temperature=298.15 * unit.kelvin, pressure=1.0 * unit.atmosphere),
-        # Define the alchemical pathway to transform the solute along in the first
-        # and second (i.e. vacuum) solvent respectively.
+        # Define the alchemical pathway to transform the solute along in vacuum ('solvent_a')
+        # and water ('solvent_b')
         alchemical_protocol_a=EquilibriumProtocol(
-            lambda_sterics=[  # fmt: off
+            lambda_sterics=[1.0, 1.0, 1.0, 1.0, 1.0],
+            lambda_electrostatics=[1.0, 0.75, 0.5, 0.25, 0.0],
+        ),
+        alchemical_protocol_b=EquilibriumProtocol(
+            lambda_sterics=[
                 1.00, 1.00, 1.00, 1.00, 1.00, 0.95, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40,
                 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05, 0.00,
             ],
-            lambda_electrostatics=[  # fmt: off
+            lambda_electrostatics=[
                 1.00, 0.75, 0.50, 0.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
                 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
             ],
-        ),
-        alchemical_protocol_b=EquilibriumProtocol(
-            lambda_sterics=[1.0, 1.0, 1.0, 1.0, 1.0],
-            lambda_electrostatics=[1.0, 0.75, 0.5, 0.25, 0.0],
         ),
     )
 

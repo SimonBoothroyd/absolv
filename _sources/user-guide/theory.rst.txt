@@ -32,9 +32,9 @@ Equilibrium Calculations
 
 Within this framework we refer to free energy calculations that involve dividing the alchemical pathway into discrete
 windows at each value of the coupling parameter :math:`\lambda`, collecting equilibrium samples for each such discrete
-state, and using these samples to compute the free energy as 'equilibrium' free energy calculations using an approach
-such as thermodynamic integration (TI) :cite:`straatsma1992computational`, BAR :cite:`bennett1976efficient`, and MBAR
-:cite:`shirts2008statistically`.
+state, and using these samples to compute the free energy using an approach such as thermodynamic integration (TI)
+:cite:`straatsma1992computational`, BAR :cite:`bennett1976efficient`, and MBAR :cite:`shirts2008statistically` as
+'equilibrium' free energy calculations.
 
 At present `absolv` does not offer functionality for computing the derivatives with respect to lambda required for TI,
 and only supports MBAR and technically BAR although this estimator is not recommended.
