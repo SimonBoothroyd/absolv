@@ -161,9 +161,16 @@ class TestTransferFreeEnergyResult:
             delta_g_solvent_b=DeltaG(value=3.0, std_error=4.0),
         )
 
-    def test_delta_g(self, free_energy_result):
+    def test_delta_g_from_a_to_b(self, free_energy_result):
 
-        delta_g = free_energy_result.delta_g
+        delta_g = free_energy_result.delta_g_from_a_to_b
+
+        assert is_close(delta_g.value, -2.0)
+        assert is_close(delta_g.std_error, numpy.sqrt(20))
+
+    def test_delta_g_from_b_to_a(self, free_energy_result):
+
+        delta_g = free_energy_result.delta_g_from_b_to_a
 
         assert is_close(delta_g.value, 2.0)
         assert is_close(delta_g.std_error, numpy.sqrt(20))
@@ -173,9 +180,18 @@ class TestTransferFreeEnergyResult:
         value = free_energy_result._boltzmann_temperature
         assert is_close(value, 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R)
 
-    def test_delta_g_with_units(self, free_energy_result):
+    def test_delta_g_from_a_to_b_with_units(self, free_energy_result):
 
-        value, std_error = free_energy_result.delta_g_with_units
+        value, std_error = free_energy_result.delta_g_from_a_to_b_with_units
+
+        assert is_close(value, -2.0 * 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R)
+        assert is_close(
+            std_error, numpy.sqrt(20) * 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R
+        )
+
+    def test_delta_g_from_b_to_a_with_units(self, free_energy_result):
+
+        value, std_error = free_energy_result.delta_g_from_b_to_a_with_units
 
         assert is_close(value, 2.0 * 85.5 * unit.kelvin * unit.MOLAR_GAS_CONSTANT_R)
         assert is_close(
@@ -183,9 +199,12 @@ class TestTransferFreeEnergyResult:
         )
 
     def test_str(self, free_energy_result):
-        assert str(free_energy_result) == "ΔG=0.340 kcal/mol ΔG std=0.760 kcal/mol"
+        assert (
+            str(free_energy_result)
+            == "ΔG a->b=-0.340 kcal/mol ΔG a->b std=0.760 kcal/mol"
+        )
 
     def test_repr(self, free_energy_result):
         assert repr(free_energy_result) == (
-            "TransferFreeEnergyResult(ΔG=0.340 kcal/mol ΔG std=0.760 kcal/mol)"
+            "TransferFreeEnergyResult(ΔG a->b=-0.340 kcal/mol ΔG a->b std=0.760 kcal/mol)"
         )

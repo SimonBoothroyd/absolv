@@ -124,12 +124,12 @@ class SimulationProtocol(BaseModel):
         ...,
         description="The number of steps to evolve the system by at each iteration. "
         "The total number of steps performed will be equal to the "
-        "`total_number_of_iterations * steps_per_iteration`.",
+        "``total_number_of_iterations * steps_per_iteration``.",
     )
     n_iterations: PositiveInt = Field(
         ...,
         description="The number of times to evolve the system forward by "
-        "`n_steps_per_iteration` time steps.",
+        "``n_steps_per_iteration`` time steps.",
     )
 
     timestep: PositiveFloat = Field(
@@ -360,12 +360,12 @@ class TransferFreeEnergyResult(BaseModel):
     delta_g_solvent_a: DeltaG = Field(
         ...,
         description="The change in free energy of alchemically transforming the solute "
-        "from an interacting to a non-interacting state in `solvent-a`.",
+        "from an interacting to a non-interacting state in *solvent-a*.",
     )
     delta_g_solvent_b: DeltaG = Field(
         ...,
         description="The change in free energy of alchemically transforming the solute "
-        "from an interacting to a non-interacting state in `solvent-b`.",
+        "from an interacting to a non-interacting state in *solvent-b*.",
     )
 
     provenance: Dict[str, Any] = Field(
@@ -373,9 +373,15 @@ class TransferFreeEnergyResult(BaseModel):
     )
 
     @property
-    def delta_g(self) -> DeltaG:
-        """The change in free energy of transferring the solute from `solvent-a` to
-        `solvent-b` in units of kT."""
+    def delta_g_from_a_to_b(self) -> DeltaG:
+        """The change in free energy of transferring the solute from *solvent-a* to
+        *solvent-b* in units of kT."""
+        return self.delta_g_solvent_a - self.delta_g_solvent_b
+
+    @property
+    def delta_g_from_b_to_a(self) -> DeltaG:
+        """The change in free energy of transferring the solute from *solvent-b* to
+        *solvent-a* in units of kT."""
         return self.delta_g_solvent_b - self.delta_g_solvent_a
 
     @property
@@ -387,22 +393,32 @@ class TransferFreeEnergyResult(BaseModel):
         ).in_units_of(unit.kilocalories_per_mole)
 
     @property
-    def delta_g_with_units(self) -> Tuple[unit.Quantity, unit.Quantity]:
-        """The change in free energy of transferring the solute from `solvent-a` to
-        `solvent-b`, as well as the error in that change."""
+    def delta_g_from_a_to_b_with_units(self) -> Tuple[unit.Quantity, unit.Quantity]:
+        """The change in free energy of transferring the solute from *solvent-a* to
+        *solvent-b*, as well as the error in that change."""
 
         return (
-            self.delta_g.value * self._boltzmann_temperature,
-            self.delta_g.std_error * self._boltzmann_temperature,
+            self.delta_g_from_a_to_b.value * self._boltzmann_temperature,
+            self.delta_g_from_a_to_b.std_error * self._boltzmann_temperature,
+        )
+
+    @property
+    def delta_g_from_b_to_a_with_units(self) -> Tuple[unit.Quantity, unit.Quantity]:
+        """The change in free energy of transferring the solute from *solvent-a* to
+        *solvent-b*, as well as the error in that change."""
+
+        return (
+            self.delta_g_from_b_to_a.value * self._boltzmann_temperature,
+            self.delta_g_from_b_to_a.std_error * self._boltzmann_temperature,
         )
 
     def __str__(self):
 
-        value, std_error = self.delta_g_with_units
+        value_a_b, std_error_a_b = self.delta_g_from_a_to_b_with_units
 
         return (
-            f"ΔG={value.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol "
-            f"ΔG std={std_error.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol"
+            f"ΔG a->b={value_a_b.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol "
+            f"ΔG a->b std={std_error_a_b.value_in_unit(unit.kilocalories_per_mole):.3f} kcal/mol"
         )
 
     def __repr__(self):
