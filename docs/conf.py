@@ -115,9 +115,7 @@ html_theme_options = {
     "repo_url": "https://github.com/SimonBoothroyd/absolv/",
     "repo_name": "SimonBoothroyd/absolv",
     "repo_type": "github",
-    "globaltoc_depth": -1,
     "globaltoc_collapse": True,
-    "globaltoc_includehidden": True,
     "features": [
         "navigation.expand",
         # 'navigation.tabs',

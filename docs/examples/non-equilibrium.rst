@@ -25,12 +25,26 @@ This can be compactly done by creating a new ``TransferFreeEnergySchema`` object
     )
 
     schema = TransferFreeEnergySchema(
-        system=System(solutes={"CCO": 1}, solvent_a={"O": 895}, solvent_b=None),
+        system=System(solutes={"CCO": 1}, solvent_a=None, solvent_b={"O": 895}),
         # Define the state that the calculation will be performed at.
         state=State(temperature=298.15 * unit.kelvin, pressure=1.0 * unit.atmosphere),
-        # Define the alchemical pathway to transform the solute along in the first
-        # and second (i.e. vacuum) solvent respectively.
+        # Define the alchemical pathway to transform the solute along in vacuum ('solvent_a')
+        # and water ('solvent_b')
         alchemical_protocol_a=NonEquilibriumProtocol(
+            production_protocol=SimulationProtocol(
+                n_steps_per_iteration=6250,
+                n_iterations=160,
+                timestep=2.0 * unit.femtoseconds
+            ),
+            switching_protocol=SwitchingProtocol(
+                n_electrostatic_steps=60,
+                n_steps_per_electrostatic_step=100,
+                n_steric_steps=0,
+                n_steps_per_steric_step=0,
+                timestep=2.0*unit.femtoseconds
+            )
+        ),
+        alchemical_protocol_b=NonEquilibriumProtocol(
             production_protocol=SimulationProtocol(
                 n_steps_per_iteration=6250,
                 n_iterations=160,
@@ -43,20 +57,6 @@ This can be compactly done by creating a new ``TransferFreeEnergySchema`` object
                 # followed by decoupling the vdW interactions over the next 38 ps
                 n_steric_steps=190,
                 n_steps_per_steric_step=100,
-            )
-        ),
-        alchemical_protocol_b=NonEquilibriumProtocol(
-            production_protocol=SimulationProtocol(
-                n_steps_per_iteration=6250,
-                n_iterations=160,
-                timestep=2.0 * unit.femtoseconds
-            ),
-            switching_protocol=SwitchingProtocol(
-                n_electrostatic_steps=60,
-                n_steps_per_electrostatic_step=100,
-                n_steric_steps=0,
-                n_steps_per_steric_step=0,
-                timestep=2.0*unit.femtoseconds
             )
         )
     )
