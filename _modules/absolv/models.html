@@ -10,7 +10,7 @@
       
       
       
-      <link rel="icon" href="../../_static/">
+      <link rel="icon" href="">
     
     
       
@@ -527,12 +527,12 @@
         <span class="o">...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of steps to evolve the system by at each iteration. &quot;</span>
         <span class="s2">&quot;The total number of steps performed will be equal to the &quot;</span>
-        <span class="s2">&quot;`total_number_of_iterations * steps_per_iteration`.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;``total_number_of_iterations * steps_per_iteration``.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">n_iterations</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="o">...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The number of times to evolve the system forward by &quot;</span>
-        <span class="s2">&quot;`n_steps_per_iteration` time steps.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;``n_steps_per_iteration`` time steps.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">timestep</span><span class="p">:</span> <span class="n">PositiveFloat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
@@ -763,12 +763,12 @@
     <span class="n">delta_g_solvent_a</span><span class="p">:</span> <span class="n">DeltaG</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="o">...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The change in free energy of alchemically transforming the solute &quot;</span>
-        <span class="s2">&quot;from an interacting to a non-interacting state in `solvent-a`.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;from an interacting to a non-interacting state in *solvent-a*.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">delta_g_solvent_b</span><span class="p">:</span> <span class="n">DeltaG</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="o">...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The change in free energy of alchemically transforming the solute &quot;</span>
-        <span class="s2">&quot;from an interacting to a non-interacting state in `solvent-b`.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;from an interacting to a non-interacting state in *solvent-b*.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">provenance</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
@@ -776,9 +776,15 @@
     <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">delta_g</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeltaG</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from `solvent-a` to</span>
-<span class="sd">        `solvent-b` in units of kT.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">delta_g_from_a_to_b</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeltaG</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from *solvent-a* to</span>
+<span class="sd">        *solvent-b* in units of kT.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_a</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_b</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_g_from_b_to_a</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeltaG</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from *solvent-b* to</span>
+<span class="sd">        *solvent-a* in units of kT.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_b</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_solvent_a</span>
 
     <span class="nd">@property</span>
@@ -790,22 +796,32 @@
         <span class="p">)</span><span class="o">.</span><span class="n">in_units_of</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">delta_g_with_units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from `solvent-a` to</span>
-<span class="sd">        `solvent-b`, as well as the error in that change.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">delta_g_from_a_to_b_with_units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from *solvent-a* to</span>
+<span class="sd">        *solvent-b*, as well as the error in that change.&quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g</span><span class="o">.</span><span class="n">std_error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_from_a_to_b</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_from_a_to_b</span><span class="o">.</span><span class="n">std_error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_g_from_b_to_a_with_units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;The change in free energy of transferring the solute from *solvent-a* to</span>
+<span class="sd">        *solvent-b*, as well as the error in that change.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_from_b_to_a</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_from_b_to_a</span><span class="o">.</span><span class="n">std_error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boltzmann_temperature</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="n">value</span><span class="p">,</span> <span class="n">std_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_with_units</span>
+        <span class="n">value_a_b</span><span class="p">,</span> <span class="n">std_error_a_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_g_from_a_to_b_with_units</span>
 
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ΔG=</span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;ΔG std=</span><span class="si">{</span><span class="n">std_error</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ΔG a-&gt;b=</span><span class="si">{</span><span class="n">value_a_b</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ΔG a-&gt;b std=</span><span class="si">{</span><span class="n">std_error_a_b</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilocalories_per_mole</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol&quot;</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -820,7 +836,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: Nov 24, 2021
+      Last update: Dec 07, 2021
     
   </small>
 </div>
