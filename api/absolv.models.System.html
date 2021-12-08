@@ -861,23 +861,51 @@ be transferred between (a -&gt; b) as well as the solutes themselves.</p>
 <li><p><a class="reference internal" href="#absolv.models.System.solvent_b" title="absolv.models.System.solvent_b"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solvent_b</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">pydantic.types.PositiveInt]])</span></code></a></p></li>
 </ul>
 </dd>
+<dt class="field-even">Validators</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solutes</span></code> » <a class="reference internal" href="#absolv.models.System.solutes" title="absolv.models.System.solutes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solutes</span></code></a></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solvent_a</span></code> » <a class="reference internal" href="#absolv.models.System.solvent_a" title="absolv.models.System.solvent_a"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solvent_a</span></code></a></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solvent_b</span></code> » <a class="reference internal" href="#absolv.models.System.solvent_b" title="absolv.models.System.solvent_b"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solvent_b</span></code></a></p></li>
+</ul>
+</dd>
 </dl>
 <dl class="py pydantic_field objdesc">
 <dt class="sig sig-object py" id="absolv.models.System.solutes">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">solutes</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pydantic.types.PositiveInt</span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.System.solutes" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary containing the SMILES patterns of each solute in the system as well as how many instances of each there should be.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solutes</span></code></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py pydantic_field objdesc">
 <dt class="sig sig-object py sig-wrap" id="absolv.models.System.solvent_a">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">solvent_a</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pydantic.types.PositiveInt</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.System.solvent_a" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary containing the SMILES patterns of each component in the first solvent as well as how many instances of each there should be.A value of <code class="docutils literal notranslate"><span class="pre">None</span></code> should be used to indicate vacuum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solvent_a</span></code></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py pydantic_field objdesc">
 <dt class="sig sig-object py sig-wrap" id="absolv.models.System.solvent_b">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">solvent_b</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pydantic.types.PositiveInt</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.System.solvent_b" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary containing the SMILES patterns of each component in the second solvent as well as how many instances of each there should be. A value of <code class="docutils literal notranslate"><span class="pre">None</span></code> should be used to indicate vacuum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_solvent_b</span></code></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property objdesc">
@@ -927,7 +955,7 @@ count.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 07, 2021
+      Last update: Dec 08, 2021
     
   </small>
 </div>

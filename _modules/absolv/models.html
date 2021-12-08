@@ -472,6 +472,34 @@
 <span class="sd">        second solution.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solvent_b</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
+    <span class="nd">@validator</span><span class="p">(</span><span class="s2">&quot;solutes&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_validate_solutes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;at least one solute must be specified&quot;</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@validator</span><span class="p">(</span><span class="s2">&quot;solvent_a&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_validate_solvent_a</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;at least one solvent must be specified when `solvent_a` is not none&quot;</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="nd">@validator</span><span class="p">(</span><span class="s2">&quot;solvent_b&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_validate_solvent_b</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;at least one solvent must be specified when `solvent_b` is not none&quot;</span>
+        <span class="k">return</span> <span class="n">value</span>
+
 <div class="viewcode-block" id="System.to_components"><a class="viewcode-back" href="../../api/absolv.models.System.html#absolv.models.System.to_components">[docs]</a>    <span class="k">def</span> <span class="nf">to_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;Converts this object into two lists: one containing the identities and amounts</span>
 <span class="sd">        of the molecules present in the first solution, and one the containg the same for</span>
@@ -836,7 +864,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 07, 2021
+      Last update: Dec 08, 2021
     
   </small>
 </div>
