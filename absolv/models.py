@@ -69,6 +69,34 @@ class System(BaseModel):
         second solution."""
         return 0 if self.solvent_b is None else sum(self.solvent_b.values())
 
+    @validator("solutes")
+    def _validate_solutes(cls, value):
+
+        assert len(value) > 0, "at least one solute must be specified"
+        return value
+
+    @validator("solvent_a")
+    def _validate_solvent_a(cls, value):
+
+        if value is None:
+            return value
+
+        assert (
+            len(value) > 0
+        ), "at least one solvent must be specified when `solvent_a` is not none"
+        return value
+
+    @validator("solvent_b")
+    def _validate_solvent_b(cls, value):
+
+        if value is None:
+            return value
+
+        assert (
+            len(value) > 0
+        ), "at least one solvent must be specified when `solvent_b` is not none"
+        return value
+
     def to_components(self) -> Tuple[List[Tuple[str, int]], List[Tuple[str, int]]]:
         """Converts this object into two lists: one containing the identities and amounts
         of the molecules present in the first solution, and one the containg the same for

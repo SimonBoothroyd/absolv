@@ -44,6 +44,36 @@ class TestSystem:
         )
         assert system.n_solvent_molecules_b == n_expected
 
+    def test_validate_solutes(self):
+
+        with pytest.raises(
+            ValidationError, match="at least one solute must be specified"
+        ):
+            System(solutes={}, solvent_a=None, solvent_b=None)
+
+        system = System(solutes={"C": 1}, solvent_a=None, solvent_b=None)
+        assert system.solutes == {"C": 1}
+
+    def test_validate_solvent_a(self):
+
+        with pytest.raises(
+            ValidationError, match="specified when `solvent_a` is not none"
+        ):
+            System(solutes={"C": 1}, solvent_a={}, solvent_b=None)
+
+        system = System(solutes={"C": 1}, solvent_a={"O": 2}, solvent_b=None)
+        assert system.solvent_a == {"O": 2}
+
+    def test_validate_solvent_b(self):
+
+        with pytest.raises(
+            ValidationError, match="specified when `solvent_b` is not none"
+        ):
+            System(solutes={"C": 1}, solvent_a=None, solvent_b={})
+
+        system = System(solutes={"C": 1}, solvent_a=None, solvent_b={"O": 2})
+        assert system.solvent_b == {"O": 2}
+
     def test_to_components(self):
 
         system = System(
