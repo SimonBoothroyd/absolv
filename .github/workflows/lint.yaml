@@ -31,11 +31,14 @@ jobs:
       - name: Run isort
         run: |
           isort --recursive --check-only absolv
+          isort --recursive --check-only regression-tests
 
       - name: Run black
         run: |
           black absolv --check
+          black regression-tests --check
 
       - name: Run flake8
         run: |
           flake8 absolv
+          flake8 regression-tests

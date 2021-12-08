@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# Set the job name and wall time limit
+#BSUB -J absolv[0-17]
+#BSUB -W 12:00
+#
+# Set the output and error output paths.
+#BSUB -o  %J.o
+#BSUB -e  %J.e
+#
+# Set any gpu options.
+#BSUB -q gpuqueue
+#BSUB -gpu num=1:j_exclusive=yes:mode=shared:mps=no:
+#
+#BSUB -M 4
+
+# Enable conda
+. ~/.bashrc
+
+conda activate absolv
+
+export ABSOLV_VERSION=$(python -c "import absolv; print(absolv.__version__)")
+conda env export > "absolv-$ABSOLV_VERSION-env.yml
+
+# Launch my program.
+module load cuda/10.1
+export OPENMM_CPU_THREADS=1
+
+export SYSTEMS=(
+"methane"
+"methanol"
+"ethane"
+"toluene"
+"neopentane"
+"2-methylfuran"
+"2-methylindole"
+"2-cyclopentanylindole"
+"7-cyclopentanylindole"
+)
+export N_SYSTEMS=${#SYSTEMS[@]}
+
+export METHODS=("eq" "neq")
+export N_METHODS=${#METHODS[@]}
+
+export SYSTEM_INDEX=$(($LSB_JOBINDEX % N_SYSTEMS))
+export METHOD_INDEX=$(($LSB_JOBINDEX / N_SYSTEMS))
+
+export RUN_DIR="absolv-$ABSOLV_VERSION/${METHODS[$METHOD_INDEX]}/${SYSTEMS[$SYSTEM_INDEX]}"
+echo $RUN_DIR
+
+python run-production.py $RUN_DIR
