@@ -493,9 +493,9 @@ class RepexAlchemicalOpenMMSimulation:
 
             numpy.savetxt(
                 os.path.join(f"state-{state_index}", "lambda-potentials.csv"),
-                state_energy_matrix[state_index],
+                state_energy_matrix[state_index][1:, :],
                 fmt="%+.10f",
-                delimiter=",",
+                delimiter=" ",
             )
 
     def run(self, directory: Optional[str]):
