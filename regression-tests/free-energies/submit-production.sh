@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Set the job name and wall time limit
-#BSUB -J absolv[0-17]
+#BSUB -J absolv[1-54]
 #BSUB -W 12:00
 #
 # Set the output and error output paths.
@@ -20,7 +20,7 @@
 conda activate absolv
 
 export ABSOLV_VERSION=$(python -c "import absolv; print(absolv.__version__)")
-conda env export > "absolv-$ABSOLV_VERSION-env.yml
+conda env export > "absolv-$ABSOLV_VERSION-env.yml"
 
 # Launch my program.
 module load cuda/10.1
@@ -42,10 +42,20 @@ export N_SYSTEMS=${#SYSTEMS[@]}
 export METHODS=("eq" "neq")
 export N_METHODS=${#METHODS[@]}
 
-export SYSTEM_INDEX=$(($LSB_JOBINDEX % N_SYSTEMS))
-export METHOD_INDEX=$(($LSB_JOBINDEX / N_SYSTEMS))
+export REPLICAS=(1 2 3)
+export N_REPLICAS=${#REPLICAS[@]}
 
-export RUN_DIR="absolv-$ABSOLV_VERSION/${METHODS[$METHOD_INDEX]}/${SYSTEMS[$SYSTEM_INDEX]}"
+export INDEX=$(($LSB_JOBINDEX-1))
+
+export SYSTEM_INDEX=$(( INDEX % N_SYSTEMS ))
+export METHOD_INDEX=$(( (INDEX / N_SYSTEMS) % N_METHODS ))
+export REPLICA_INDEX=$(( INDEX / (N_SYSTEMS * N_METHODS) ))
+
+cp -a "absolv-$ABSOLV_VERSION/" "absolv-$ABSOLV_VERSION-${REPLICAS[REPLICA_INDEX]}/"
+
+export RUN_DIR="absolv-$ABSOLV_VERSION-${REPLICAS[REPLICA_INDEX]}/${METHODS[$METHOD_INDEX]}/${SYSTEMS[$SYSTEM_INDEX]}"
 echo $RUN_DIR
+
+export ABSOLV_PACKMOL_SEED=${REPLICAS[REPLICA_INDEX]}
 
 python run-production.py $RUN_DIR

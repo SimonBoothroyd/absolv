@@ -13,27 +13,32 @@ def main():
 
     root_directory = f"absolv-{absolv.__version__}"
 
-    summary_dict = {"version": absolv.__version__, "results": defaultdict(dict)}
+    summary_dict = {
+        "version": absolv.__version__,
+        "results": defaultdict(lambda: defaultdict(dict)),
+    }
 
-    for path in glob(os.path.join(root_directory, "*", "*")):
+    for replica in (1, 2, 3):
 
-        _, method, name = path.split(os.sep)
+        for path in glob(os.path.join(f"{root_directory}-{replica}", "*", "*")):
 
-        result = TransferFreeEnergyResult.parse_file(
-            os.path.join(path, "free-energies.json")
-        )
+            _, method, name = path.split(os.sep)
 
-        value, std_error = result.delta_g_from_a_to_b_with_units
+            result = TransferFreeEnergyResult.parse_file(
+                os.path.join(path, "free-energies.json")
+            )
 
-        result_dict = {
-            "value": value.value_in_unit(openmm.unit.kilocalorie_per_mole),
-            "std_error": value.value_in_unit(openmm.unit.kilocalorie_per_mole),
-            "units": "kcal / mol",
-        }
+            value, std_error = result.delta_g_from_a_to_b_with_units
 
-        summary_dict["results"][method][name] = result_dict
+            result_dict = {
+                "value": value.value_in_unit(openmm.unit.kilocalorie_per_mole),
+                "std_error": std_error.value_in_unit(openmm.unit.kilocalorie_per_mole),
+                "units": "kcal / mol",
+            }
 
-    with open(f"{root_directory}.json", "w") as file:
+            summary_dict["results"][replica][method][name] = result_dict
+
+    with open(os.path.join("results", f"{root_directory}.json"), "w") as file:
         json.dump(summary_dict, file)
 
 

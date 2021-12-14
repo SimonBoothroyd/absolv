@@ -11,7 +11,7 @@ from absolv.runners.nonequilibrium import NonEquilibriumRunner
 @click.argument(
     "directory", type=click.Path(exists=True, file_okay=False, dir_okay=True)
 )
-@click.command
+@click.command()
 def main(directory):
 
     *_, method, name = directory.split(os.sep)
@@ -19,6 +19,8 @@ def main(directory):
     runner_cls = EquilibriumRunner if method == "eq" else NonEquilibriumRunner
 
     with temporary_cd(directory):
+
+        print(f"PACKMOL seed={os.environ['ABSOLV_PACKMOL_SEED']}")
 
         start_time = time.perf_counter()
         runner_cls.run("", platform="CUDA")
