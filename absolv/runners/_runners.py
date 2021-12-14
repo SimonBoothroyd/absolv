@@ -12,7 +12,10 @@ from tqdm import tqdm
 from absolv.factories.alchemical import OpenMMAlchemicalFactory
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.models import EquilibriumProtocol, State, TransferFreeEnergySchema
-from absolv.simulations import AlchemicalOpenMMSimulation
+from absolv.simulations import (
+    AlchemicalOpenMMSimulation,
+    RepexAlchemicalOpenMMSimulation,
+)
 from absolv.utilities.openmm import OpenMMPlatform, SystemGenerator
 from absolv.utilities.topology import topology_to_atom_indices
 
@@ -190,9 +193,30 @@ class BaseRunner:
 
         topology, coordinates, _, alchemical_system = cls._load_solvent_inputs("")
 
-        for state_index in tqdm(states, desc="state", ncols=80):
+        if protocol.sampler == "independent":
 
-            simulation = AlchemicalOpenMMSimulation(
+            for state_index in tqdm(states, desc="state", ncols=80):
+
+                simulation = AlchemicalOpenMMSimulation(
+                    alchemical_system,
+                    coordinates,
+                    topology.box_vectors,
+                    State(
+                        temperature=state.temperature,
+                        pressure=None
+                        if topology.box_vectors is None
+                        else state.pressure,
+                    ),
+                    protocol,
+                    state_index,
+                    platform if topology.box_vectors is not None else "Reference",
+                )
+
+                simulation.run(os.path.join(f"state-{state_index}"))
+
+        elif protocol.sampler == "repex":
+
+            simulation = RepexAlchemicalOpenMMSimulation(
                 alchemical_system,
                 coordinates,
                 topology.box_vectors,
@@ -201,8 +225,9 @@ class BaseRunner:
                     pressure=None if topology.box_vectors is None else state.pressure,
                 ),
                 protocol,
-                state_index,
                 platform if topology.box_vectors is not None else "Reference",
             )
+            simulation.run("")
 
-            simulation.run(os.path.join(f"state-{state_index}"))
+        else:
+            raise NotImplementedError()
