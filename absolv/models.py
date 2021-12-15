@@ -193,7 +193,7 @@ class EquilibriumProtocol(BaseModel):
         description="The (optional) protocol that describes the equilibration "
         "simulation to run prior to the production one.",
     )
-    production_protocol: SimulationProtocol = Field(
+    production_protocol: Optional[SimulationProtocol] = Field(
         SimulationProtocol(n_steps_per_iteration=6250, n_iterations=160),  # 2 ns
         description="The protocol that describes the production to run.",
     )
@@ -211,6 +211,11 @@ class EquilibriumProtocol(BaseModel):
         "along. A value of 1.0 represents a fully interacting system while a value of "
         "0.0 represents a system with the solute-solute and solute-solvent "
         "electrostatic interactions disabled.",
+    )
+
+    sampler: Literal["independent", "repex"] = Field(
+        "independent",
+        description="The mode in which to sample each of the different lambda states.",
     )
 
     @property

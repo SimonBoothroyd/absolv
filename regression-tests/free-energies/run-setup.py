@@ -1,5 +1,6 @@
 import os.path
 from glob import glob
+from typing import Literal
 
 import openmm.app
 import openmm.unit
@@ -40,7 +41,10 @@ LAMBDA_STERICS_SOLVENT = [
 
 
 def setup_equilibrium(
-    system: System, system_generator: SystemGenerator, directory: str
+    system: System,
+    system_generator: SystemGenerator,
+    directory: str,
+    sampler: Literal["independent", "repex"]
 ):
 
     schema = TransferFreeEnergySchema(
@@ -54,6 +58,7 @@ def setup_equilibrium(
             ),
             lambda_sterics=LAMBDA_STERICS_VACUUM,
             lambda_electrostatics=LAMBDA_ELECTROSTATICS_VACUUM,
+            sampler=sampler
         ),
         # solvent lambda states
         alchemical_protocol_b=EquilibriumProtocol(
@@ -63,6 +68,7 @@ def setup_equilibrium(
             ),
             lambda_sterics=LAMBDA_STERICS_SOLVENT,
             lambda_electrostatics=LAMBDA_ELECTROSTATICS_SOLVENT,
+            sampler=sampler
         )
     )
 
@@ -147,8 +153,18 @@ def main():
     for name, system in systems.items():
 
         setup_equilibrium(
-            system, system_generator, os.path.join(root_directory, "eq", name)
+            system,
+            system_generator,
+            os.path.join(root_directory, "eq-indep", name),
+            "independent"
         )
+        setup_equilibrium(
+            system,
+            system_generator,
+            os.path.join(root_directory, "eq-repex", name),
+            "repex"
+        )
+
         setup_non_equilibrium(
             system, system_generator, os.path.join(root_directory, "neq", name)
         )

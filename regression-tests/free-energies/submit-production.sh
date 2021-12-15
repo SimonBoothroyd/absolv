@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Set the job name and wall time limit
-#BSUB -J absolv[1-54]
+#BSUB -J absolv[1-81]
 #BSUB -W 12:00
 #
 # Set the output and error output paths.
@@ -39,7 +39,7 @@ export SYSTEMS=(
 )
 export N_SYSTEMS=${#SYSTEMS[@]}
 
-export METHODS=("eq" "neq")
+export METHODS=("eq-indep" "eq-repex" "neq")
 export N_METHODS=${#METHODS[@]}
 
 export REPLICAS=(1 2 3)

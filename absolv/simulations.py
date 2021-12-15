@@ -1,9 +1,11 @@
+import importlib
 import os.path
-from typing import IO, Iterable, Optional, Tuple
+from typing import IO, TYPE_CHECKING, Iterable, List, Optional, Tuple
 
 import numpy
 import openmm
 from openff.utilities import temporary_cd
+from openff.utilities.exceptions import MissingOptionalDependency
 from openmm import unit
 from openmm.app import DCDFile
 from tqdm import tqdm
@@ -21,6 +23,12 @@ from absolv.utilities.openmm import (
     set_alchemical_lambdas,
     set_coordinates,
 )
+
+if TYPE_CHECKING:
+    try:
+        from openmmtools.multistate import ReplicaExchangeSampler
+    except ModuleNotFoundError:
+        pass
 
 
 class _OpenMMTopology:
@@ -47,6 +55,18 @@ class _OpenMMTopology:
 
 
 class _BaseOpenMMSimulation:
+    @property
+    def current_state(self) -> openmm.State:
+        """Retrieve the current state of the simulation."""
+
+        return self._context.getState(
+            getPositions=True,
+            getVelocities=True,
+            getForces=True,
+            getParameters=True,
+            getIntegratorParameters=True,
+        )
+
     def __init__(
         self,
         system: openmm.System,
@@ -109,16 +129,8 @@ class _BaseOpenMMSimulation:
             name: The name of the state. The associate state file will be named
                 ``{name}-state.xml``.
         """
-        state: openmm.State = self._context.getState(
-            getPositions=True,
-            getVelocities=True,
-            getForces=True,
-            getParameters=True,
-            getIntegratorParameters=True,
-        )
-
         with open(f"{name}-state.xml", "w") as file:
-            file.write(openmm.XmlSerializer.serialize(state))
+            file.write(openmm.XmlSerializer.serialize(self.current_state))
 
     def _compute_reduced_potential(self) -> float:
         """Computes the reduced potential of the contexts current state.
@@ -177,6 +189,10 @@ class EquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
         set_alchemical_lambdas(
             self._context, self._lambda_sterics, self._lambda_electrostatics
         )
+
+        assert (
+            self._protocol.sampler == "independent"
+        ), "the protocol does not specify an independent sampler"
 
     def _minimize(self):
         """Energy minimize the context if minimization has not already occurred."""
@@ -341,6 +357,204 @@ class AlchemicalOpenMMSimulation(EquilibriumOpenMMSimulation):
             " ".join(f"{energy:+.10f}" for energy in alchemical_potentials) + "\n"
         )
         self._energies_file.flush()
+
+
+class RepexAlchemicalOpenMMSimulation:
+    """A class that simplifies the process of running a hamiltonian replica exchange
+    simulation with OpenMM, including performing energy minimizations, equilibration
+    steps, and checkpointing.
+
+    Notes:
+        This class requires the `openmmtools` optional dependency.
+    """
+
+    def __init__(
+        self,
+        system: openmm.System,
+        coordinates: unit.Quantity,
+        box_vectors: Optional[unit.Quantity],
+        state: State,
+        protocol: EquilibriumProtocol,
+        platform: OpenMMPlatform,
+    ):
+
+        try:
+            importlib.import_module("openmmtools")
+        except ImportError:
+            raise MissingOptionalDependency("openmmtools")
+
+        self._system = system
+
+        self._coordinates = coordinates
+        self._box_vectors = box_vectors
+
+        self._state = state
+        self._protocol = protocol
+
+        self._platform = platform
+
+        assert (
+            self._protocol.sampler == "repex"
+        ), "the protocol does not specify a repex sampler"
+
+    def _setup_sampler(
+        self,
+        state_coordinates: List[Tuple[List[openmm.Vec3], Optional[openmm.Vec3]]],
+        storage_path: str,
+    ) -> "ReplicaExchangeSampler":
+
+        from openmmtools import alchemy, cache, mcmc, multistate, states
+
+        cache.global_context_cache.empty()
+        cache.global_context_cache.platform = openmm.Platform.getPlatformByName(
+            self._platform
+        )
+
+        if os.path.exists(storage_path):
+            return multistate.ReplicaExchangeSampler.from_storage(storage_path)
+
+        production_protocol = self._protocol.production_protocol
+
+        reporter = multistate.MultiStateReporter(storage_path, checkpoint_interval=1)
+
+        alchemical_state = alchemy.AlchemicalState.from_system(self._system)
+        alchemical_protocol = {
+            "lambda_electrostatics": self._protocol.lambda_electrostatics,
+            "lambda_sterics": self._protocol.lambda_sterics,
+        }
+        compound_states = states.create_thermodynamic_state_protocol(
+            self._system,
+            protocol=alchemical_protocol,
+            composable_states=[alchemical_state],
+            constants={
+                "temperature": self._state.temperature * unit.kelvin,
+                "pressure": (
+                    None
+                    if self._state.pressure is None
+                    else self._state.pressure * unit.atmosphere
+                ),
+            },
+        )
+
+        simulation = multistate.ReplicaExchangeSampler(
+            number_of_iterations=production_protocol.n_iterations,
+            mcmc_moves=mcmc.LangevinDynamicsMove(
+                timestep=production_protocol.timestep * unit.femtosecond,
+                collision_rate=production_protocol.thermostat_friction
+                / unit.picosecond,
+                n_steps=production_protocol.n_steps_per_iteration,
+                reassign_velocities=True,
+                n_restart_attempts=6,
+            ),
+        )
+        simulation.create(
+            thermodynamic_states=compound_states,
+            sampler_states=[
+                states.SamplerState(coordinates, box_vectors=box_vectors)
+                for coordinates, box_vectors in state_coordinates
+            ],
+            storage=reporter,
+        )
+
+        return simulation
+
+    def _save_reduced_potentials(self, storage_path: str):
+
+        from openmmtools import multistate
+
+        reporter = multistate.MultiStateReporter(
+            storage=storage_path, open_mode="r", checkpoint_interval=1
+        )
+
+        replica_energy_matrix, *_ = reporter.read_energies()
+        replica_state_indices = reporter.read_replica_thermodynamic_states()
+
+        # [iter][replica_idx][state_e_idx] to [iter][state_idx][state_e_idx]
+        state_energy_matrix = numpy.zeros_like(replica_energy_matrix)
+
+        for iteration, state_indices in enumerate(replica_state_indices):
+
+            replica_indices = numpy.zeros_like(state_indices)
+
+            for replica_index, state_index in enumerate(state_indices):
+                replica_indices[state_index] = replica_index
+
+            replica_energies = replica_energy_matrix[iteration]
+            state_energies = replica_energies[replica_indices]
+
+            state_energy_matrix[iteration] = state_energies
+
+        # [iter][state_idx][state_e_idx] to [state_idx][iter][state_e_idx]
+        state_energy_matrix = numpy.moveaxis(state_energy_matrix, 0, 1)
+
+        for state_index in range(self._protocol.n_states):
+
+            os.makedirs(f"state-{state_index}", exist_ok=True)
+
+            numpy.savetxt(
+                os.path.join(f"state-{state_index}", "lambda-potentials.csv"),
+                state_energy_matrix[state_index][1:, :],
+                fmt="%+.10f",
+                delimiter=" ",
+            )
+
+    def run(self, directory: Optional[str]):
+        """Run the full simulation, restarting from where it left off if a previous
+        attempt to run had already been made.
+
+        Args:
+            directory: The (optional) directory to run in. If no directory is specified
+                the outputs will be stored in a temporary directory and no restarts will
+                be possible.
+        """
+
+        if directory is not None and len(directory) > 0:
+            os.makedirs(directory, exist_ok=True)
+
+        state_coordinates: List[Tuple[List[openmm.Vec3], Optional[openmm.Vec3]]] = []
+
+        for lambda_index in tqdm(range(self._protocol.n_states), desc="equilibration"):
+
+            simulation = EquilibriumOpenMMSimulation(
+                self._system,
+                self._coordinates,
+                self._box_vectors,
+                self._state,
+                EquilibriumProtocol(
+                    minimization_protocol=self._protocol.minimization_protocol,
+                    equilibration_protocol=self._protocol.equilibration_protocol,
+                    production_protocol=None,
+                    lambda_sterics=self._protocol.lambda_sterics,
+                    lambda_electrostatics=self._protocol.lambda_electrostatics,
+                    sampler="independent",
+                ),
+                lambda_index,
+                self._platform,
+            )
+            simulation.run(directory)
+
+            final_state = simulation.current_state
+
+            state_coordinates.append(
+                (
+                    final_state.getPositions(),
+                    None
+                    if self._state.pressure is None
+                    else final_state.getPeriodicBoxVectors(),
+                )
+            )
+
+        if self._protocol.production_protocol is None:
+            return
+
+        storage_path = "production-storage.nc"
+
+        with temporary_cd(directory):
+
+            simulation = self._setup_sampler(state_coordinates, storage_path)
+            simulation.run()
+
+            self._save_reduced_potentials(storage_path)
 
 
 class NonEquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
