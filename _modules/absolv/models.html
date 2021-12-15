@@ -596,7 +596,7 @@
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The (optional) protocol that describes the equilibration &quot;</span>
         <span class="s2">&quot;simulation to run prior to the production one.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">production_protocol</span><span class="p">:</span> <span class="n">SimulationProtocol</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+    <span class="n">production_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SimulationProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">),</span>  <span class="c1"># 2 ns</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The protocol that describes the production to run.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -614,6 +614,11 @@
         <span class="s2">&quot;along. A value of 1.0 represents a fully interacting system while a value of &quot;</span>
         <span class="s2">&quot;0.0 represents a system with the solute-solute and solute-solvent &quot;</span>
         <span class="s2">&quot;electrostatic interactions disabled.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">sampler</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;independent&quot;</span><span class="p">,</span> <span class="s2">&quot;repex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="s2">&quot;independent&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The mode in which to sample each of the different lambda states.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -864,7 +869,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 14, 2021
+      Last update: Dec 15, 2021
     
   </small>
 </div>

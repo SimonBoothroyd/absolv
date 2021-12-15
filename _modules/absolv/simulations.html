@@ -401,12 +401,14 @@
                 
                 
   <h1>Source code for absolv.simulations</h1><div class="highlight"><pre>
-<span></span><code><span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span></span><code><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">openmm</span>
 <span class="kn">from</span> <span class="nn">openff.utilities</span> <span class="kn">import</span> <span class="n">temporary_cd</span>
+<span class="kn">from</span> <span class="nn">openff.utilities.exceptions</span> <span class="kn">import</span> <span class="n">MissingOptionalDependency</span>
 <span class="kn">from</span> <span class="nn">openmm</span> <span class="kn">import</span> <span class="n">unit</span>
 <span class="kn">from</span> <span class="nn">openmm.app</span> <span class="kn">import</span> <span class="n">DCDFile</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -424,6 +426,12 @@
     <span class="n">set_alchemical_lambdas</span><span class="p">,</span>
     <span class="n">set_coordinates</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">openmmtools.multistate</span> <span class="kn">import</span> <span class="n">ReplicaExchangeSampler</span>
+    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+        <span class="k">pass</span>
 
 
 <span class="k">class</span> <span class="nc">_OpenMMTopology</span><span class="p">:</span>
@@ -450,6 +458,18 @@
 
 
 <span class="k">class</span> <span class="nc">_BaseOpenMMSimulation</span><span class="p">:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">openmm</span><span class="o">.</span><span class="n">State</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the current state of the simulation.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span>
+            <span class="n">getPositions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">getVelocities</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">getForces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">getParameters</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">getIntegratorParameters</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span>
@@ -512,16 +532,8 @@
 <span class="sd">            name: The name of the state. The associate state file will be named</span>
 <span class="sd">                ``{name}-state.xml``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">state</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">State</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span>
-            <span class="n">getPositions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">getVelocities</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">getForces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">getParameters</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">getIntegratorParameters</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
-
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-state.xml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">openmm</span><span class="o">.</span><span class="n">XmlSerializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">openmm</span><span class="o">.</span><span class="n">XmlSerializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_compute_reduced_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Computes the reduced potential of the contexts current state.</span>
@@ -579,7 +591,11 @@
 
         <span class="n">set_alchemical_lambdas</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_sterics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_electrostatics</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">sampler</span> <span class="o">==</span> <span class="s2">&quot;independent&quot;</span>
+        <span class="p">),</span> <span class="s2">&quot;the protocol does not specify an independent sampler&quot;</span></div>
 
     <span class="k">def</span> <span class="nf">_minimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Energy minimize the context if minimization has not already occurred.&quot;&quot;&quot;</span>
@@ -744,6 +760,204 @@
             <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">+.10f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">alchemical_potentials</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_energies_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RepexAlchemicalOpenMMSimulation"><a class="viewcode-back" href="../../api/absolv.simulations.RepexAlchemicalOpenMMSimulation.html#absolv.simulations.RepexAlchemicalOpenMMSimulation">[docs]</a><span class="k">class</span> <span class="nc">RepexAlchemicalOpenMMSimulation</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class that simplifies the process of running a hamiltonian replica exchange</span>
+<span class="sd">    simulation with OpenMM, including performing energy minimizations, equilibration</span>
+<span class="sd">    steps, and checkpointing.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        This class requires the `openmmtools` optional dependency.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RepexAlchemicalOpenMMSimulation.__init__"><a class="viewcode-back" href="../../api/absolv.simulations.RepexAlchemicalOpenMMSimulation.html#absolv.simulations.RepexAlchemicalOpenMMSimulation.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">,</span>
+        <span class="n">coordinates</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">,</span>
+        <span class="n">box_vectors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">unit</span><span class="o">.</span><span class="n">Quantity</span><span class="p">],</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span>
+        <span class="n">protocol</span><span class="p">:</span> <span class="n">EquilibriumProtocol</span><span class="p">,</span>
+        <span class="n">platform</span><span class="p">:</span> <span class="n">OpenMMPlatform</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;openmmtools&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MissingOptionalDependency</span><span class="p">(</span><span class="s2">&quot;openmmtools&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_system</span> <span class="o">=</span> <span class="n">system</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coordinates</span> <span class="o">=</span> <span class="n">coordinates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_box_vectors</span> <span class="o">=</span> <span class="n">box_vectors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span> <span class="o">=</span> <span class="n">protocol</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_platform</span> <span class="o">=</span> <span class="n">platform</span>
+
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">sampler</span> <span class="o">==</span> <span class="s2">&quot;repex&quot;</span>
+        <span class="p">),</span> <span class="s2">&quot;the protocol does not specify a repex sampler&quot;</span></div>
+
+    <span class="k">def</span> <span class="nf">_setup_sampler</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">state_coordinates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">]]],</span>
+        <span class="n">storage_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReplicaExchangeSampler&quot;</span><span class="p">:</span>
+
+        <span class="kn">from</span> <span class="nn">openmmtools</span> <span class="kn">import</span> <span class="n">alchemy</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">mcmc</span><span class="p">,</span> <span class="n">multistate</span><span class="p">,</span> <span class="n">states</span>
+
+        <span class="n">cache</span><span class="o">.</span><span class="n">global_context_cache</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span>
+        <span class="n">cache</span><span class="o">.</span><span class="n">global_context_cache</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Platform</span><span class="o">.</span><span class="n">getPlatformByName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_platform</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">storage_path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">multistate</span><span class="o">.</span><span class="n">ReplicaExchangeSampler</span><span class="o">.</span><span class="n">from_storage</span><span class="p">(</span><span class="n">storage_path</span><span class="p">)</span>
+
+        <span class="n">production_protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">production_protocol</span>
+
+        <span class="n">reporter</span> <span class="o">=</span> <span class="n">multistate</span><span class="o">.</span><span class="n">MultiStateReporter</span><span class="p">(</span><span class="n">storage_path</span><span class="p">,</span> <span class="n">checkpoint_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">alchemical_state</span> <span class="o">=</span> <span class="n">alchemy</span><span class="o">.</span><span class="n">AlchemicalState</span><span class="o">.</span><span class="n">from_system</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_system</span><span class="p">)</span>
+        <span class="n">alchemical_protocol</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;lambda_electrostatics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">lambda_electrostatics</span><span class="p">,</span>
+            <span class="s2">&quot;lambda_sterics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">lambda_sterics</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">compound_states</span> <span class="o">=</span> <span class="n">states</span><span class="o">.</span><span class="n">create_thermodynamic_state_protocol</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_system</span><span class="p">,</span>
+            <span class="n">protocol</span><span class="o">=</span><span class="n">alchemical_protocol</span><span class="p">,</span>
+            <span class="n">composable_states</span><span class="o">=</span><span class="p">[</span><span class="n">alchemical_state</span><span class="p">],</span>
+            <span class="n">constants</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">temperature</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span>
+                <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="kc">None</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">pressure</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">pressure</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">atmosphere</span>
+                <span class="p">),</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="n">simulation</span> <span class="o">=</span> <span class="n">multistate</span><span class="o">.</span><span class="n">ReplicaExchangeSampler</span><span class="p">(</span>
+            <span class="n">number_of_iterations</span><span class="o">=</span><span class="n">production_protocol</span><span class="o">.</span><span class="n">n_iterations</span><span class="p">,</span>
+            <span class="n">mcmc_moves</span><span class="o">=</span><span class="n">mcmc</span><span class="o">.</span><span class="n">LangevinDynamicsMove</span><span class="p">(</span>
+                <span class="n">timestep</span><span class="o">=</span><span class="n">production_protocol</span><span class="o">.</span><span class="n">timestep</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtosecond</span><span class="p">,</span>
+                <span class="n">collision_rate</span><span class="o">=</span><span class="n">production_protocol</span><span class="o">.</span><span class="n">thermostat_friction</span>
+                <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">picosecond</span><span class="p">,</span>
+                <span class="n">n_steps</span><span class="o">=</span><span class="n">production_protocol</span><span class="o">.</span><span class="n">n_steps_per_iteration</span><span class="p">,</span>
+                <span class="n">reassign_velocities</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">n_restart_attempts</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">simulation</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">thermodynamic_states</span><span class="o">=</span><span class="n">compound_states</span><span class="p">,</span>
+            <span class="n">sampler_states</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">states</span><span class="o">.</span><span class="n">SamplerState</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">box_vectors</span><span class="o">=</span><span class="n">box_vectors</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">box_vectors</span> <span class="ow">in</span> <span class="n">state_coordinates</span>
+            <span class="p">],</span>
+            <span class="n">storage</span><span class="o">=</span><span class="n">reporter</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">simulation</span>
+
+    <span class="k">def</span> <span class="nf">_save_reduced_potentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+        <span class="kn">from</span> <span class="nn">openmmtools</span> <span class="kn">import</span> <span class="n">multistate</span>
+
+        <span class="n">reporter</span> <span class="o">=</span> <span class="n">multistate</span><span class="o">.</span><span class="n">MultiStateReporter</span><span class="p">(</span>
+            <span class="n">storage</span><span class="o">=</span><span class="n">storage_path</span><span class="p">,</span> <span class="n">open_mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">checkpoint_interval</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="n">replica_energy_matrix</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">reporter</span><span class="o">.</span><span class="n">read_energies</span><span class="p">()</span>
+        <span class="n">replica_state_indices</span> <span class="o">=</span> <span class="n">reporter</span><span class="o">.</span><span class="n">read_replica_thermodynamic_states</span><span class="p">()</span>
+
+        <span class="c1"># [iter][replica_idx][state_e_idx] to [iter][state_idx][state_e_idx]</span>
+        <span class="n">state_energy_matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">replica_energy_matrix</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">state_indices</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">replica_state_indices</span><span class="p">):</span>
+
+            <span class="n">replica_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">state_indices</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">replica_index</span><span class="p">,</span> <span class="n">state_index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">state_indices</span><span class="p">):</span>
+                <span class="n">replica_indices</span><span class="p">[</span><span class="n">state_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">replica_index</span>
+
+            <span class="n">replica_energies</span> <span class="o">=</span> <span class="n">replica_energy_matrix</span><span class="p">[</span><span class="n">iteration</span><span class="p">]</span>
+            <span class="n">state_energies</span> <span class="o">=</span> <span class="n">replica_energies</span><span class="p">[</span><span class="n">replica_indices</span><span class="p">]</span>
+
+            <span class="n">state_energy_matrix</span><span class="p">[</span><span class="n">iteration</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_energies</span>
+
+        <span class="c1"># [iter][state_idx][state_e_idx] to [state_idx][iter][state_e_idx]</span>
+        <span class="n">state_energy_matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">state_energy_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">state_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">n_states</span><span class="p">):</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state-</span><span class="si">{</span><span class="n">state_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">numpy</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state-</span><span class="si">{</span><span class="n">state_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda-potentials.csv&quot;</span><span class="p">),</span>
+                <span class="n">state_energy_matrix</span><span class="p">[</span><span class="n">state_index</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%+.10f</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="RepexAlchemicalOpenMMSimulation.run"><a class="viewcode-back" href="../../api/absolv.simulations.RepexAlchemicalOpenMMSimulation.html#absolv.simulations.RepexAlchemicalOpenMMSimulation.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Run the full simulation, restarting from where it left off if a previous</span>
+<span class="sd">        attempt to run had already been made.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            directory: The (optional) directory to run in. If no directory is specified</span>
+<span class="sd">                the outputs will be stored in a temporary directory and no restarts will</span>
+<span class="sd">                be possible.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">state_coordinates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">openmm</span><span class="o">.</span><span class="n">Vec3</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">lambda_index</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">n_states</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;equilibration&quot;</span><span class="p">):</span>
+
+            <span class="n">simulation</span> <span class="o">=</span> <span class="n">EquilibriumOpenMMSimulation</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_system</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_coordinates</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_box_vectors</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">,</span>
+                <span class="n">EquilibriumProtocol</span><span class="p">(</span>
+                    <span class="n">minimization_protocol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">minimization_protocol</span><span class="p">,</span>
+                    <span class="n">equilibration_protocol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">equilibration_protocol</span><span class="p">,</span>
+                    <span class="n">production_protocol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">lambda_sterics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">lambda_sterics</span><span class="p">,</span>
+                    <span class="n">lambda_electrostatics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">lambda_electrostatics</span><span class="p">,</span>
+                    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;independent&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">lambda_index</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_platform</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+            <span class="n">final_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">current_state</span>
+
+            <span class="n">state_coordinates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">final_state</span><span class="o">.</span><span class="n">getPositions</span><span class="p">(),</span>
+                    <span class="kc">None</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">pressure</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">final_state</span><span class="o">.</span><span class="n">getPeriodicBoxVectors</span><span class="p">(),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol</span><span class="o">.</span><span class="n">production_protocol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">storage_path</span> <span class="o">=</span> <span class="s2">&quot;production-storage.nc&quot;</span>
+
+        <span class="k">with</span> <span class="n">temporary_cd</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+
+            <span class="n">simulation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup_sampler</span><span class="p">(</span><span class="n">state_coordinates</span><span class="p">,</span> <span class="n">storage_path</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_reduced_potentials</span><span class="p">(</span><span class="n">storage_path</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="NonEquilibriumOpenMMSimulation"><a class="viewcode-back" href="../../api/absolv.simulations.NonEquilibriumOpenMMSimulation.html#absolv.simulations.NonEquilibriumOpenMMSimulation">[docs]</a><span class="k">class</span> <span class="nc">NonEquilibriumOpenMMSimulation</span><span class="p">(</span><span class="n">_BaseOpenMMSimulation</span><span class="p">):</span>
@@ -937,7 +1151,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 14, 2021
+      Last update: Dec 15, 2021
     
   </small>
 </div>

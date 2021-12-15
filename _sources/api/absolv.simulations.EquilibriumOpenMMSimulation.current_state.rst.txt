@@ -1,0 +1,6 @@
+EquilibriumOpenMMSimulation.current\_state
+==========================================
+
+.. currentmodule:: absolv.simulations
+
+.. autoproperty:: EquilibriumOpenMMSimulation.current_state

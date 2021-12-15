@@ -1,0 +1,6 @@
+TYPE\_CHECKING
+==============
+
+.. currentmodule:: absolv.simulations
+
+.. autodata:: TYPE_CHECKING

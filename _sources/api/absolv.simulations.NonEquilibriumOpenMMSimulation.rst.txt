@@ -7,6 +7,13 @@ NonEquilibriumOpenMMSimulation
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~NonEquilibriumOpenMMSimulation.current_state
+   
    
 
    

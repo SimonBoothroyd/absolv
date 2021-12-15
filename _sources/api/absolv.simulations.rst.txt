@@ -19,6 +19,8 @@ simulations
       AlchemicalOpenMMSimulation
       EquilibriumOpenMMSimulation
       NonEquilibriumOpenMMSimulation
+      RepexAlchemicalOpenMMSimulation
+      TYPE_CHECKING
    
    
 

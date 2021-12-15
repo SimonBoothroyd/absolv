@@ -7,6 +7,13 @@ AlchemicalOpenMMSimulation
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      ~AlchemicalOpenMMSimulation.current_state
+   
    
 
    

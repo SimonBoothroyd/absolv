@@ -1,0 +1,30 @@
+RepexAlchemicalOpenMMSimulation
+===============================
+
+.. currentmodule:: absolv.simulations
+
+.. autoclass:: RepexAlchemicalOpenMMSimulation
+
+   
+   
+   
+
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RepexAlchemicalOpenMMSimulation.__init__
+      ~RepexAlchemicalOpenMMSimulation.run
+
+   
+   .. automethod:: __init__
+   
+   .. automethod:: run
+   
+
+   
+   
