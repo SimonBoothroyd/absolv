@@ -24,6 +24,8 @@ dependencies:
   - rdkit
   - ambertools
 
+  - openmmtools  # repex
+
   - smirnoff-plugins  # custom vdW functional forms
 
     # Testing

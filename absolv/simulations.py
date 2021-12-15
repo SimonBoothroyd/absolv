@@ -192,7 +192,7 @@ class EquilibriumOpenMMSimulation(_BaseOpenMMSimulation):
 
         assert (
             self._protocol.sampler == "independent"
-        ), "the protocol does not specifiy a independent sampler"
+        ), "the protocol does not specify an independent sampler"
 
     def _minimize(self):
         """Energy minimize the context if minimization has not already occurred."""
@@ -395,7 +395,7 @@ class RepexAlchemicalOpenMMSimulation:
 
         assert (
             self._protocol.sampler == "repex"
-        ), "the protocol does not specifiy a repex sampler"
+        ), "the protocol does not specify a repex sampler"
 
     def _setup_sampler(
         self,

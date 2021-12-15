@@ -8,7 +8,9 @@ import numpy
 import openmm
 import pytest
 from openff.toolkit.topology import Molecule, Topology
+from openff.utilities import temporary_cd
 from openmm import unit
+from openmmtools import cache, mcmc, multistate
 
 from absolv.factories.alchemical import OpenMMAlchemicalFactory
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
@@ -23,6 +25,7 @@ from absolv.simulations import (
     AlchemicalOpenMMSimulation,
     EquilibriumOpenMMSimulation,
     NonEquilibriumOpenMMSimulation,
+    RepexAlchemicalOpenMMSimulation,
     _BaseOpenMMSimulation,
     _OpenMMTopology,
 )
@@ -111,6 +114,33 @@ def alchemical_argon_eq_simulation(alchemical_argon_system):
 
 
 @pytest.fixture()
+def repex_argon_eq_simulation(alchemical_argon_system):
+
+    topology, coordinates, system = alchemical_argon_system
+
+    protocol = EquilibriumProtocol(
+        lambda_sterics=[1.0, 1.0, 0.0],
+        lambda_electrostatics=[1.0, 0.0, 0.0],
+        minimization_protocol=MinimizationProtocol(max_iterations=1),
+        equilibration_protocol=SimulationProtocol(
+            n_iterations=1, n_steps_per_iteration=1
+        ),
+        production_protocol=SimulationProtocol(n_iterations=2, n_steps_per_iteration=3),
+        sampler="repex",
+    )
+
+    simulation = RepexAlchemicalOpenMMSimulation(
+        system,
+        coordinates,
+        topology.box_vectors,
+        State(temperature=85.5, pressure=1.0),
+        protocol,
+        "Reference",
+    )
+    yield simulation
+
+
+@pytest.fixture()
 def alchemical_argon_neq_simulation(alchemical_argon_system):
 
     topology, coordinates, system = alchemical_argon_system
@@ -167,6 +197,11 @@ class TestBaseOpenMMSimulation(BaseTemporaryDirTest):
 
         expected_pressure = 0.5 * unit.atmosphere
         assert is_close(expected_pressure, simulation._pressure)
+
+    def test_current_state(self, alchemical_argon_eq_simulation):
+
+        current_state = alchemical_argon_eq_simulation.current_state
+        assert isinstance(current_state, openmm.State)
 
     def test_save_restore_state(self, alchemical_argon_eq_simulation):
 
@@ -421,6 +456,181 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
         assert all_close(
             lambda_potentials, numpy.array([expected_reduced_potential, 0.0])
         )
+
+
+class TestRepexAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
+    def test_init(self, alchemical_argon_system):
+        topology, coordinates, system = alchemical_argon_system
+
+        protocol = EquilibriumProtocol(
+            lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0], sampler="repex"
+        )
+
+        simulation = RepexAlchemicalOpenMMSimulation(
+            system,
+            coordinates,
+            topology.box_vectors,
+            State(temperature=85.5, pressure=0.5),
+            protocol,
+            "CPU",
+        )
+
+        assert simulation._system == system
+
+        assert simulation._coordinates.shape == coordinates.shape
+        assert simulation._box_vectors.shape == topology.box_vectors.shape
+
+        assert numpy.isclose(simulation._state.temperature, 85.5)
+        assert numpy.isclose(simulation._state.pressure, 0.5)
+
+        assert simulation._platform == "CPU"
+
+        assert simulation._protocol == protocol
+
+    def test_setup_sampler(
+        self, alchemical_argon_system, repex_argon_eq_simulation, tmpdir
+    ):
+
+        topology, coordinates, _ = alchemical_argon_system
+
+        expected_state_coordinates = [
+            (coordinates + i * unit.angstrom, topology.box_vectors) for i in range(3)
+        ]
+
+        simulation = repex_argon_eq_simulation._setup_sampler(
+            expected_state_coordinates, storage_path=os.path.join(tmpdir, "storage.nc")
+        )
+
+        assert cache.global_context_cache.platform.getName() == "Reference"
+
+        assert simulation.n_states == 3
+        assert simulation.n_replicas == 3
+
+        assert (
+            simulation.number_of_iterations
+            == repex_argon_eq_simulation._protocol.production_protocol.n_iterations
+        )
+
+        for mcmc_move in simulation.mcmc_moves:
+            assert isinstance(mcmc_move, mcmc.LangevinDynamicsMove)
+
+            assert numpy.isclose(
+                mcmc_move.timestep.value_in_unit(unit.femtosecond),
+                repex_argon_eq_simulation._protocol.production_protocol.timestep,
+            )
+            assert numpy.isclose(
+                mcmc_move.collision_rate.value_in_unit(unit.picosecond ** -1),
+                repex_argon_eq_simulation._protocol.production_protocol.thermostat_friction,
+            )
+            assert (
+                mcmc_move.n_steps
+                == repex_argon_eq_simulation._protocol.production_protocol.n_steps_per_iteration
+            )
+
+        for sampler_state, (expected_coordinates, expected_box_vectors) in zip(
+            simulation.sampler_states, expected_state_coordinates
+        ):
+
+            assert numpy.allclose(
+                expected_coordinates.value_in_unit(unit.angstrom),
+                sampler_state.positions.value_in_unit(unit.angstrom),
+            )
+            assert numpy.allclose(
+                expected_box_vectors.value_in_unit(unit.angstrom),
+                sampler_state.box_vectors.value_in_unit(unit.angstrom),
+            )
+
+        for thermodynamic_state, expected_lambda_sterics, expected_lambda_elec in zip(
+            simulation._thermodynamic_states,
+            repex_argon_eq_simulation._protocol.lambda_sterics,
+            repex_argon_eq_simulation._protocol.lambda_electrostatics,
+        ):
+
+            assert numpy.isclose(
+                thermodynamic_state.temperature.value_in_unit(unit.kelvin), 85.5
+            )
+
+            assert len(thermodynamic_state._composable_states) == 1
+            assert numpy.isclose(
+                thermodynamic_state._composable_states[0].lambda_sterics,
+                expected_lambda_sterics,
+            )
+            assert numpy.isclose(
+                thermodynamic_state._composable_states[0].lambda_electrostatics,
+                expected_lambda_elec,
+            )
+
+        assert os.path.isfile(os.path.join(tmpdir, "storage.nc"))
+
+    def test_save_reduced_potentials(self, repex_argon_eq_simulation, tmpdir):
+
+        with temporary_cd(str(tmpdir)):
+
+            reporter = multistate.MultiStateReporter(
+                "storage.nc", checkpoint_interval=1, open_mode="w"
+            )
+
+            reporter.write_energies(
+                numpy.arange(9).reshape((3, 3)), numpy.eye(3), numpy.zeros((3, 0)), 0
+            )
+            reporter.write_replica_thermodynamic_states([0, 1, 2], 0)
+            reporter.write_energies(
+                numpy.arange(9).reshape((3, 3)), numpy.eye(3), numpy.zeros((3, 0)), 1
+            )
+            reporter.write_replica_thermodynamic_states([0, 1, 2], 1)
+
+            reporter.write_energies(
+                numpy.arange(9).reshape((3, 3)) + 9.0,
+                numpy.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]]),
+                numpy.zeros((3, 0)),
+                2,
+            )
+            reporter.write_replica_thermodynamic_states([2, 1, 0], 2)
+            reporter.write_last_iteration(2)
+            reporter.close()
+
+            repex_argon_eq_simulation._save_reduced_potentials("storage.nc")
+
+            saved_energies = numpy.stack(
+                [
+                    numpy.genfromtxt(
+                        os.path.join(f"state-{state_index}", "lambda-potentials.csv")
+                    )
+                    for state_index in range(3)
+                ]
+            )
+            assert saved_energies.shape == (3, 2, 3)
+
+            # [iter][state_idx][state_e_idx]
+            expected_energies = numpy.array(
+                [
+                    [[0.0, 1.0, 2.0], [15.0, 16.0, 17.0]],
+                    [[3.0, 4.0, 5.0], [12.0, 13.0, 14.0]],
+                    [[6.0, 7.0, 8.0], [9.0, 10.0, 11.0]],
+                ]
+            )
+
+            assert numpy.allclose(saved_energies, expected_energies)
+
+    def test_run(self, repex_argon_eq_simulation, tmpdir):
+
+        with temporary_cd(str(tmpdir)):
+
+            repex_argon_eq_simulation.run("")
+
+            expected_files = [
+                "minimized-state.xml",
+                "equilibration-final-state.xml",
+                "production-storage.nc",
+                "production-storage_checkpoint.nc",
+                os.path.join("state-0", "lambda-potentials.csv"),
+                os.path.join("state-1", "lambda-potentials.csv"),
+                os.path.join("state-2", "lambda-potentials.csv"),
+            ]
+
+            assert all(
+                os.path.isfile(expected_file) for expected_file in expected_files
+            )
 
 
 class TestNonEquilibriumOpenMMSimulation(BaseTemporaryDirTest):

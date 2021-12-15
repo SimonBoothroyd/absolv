@@ -216,6 +216,13 @@ class BaseRunner:
 
         elif protocol.sampler == "repex":
 
+            if states is not None and len(states) != protocol.n_states:
+
+                raise NotImplementedError(
+                    "All lambda states must be run when using the replica exchange "
+                    "sampler."
+                )
+
             simulation = RepexAlchemicalOpenMMSimulation(
                 alchemical_system,
                 coordinates,
