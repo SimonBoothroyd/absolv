@@ -24,17 +24,25 @@ def main():
 
             _, method, name = path.split(os.sep)
 
-            result = TransferFreeEnergyResult.parse_file(
-                os.path.join(path, "free-energies.json")
-            )
+            if not os.path.isfile(os.path.join(path, "free-energies.json")):
+                print(f"WARNING: {path} not found")
+                result_dict = {"value": None, "std_error": None, "units": "kcal / mol"}
 
-            value, std_error = result.delta_g_from_a_to_b_with_units
+            else:
 
-            result_dict = {
-                "value": value.value_in_unit(openmm.unit.kilocalorie_per_mole),
-                "std_error": std_error.value_in_unit(openmm.unit.kilocalorie_per_mole),
-                "units": "kcal / mol",
-            }
+                result = TransferFreeEnergyResult.parse_file(
+                    os.path.join(path, "free-energies.json")
+                )
+
+                value, std_error = result.delta_g_from_a_to_b_with_units
+
+                result_dict = {
+                    "value": value.value_in_unit(openmm.unit.kilocalorie_per_mole),
+                    "std_error": std_error.value_in_unit(
+                        openmm.unit.kilocalorie_per_mole
+                    ),
+                    "units": "kcal / mol",
+                }
 
             summary_dict["results"][replica][method][name] = result_dict
 

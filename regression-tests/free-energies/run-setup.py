@@ -2,12 +2,15 @@ import os.path
 from glob import glob
 from typing import Literal
 
+import click
 import openmm.app
 import openmm.unit
+import yaml
 from openff.toolkit.topology import Molecule
+from openff.utilities import temporary_cd
 from openmmforcefields.generators import GAFFTemplateGenerator
 
-import absolv
+from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.models import (
     EquilibriumProtocol,
     NonEquilibriumProtocol,
@@ -20,6 +23,8 @@ from absolv.models import (
 from absolv.runners.equilibrium import EquilibriumRunner
 from absolv.runners.nonequilibrium import NonEquilibriumRunner
 from absolv.utilities.openmm import SystemGenerator, create_system_generator
+
+CUTOFF = 1.0 * openmm.unit.nanometer
 
 STATE = State(
     temperature=298.15 * openmm.unit.kelvin, pressure=1.0 * openmm.unit.atmosphere
@@ -40,21 +45,18 @@ LAMBDA_STERICS_SOLVENT = [
 ]
 
 
-def setup_equilibrium(
-    system: System,
-    system_generator: SystemGenerator,
-    directory: str,
-    sampler: Literal["independent", "repex"]
-):
+def default_equilibrium_schema(
+    system: System, sampler: Literal["independent", "repex"]
+) -> TransferFreeEnergySchema:
 
-    schema = TransferFreeEnergySchema(
+    return TransferFreeEnergySchema(
         system=system,
         state=STATE,
         # vacuum lambda states
         alchemical_protocol_a=EquilibriumProtocol(
             production_protocol=SimulationProtocol(
-                n_steps_per_iteration=1000,
-                n_iterations=2500
+                n_steps_per_iteration=500,
+                n_iterations=3000
             ),
             lambda_sterics=LAMBDA_STERICS_VACUUM,
             lambda_electrostatics=LAMBDA_ELECTROSTATICS_VACUUM,
@@ -63,8 +65,8 @@ def setup_equilibrium(
         # solvent lambda states
         alchemical_protocol_b=EquilibriumProtocol(
             production_protocol=SimulationProtocol(
-                n_steps_per_iteration=1000,
-                n_iterations=2500
+                n_steps_per_iteration=500,
+                n_iterations=3000
             ),
             lambda_sterics=LAMBDA_STERICS_SOLVENT,
             lambda_electrostatics=LAMBDA_ELECTROSTATICS_SOLVENT,
@@ -72,6 +74,15 @@ def setup_equilibrium(
         )
     )
 
+
+def setup_equilibrium(
+    system: System,
+    system_generator: SystemGenerator,
+    directory: str,
+    sampler: Literal["independent", "repex"]
+):
+
+    schema = default_equilibrium_schema(system, sampler)
     EquilibriumRunner.setup(schema, system_generator, directory)
 
 
@@ -106,9 +117,104 @@ def setup_non_equilibrium(
     NonEquilibriumRunner.setup(schema, system_generator, directory)
 
 
-def main():
+def setup_yank(
+    system: System, system_generator: SystemGenerator, directory: str
+):
 
-    root_directory = f"absolv-{absolv.__version__}"
+    schema = default_equilibrium_schema(system, "repex")
+
+    topology_a, coordinates_a = PACKMOLCoordinateFactory.generate(
+        [
+            *system.solutes.items(),
+            *({} if system.solvent_a is None else system.solvent_a).items()
+        ]
+    )
+    topology_a.box_vectors = None if system.solvent_a is None else topology_a.box_vectors
+    system_a = system_generator(topology_a, coordinates_a, "solvent-a")
+
+    topology_b, coordinates_b = PACKMOLCoordinateFactory.generate(
+        [
+            *system.solutes.items(),
+            *({} if system.solvent_b is None else system.solvent_b).items()
+        ]
+    )
+    topology_b.box_vectors = None if system.solvent_b is None else topology_b.box_vectors
+    system_b = system_generator(topology_b, coordinates_b, "solvent-b")
+
+    input_dict = dict(
+        options=dict(
+            output_dir=".",
+            temperature=f"{schema.state.temperature} * kelvin",
+            pressure=f"{schema.state.pressure} * atmosphere",
+            minimize=True,
+            number_of_equilibration_iterations=150,
+            equilibration_timestep="2.0 * femtosecond",
+            default_number_of_iterations=3000,
+            default_nsteps_per_iteration=500,
+            default_timestep="2.0 * femtosecond",
+            annihilate_electrostatics=True,
+            annihilate_sterics=False,
+            # Try and get Yank to setup the system as close to absolv does as possible.
+            # Namely, don't use a direct-space soft-core for electrostatics
+            alchemical_pme_treatment="exact",
+            # Don't try to expand the cut-off to a large value by re-weighting
+            anisotropic_dispersion_cutoff=CUTOFF,
+        ),
+        systems=dict(
+            default=dict(
+                phase1_path=["solvent-a.xml", "solvent-a.pdb"],
+                phase2_path=["solvent-b.xml", "solvent-b.pdb"],
+                solvent_dsl="chainid 1"
+            )
+        ),
+        protocols=dict(
+            default=dict(
+                solvent1={
+                    "alchemical_path": {
+                        "lambda_electrostatics": schema.alchemical_protocol_a.lambda_electrostatics,
+                        "lambda_sterics": schema.alchemical_protocol_a.lambda_sterics,
+                    }
+                },
+                solvent2={
+                    "alchemical_path": {
+                        "lambda_electrostatics": schema.alchemical_protocol_b.lambda_electrostatics,
+                        "lambda_sterics": schema.alchemical_protocol_b.lambda_sterics
+                    }
+                },
+            )
+        ),
+        experiments=dict(
+            system="default",
+            protocol="default"
+        )
+    )
+
+    os.makedirs(directory)
+
+    with temporary_cd(directory):
+
+        with open("solvent-a.xml", "w") as file:
+            file.write(openmm.XmlSerializer.serialize(system_a))
+        with open("solvent-b.xml", "w") as file:
+            file.write(openmm.XmlSerializer.serialize(system_b))
+
+        topology_a.to_file("solvent-a.pdb", coordinates_a)
+        topology_b.to_file("solvent-b.pdb", coordinates_b)
+
+        with open("yank.yaml", "w") as file:
+            yaml.dump(input_dict, file, sort_keys=False)
+
+        with open("schema.json", "w") as file:
+            file.write(schema.json(indent=4))
+
+
+@click.argument("replica", type=click.INT)
+@click.command()
+def main(replica):
+
+    print(f"PACKMOL seed={os.environ['ABSOLV_PACKMOL_SEED']}")
+
+    root_directory = f"absolv-0.0.1-rc.2-{replica}"
     os.makedirs(root_directory)
 
     # Define the regression systems
@@ -145,7 +251,7 @@ def main():
         solvent_a_nonbonded_method=openmm.app.NoCutoff,
         solvent_b_nonbonded_method=openmm.app.PME,
         switch_distance=0.9 * openmm.unit.nanometer,
-        nonbonded_cutoff=1.0 * openmm.unit.nanometer,
+        nonbonded_cutoff=CUTOFF,
         constraints=openmm.app.HBonds,
         rigid_water=True
     )
@@ -167,6 +273,9 @@ def main():
 
         setup_non_equilibrium(
             system, system_generator, os.path.join(root_directory, "neq", name)
+        )
+        setup_yank(
+            system, system_generator, os.path.join(root_directory, "yank", name)
         )
 
 

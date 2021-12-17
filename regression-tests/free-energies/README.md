@@ -13,6 +13,7 @@ column of Table 2.
 To run the regression tests
 
 1) Download the charges used in the study by running `download-charges.sh`
-2) Create the input files using `python run-setup.py`
+2) Create the input files by running `submit-setup.sh`
 3) Submit all the required calculations to an LSF compute cluster using `submit-production.sh`
 4) Summarise the results using `python run-summarise.py`
+5) Plot the final data using `python run-plotting.py`
