@@ -8,8 +8,10 @@ import openmm.unit
 import yaml
 from openff.toolkit.topology import Molecule
 from openff.utilities import temporary_cd
+from openmm import unit
 from openmmforcefields.generators import GAFFTemplateGenerator
 
+import absolv
 from absolv.factories.coordinate import PACKMOLCoordinateFactory
 from absolv.models import (
     EquilibriumProtocol,
@@ -158,7 +160,9 @@ def setup_yank(
             # Namely, don't use a direct-space soft-core for electrostatics
             alchemical_pme_treatment="exact",
             # Don't try to expand the cut-off to a large value by re-weighting
-            anisotropic_dispersion_cutoff=CUTOFF,
+            anisotropic_dispersion_cutoff=(
+                f"{CUTOFF.value_in_unit(unit.nanometers)} nanometers"
+            ),
         ),
         systems=dict(
             default=dict(
@@ -214,7 +218,7 @@ def main(replica):
 
     print(f"PACKMOL seed={os.environ['ABSOLV_PACKMOL_SEED']}")
 
-    root_directory = f"absolv-0.0.1-rc.2-{replica}"
+    root_directory = f"absolv-{absolv.__version__}-{replica}"
     os.makedirs(root_directory)
 
     # Define the regression systems
