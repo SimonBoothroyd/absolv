@@ -448,7 +448,7 @@ class RepexAlchemicalOpenMMSimulation:
             ),
             online_analysis_interval=None,
             online_analysis_target_error=None,
-            online_analysis_minimum_iterations=None
+            online_analysis_minimum_iterations=None,
         )
         simulation.create(
             thermodynamic_states=compound_states,
