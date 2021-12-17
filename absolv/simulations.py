@@ -446,6 +446,9 @@ class RepexAlchemicalOpenMMSimulation:
                 reassign_velocities=True,
                 n_restart_attempts=6,
             ),
+            online_analysis_interval=None,
+            online_analysis_target_error=None,
+            online_analysis_minimum_iterations=None,
         )
         simulation.create(
             thermodynamic_states=compound_states,
