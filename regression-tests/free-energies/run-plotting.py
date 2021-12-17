@@ -66,7 +66,7 @@ def main():
 
         for version, method, name in replica_values:
 
-            if any(v is None for v in replica_values[(version, method, name)]):
+            if not any(v is None for v in replica_values[(version, method, name)]):
                 mean = float(numpy.mean(replica_values[(version, method, name)]))
                 std_error = float(numpy.std(replica_values[(version, method, name)]))
             else:
