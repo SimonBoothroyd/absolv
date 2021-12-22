@@ -709,13 +709,13 @@ free energy calculation from an OpenMM force field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="api-field simple">
-<dt><span class="sig-name descname">force_field</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.app.forcefield.ForceField.html#openmm.app.forcefield.ForceField" title="(in OpenMM Python API v7.6.0)">openmm.app.forcefield.ForceField</a></span></span></dt><dd><p>The OpenMM force field to parameterize the topology using.</p>
+<dt><span class="sig-name descname">force_field</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.app.forcefield.ForceField.html#openmm.app.forcefield.ForceField" title="(in OpenMM Python API v7.7.0)">openmm.app.forcefield.ForceField</a></span></span></dt><dd><p>The OpenMM force field to parameterize the topology using.</p>
 </dd>
 <dt><span class="sig-name descname">solvent_a_nonbonded_method</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p>The non-bonded method to use in solvent a.</p>
 </dd>
 <dt><span class="sig-name descname">solvent_b_nonbonded_method</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p>The non-bonded method to use in solvent b.</p>
 </dd>
-<dt><span class="sig-name descname">nonbonded_cutoff</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a></span></span></dt><dd><p>The non-bonded cutoff to use.</p>
+<dt><span class="sig-name descname">nonbonded_cutoff</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a></span></span></dt><dd><p>The non-bonded cutoff to use.</p>
 </dd>
 <dt><span class="sig-name descname">constraints</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</span></span></dt><dd><p>The type of constraints to apply to the system.</p>
 </dd>
@@ -723,9 +723,9 @@ free energy calculation from an OpenMM force field.</p>
 </dd>
 <dt><span class="sig-name descname">remove_cmm_motion</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></span></span></dt><dd><p>Whether to remove any CMM motion.</p>
 </dd>
-<dt><span class="sig-name descname">hydrogen_mass</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The mass to use for hydrogens.</p>
+<dt><span class="sig-name descname">hydrogen_mass</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The mass to use for hydrogens.</p>
 </dd>
-<dt><span class="sig-name descname">switch_distance</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The switch distance to use.</p>
+<dt><span class="sig-name descname">switch_distance</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The switch distance to use.</p>
 </dd>
 </dl>
 </dd>
@@ -735,7 +735,7 @@ name of the solvent (i.e. <code class="docutils literal notranslate"><span class
 be used for.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Callable[[<a class="reference external" href="https://open-forcefield-toolkit.readthedocs.io/en/latest/api/generated/openff.toolkit.topology.Topology.html#openff.toolkit.topology.Topology" title="(in OpenFF Toolkit v0.10.1+26.g192fe7f1.dirty)">openff.toolkit.topology.Topology</a>, <a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.6.0)">openmm.unit.quantity.Quantity</a>, Literal[‘solvent-a’, ‘solvent-b’]], openmm.openmm.System]</p>
+<dd class="field-odd"><p>Callable[[<a class="reference external" href="https://open-forcefield-toolkit.readthedocs.io/en/latest/api/generated/openff.toolkit.topology.Topology.html#openff.toolkit.topology.Topology" title="(in OpenFF Toolkit v0.10.1+26.g192fe7f1.dirty)">openff.toolkit.topology.Topology</a>, <a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a>, Literal[‘solvent-a’, ‘solvent-b’]], openmm.openmm.System]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -750,7 +750,7 @@ be used for.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 17, 2021
+      Last update: Dec 22, 2021
     
   </small>
 </div>
