@@ -161,7 +161,7 @@ def setup_yank(
             alchemical_pme_treatment="exact",
             # Don't try to expand the cut-off to a large value by re-weighting
             anisotropic_dispersion_cutoff=(
-                f"{CUTOFF.value_in_unit(unit.nanometers)} nanometers"
+                f"{CUTOFF.value_in_unit(unit.nanometers)} * nanometers"
             ),
         ),
         systems=dict(
