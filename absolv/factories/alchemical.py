@@ -30,8 +30,8 @@ class OpenMMAlchemicalFactory:
     Notes:
         * Currently only OpenMM systems that have:
 
-          - vdW + electrostatics in a single built-in LJ force
-          - electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
+          - vdW + electrostatics in a single built-in non-bonded force
+          - electrostatics in a built-in non-bonded force, vdW in a custom **non-bonded**
             force and vdW 1-4 interactions in a custom **bond** force
           - all of the above sans any electrostatics
 
@@ -125,10 +125,10 @@ class OpenMMAlchemicalFactory:
                 custom_bond_forces.append(force)
 
         if not (
-            # vdW + electrostatics in a single built-in LJ force
+            # vdW + electrostatics in a single built-in non-bonded force
             (len(normal_nonbonded_forces) == 1 and len(custom_nonbonded_forces) == 0)
-            # OR electrostatics in a built-in LJ force, vdW in a custom **non-bonded**
-            #    force and vdW 1-4 interactions in a custom **bond** force
+            # OR electrostatics in a built-in non-bonded force, vdW in a custom
+            # **non-bonded** force and vdW 1-4 interactions in a custom **bond** force
             or (
                 len(normal_nonbonded_forces) == 1
                 and len(custom_nonbonded_forces) == 1
@@ -144,9 +144,10 @@ class OpenMMAlchemicalFactory:
 
             raise NotImplementedError(
                 "Currently only OpenMM systems that have:\n\n"
-                "- vdW + electrostatics in a single built-in LJ force\n"
-                "- electrostatics in a built-in LJ force, vdW in a custom **non-"
-                "bonded** force and vdW 1-4 interactions in a custom **bond** force\n"
+                "- vdW + electrostatics in a single built-in non-bonded force\n"
+                "- electrostatics in a built-in non-bonded force, vdW in a custom "
+                "**non-bonded** force and vdW 1-4 interactions in a custom **bond** "
+                "force\n"
                 "- all of the above sans any electrostatics\n\n"
                 "are supported. Please raise an issue on the GitHub issue tracker if "
                 "you'd like your use case supported."
@@ -268,21 +269,23 @@ class OpenMMAlchemicalFactory:
         alchemical_indices: List[Set[int]],
         persistent_indices: List[Set[int]],
         custom_alchemical_potential: Optional[str],
-    ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomBondForce]:
+    ) -> Tuple[openmm.CustomNonbondedForce, openmm.CustomNonbondedForce]:
         """Modifies a standard non-bonded force so that only the interactions between
         persistent (chemical) particles are retained, and splits out all intermolecular
         alchemical (both chemical-alchemical and alchemical-alchemical) interactions
-        into a separate custom non-bonded force.
+        and all intramolecular alchemical-alchemical interactions into two new
+        custom non-bonded forces.
 
         Notes:
             * By default the custom non-bonded force will use a soft-core version of the
               LJ potential with a-b-c of 1-1-6 and alpha=0.5 that can be scaled by a
               global `lambda_sterics` parameter.
-            * All of the intramolecular vdW interactions of alchemical molecules
-              (excluding 1-2, 1-3 and 1-4 interactions) will be replaced with explicit
-              exceptions in a new custom bond force. This ensures that the decoupled
-              state truly corresponds to a set of alchemical molecules in vacuum with no
-              periodic effects.
+            * The alchemical-alchemical intramolecular custom non-bonded force will use
+              ``NoCutoff` as the interaction if ``original_force`` also uses ``NoCutoff``
+              or ``CutoffNonPeriodic`` otherwise even if ``original_force`` uses
+              ``CutoffPeriodic``. This ensures that the decoupled state truly
+              corresponds to a set of alchemical molecules in vacuum with no periodic
+              effects.
 
         Args:
             original_force: The force to modify.
@@ -295,11 +298,11 @@ class OpenMMAlchemicalFactory:
                 The expression **must** include ``"lambda_sterics"``.
 
         Returns:
-            A custom non-bonded force that contains all of the chemical-alchemical and
-            **intermolecular** alchemical-alchemical interactions, and a custom bond
-            force that contains the intermolecular interactions of the alchemical
-            molecules excluding any 1-2, 1-3, and 1-4 interactions which are still
-            handled by the original force.
+            A custom non-bonded force that contains all chemical-alchemical and
+            **intermolecular** alchemical-alchemical interactions, and a custom
+            non-bonded force that contains the intermolecular interactions of the
+            alchemical molecules excluding any 1-2, 1-3, and 1-4 interactions which are
+            still handled by the original force.
         """
 
         custom_nonbonded_template = openmm.CustomNonbondedForce("")
@@ -366,33 +369,23 @@ class OpenMMAlchemicalFactory:
             aa_na_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 
         # Make sure that each alchemical molecule can also interact with themselves
-        found_exclusions = {
-            tuple(sorted(original_force.getExceptionParameters(index)[:2]))
-            for index in range(original_force.getNumExceptions())
-        }
-        intramolecular_exclusions = {
-            tuple(sorted(pair))
-            for atom_indices in alchemical_indices
-            for pair in itertools.combinations(atom_indices, r=2)
-            if pair not in found_exclusions
-        }
+        aa_aa_custom_nonbonded_force = copy.deepcopy(custom_nonbonded_template)
+        aa_aa_custom_nonbonded_force.setEnergyFunction(
+            lj_potential() + lorentz_berthelot()
+        )
+        aa_aa_custom_nonbonded_force.setNonbondedMethod(
+            # Use a ``CutoffNonPeriodic`` to ensure solutes don't interact with
+            # periodic copies of themselves
+            openmm.NonbondedForce.NoCutoff
+            if custom_nonbonded_template.getNonbondedMethod()
+            == openmm.NonbondedForce.NoCutoff
+            else openmm.NonbondedForce.CutoffNonPeriodic
+        )
 
-        aa_aa_custom_bond_force = openmm.CustomBondForce(lj_potential())
-        aa_aa_custom_bond_force.addPerBondParameter("epsilon")
-        aa_aa_custom_bond_force.addPerBondParameter("sigma")
+        for atom_indices in alchemical_indices:
+            aa_aa_custom_nonbonded_force.addInteractionGroup(atom_indices, atom_indices)
 
-        for pair in intramolecular_exclusions:
-
-            sigma_1, epsilon_1 = original_parameters[pair[0]]
-            sigma_2, epsilon_2 = original_parameters[pair[1]]
-
-            aa_aa_custom_bond_force.addBond(
-                pair[0],
-                pair[1],
-                [numpy.sqrt(epsilon_1 * epsilon_2), 0.5 * (sigma_1 + sigma_2)],
-            )
-
-        return aa_na_custom_nonbonded_force, aa_aa_custom_bond_force
+        return aa_na_custom_nonbonded_force, aa_aa_custom_nonbonded_force
 
     @classmethod
     def _add_custom_vdw_lambda(
@@ -405,13 +398,20 @@ class OpenMMAlchemicalFactory:
         """Modifies a custom non-bonded force so that only the interactions between
         persistent (chemical) particles and all intramolecular interactions (including
         those in alchemical molecules) are retained, and splits out all intermolecular
-        alchemical (both chemical-alchemical and alchemical-alchemical) interactions into
-        a separate custom non-bonded force.
+        alchemical (both chemical-alchemical and alchemical-alchemical) interactions
+        and all intramolecular alchemical-alchemical interactions into two new
+        custom non-bonded forces.
 
         Notes:
             * By default the chemical-alchemical custom non-bonded force will use a
               modified energy expression so that it can be linearly scaled by a global
               `lambda_sterics` parameter.
+            * The alchemical-alchemical intramolecular custom non-bonded force will use
+              ``NoCutoff` as the interaction if ``original_force`` also uses ``NoCutoff``
+              or ``CutoffNonPeriodic`` otherwise even if ``original_force`` uses
+              ``CutoffPeriodic``. This ensures that the decoupled state truly
+              corresponds to a set of alchemical molecules in vacuum with no periodic
+              effects.
 
         Args:
             original_force: The force to modify.
@@ -424,7 +424,7 @@ class OpenMMAlchemicalFactory:
                 The expression **must** include ``"lambda_sterics"``.
 
         Returns:
-            A custom non-bonded forces that contain all of the chemical-alchemical and
+            A custom non-bonded forces that contains all chemical-alchemical and
             intermolecular alchemical-alchemical interactions, and one containing all of
             the intramolecular alchemical-alchemical interactions excluding any 1-2, 1-3
             and 1-4 interactions which should be instead handled by an un-scaled custom
@@ -469,7 +469,8 @@ class OpenMMAlchemicalFactory:
         aa_na_custom_nonbonded_force.addInteractionGroup(
             alchemical_atom_indices, persistent_atom_indices
         )
-        # and each alchemical molecule so that things ion pairs interactions are disabled
+        # and all other alchemical molecules so that things like ion pair interactions
+        # are included
         for pair in itertools.combinations(alchemical_indices, r=2):
             aa_na_custom_nonbonded_force.addInteractionGroup({*pair[0]}, {*pair[1]})
 

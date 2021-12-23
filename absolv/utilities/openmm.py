@@ -352,3 +352,28 @@ def create_system_generator(
         return system
 
     return system_generator
+
+
+def disable_long_range_corrections(system: openmm.System):
+    """Disables all long range corrections found in a system in-place.
+
+    This is performed by calling
+
+        * ``NonbondedForce.setUseDispersionCorrection(False)``
+        * ``CustomNonbondedForce.setUseLongRangeCorrection(False)``
+
+    on all relevant forces.
+    """
+
+    for force in (
+        force
+        for force in system.getForces()
+        if isinstance(force, openmm.NonbondedForce)
+    ):
+        force.setUseDispersionCorrection(False)
+    for force in (
+        force
+        for force in system.getForces()
+        if isinstance(force, openmm.CustomNonbondedForce)
+    ):
+        force.setUseLongRangeCorrection(False)

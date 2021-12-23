@@ -52,7 +52,7 @@ jobs:
     - name: Run Tests
       shell: bash -l {0}
       run: |
-        pytest -v --cov=absolv --cov-report=xml --color=yes absolv/tests/
+        pytest -v --cov=absolv --cov-report=xml --color=yes absolv/tests/ regression-tests/
 
     - name: CodeCov
       uses: codecov/codecov-action@v2.1.0
