@@ -283,6 +283,7 @@ def argon_eq_schema():
             ),
             lambda_sterics=[1.0, 0.5, 0.0],
             lambda_electrostatics=[0.0, 0.0, 0.0],
+            sampler="independent",
         ),
         alchemical_protocol_b=EquilibriumProtocol(
             minimization_protocol=None,
@@ -292,6 +293,7 @@ def argon_eq_schema():
             ),
             lambda_sterics=[1.0, 0.0],
             lambda_electrostatics=[1.0, 1.0],
+            sampler="independent",
         ),
     )
 
