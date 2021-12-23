@@ -123,6 +123,7 @@ class TestOpenMMAlchemicalFactory:
             nonbonded_force, [{0}, {1}], [{2, 3, 4}, {5, 6, 7}], custom_potential
         )
 
+        assert nonbonded_force.getNonbondedMethod() == openmm.NonbondedForce.PME
         assert nonbonded_force.getNumGlobalParameters() == 0
 
         # Make sure the solute interactions have been disabled while the solvent ones.
@@ -150,7 +151,7 @@ class TestOpenMMAlchemicalFactory:
         )
 
         assert isinstance(custom_forces[0], openmm.CustomNonbondedForce)
-        assert isinstance(custom_forces[1], openmm.CustomBondForce)
+        assert isinstance(custom_forces[1], openmm.CustomNonbondedForce)
 
         aa_na_custom_force, aa_aa_custom_force = custom_forces
 
@@ -165,9 +166,20 @@ class TestOpenMMAlchemicalFactory:
 
         assert aa_na_custom_force.getNumGlobalParameters() == 1
         assert aa_na_custom_force.getGlobalParameterName(0) == "lambda_sterics"
+        assert (
+            aa_na_custom_force.getNonbondedMethod()
+            == openmm.CustomNonbondedForce.CutoffPeriodic
+        )
 
-        assert aa_aa_custom_force.getEnergyFunction() == lj_potential()
+        assert (
+            aa_aa_custom_force.getEnergyFunction()
+            == lj_potential() + lorentz_berthelot()
+        )
         assert aa_aa_custom_force.getNumGlobalParameters() == 0
+        assert (
+            aa_aa_custom_force.getNonbondedMethod()
+            == openmm.CustomNonbondedForce.CutoffNonPeriodic
+        )
 
         # Make sure the alchemical-chemical interaction groups are correctly set-up
         assert aa_na_custom_force.getNumInteractionGroups() == 2
@@ -177,7 +189,9 @@ class TestOpenMMAlchemicalFactory:
         ]
         assert aa_na_custom_force.getInteractionGroupParameters(1) == [(0,), (1,)]
 
-        assert aa_aa_custom_force.getNumBonds() == 0
+        assert aa_aa_custom_force.getNumInteractionGroups() == 2
+        assert aa_aa_custom_force.getInteractionGroupParameters(0) == [(0,), (0,)]
+        assert aa_aa_custom_force.getInteractionGroupParameters(1) == [(1,), (1,)]
 
     @pytest.mark.parametrize("custom_potential", [None, "lambda_sterics*2.0"])
     def test_add_custom_vdw_lambda(self, aq_meoh_de_nonbonded, custom_potential):
@@ -286,11 +300,4 @@ class TestOpenMMAlchemicalFactory:
             for force in alchemical_system.getForces()
             if isinstance(force, openmm.CustomNonbondedForce)
         ]
-        assert len(custom_nonbonded_forces) == 1
-
-        custom_bond_forces = [
-            force
-            for force in alchemical_system.getForces()
-            if isinstance(force, openmm.CustomBondForce)
-        ]
-        assert len(custom_bond_forces) == 1
+        assert len(custom_nonbonded_forces) == 2
