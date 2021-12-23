@@ -24,6 +24,7 @@ openmm
       array_to_vectors
       build_context
       create_system_generator
+      disable_long_range_corrections
       evaluate_energy
       extract_coordinates
       minimize

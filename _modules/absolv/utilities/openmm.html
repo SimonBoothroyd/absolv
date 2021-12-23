@@ -755,6 +755,31 @@
         <span class="k">return</span> <span class="n">system</span>
 
     <span class="k">return</span> <span class="n">system_generator</span></div>
+
+
+<div class="viewcode-block" id="disable_long_range_corrections"><a class="viewcode-back" href="../../../api/absolv.utilities.openmm.disable_long_range_corrections.html#absolv.utilities.openmm.disable_long_range_corrections">[docs]</a><span class="k">def</span> <span class="nf">disable_long_range_corrections</span><span class="p">(</span><span class="n">system</span><span class="p">:</span> <span class="n">openmm</span><span class="o">.</span><span class="n">System</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Disables all long range corrections found in a system in-place.</span>
+
+<span class="sd">    This is performed by calling</span>
+
+<span class="sd">        * ``NonbondedForce.setUseDispersionCorrection(False)``</span>
+<span class="sd">        * ``CustomNonbondedForce.setUseLongRangeCorrection(False)``</span>
+
+<span class="sd">    on all relevant forces.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">force</span>
+        <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">getForces</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">NonbondedForce</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">force</span><span class="o">.</span><span class="n">setUseDispersionCorrection</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">force</span>
+        <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">getForces</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">force</span><span class="p">,</span> <span class="n">openmm</span><span class="o">.</span><span class="n">CustomNonbondedForce</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">force</span><span class="o">.</span><span class="n">setUseLongRangeCorrection</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 </code></pre></div>
 
                 
@@ -765,7 +790,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: Dec 22, 2021
+      Last update: Dec 23, 2021
     
   </small>
 </div>

@@ -64,7 +64,7 @@ so that
 * all intermolecular alchemical (both solute-solvent and solute-solute) interactions are moved into a new
   ``CustomNonbondedForce``
 
-* all solute *intramolecular* interactions are moved into a new ``CustomBondForce``
+* all solute *intramolecular* interactions are moved into a new ``CustomNonbondedForce``
 
   .. note:: The intramolecular solute-solute interactions won't use any periodic boundary corrections such that the the
             decoupled state of the solute corresponds to the proper vacuum state without periodicity effects.
