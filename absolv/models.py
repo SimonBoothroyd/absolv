@@ -214,7 +214,7 @@ class EquilibriumProtocol(BaseModel):
     )
 
     sampler: Literal["independent", "repex"] = Field(
-        "repex",
+        "independent",
         description="The mode in which to sample each of the different lambda states.",
     )
 
