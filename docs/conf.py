@@ -77,6 +77,7 @@ nbsphinx_execute = "never"
 bibtex_bibfiles = [
     "user-guide/theory.bib",
     "user-guide/transformations.bib",
+    "user-guide/reproducibility.bib",
     "examples/equilibrium.bib",
     "examples/non-equilibrium.bib",
 ]

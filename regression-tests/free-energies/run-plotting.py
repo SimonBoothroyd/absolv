@@ -95,7 +95,7 @@ def main():
         col_wrap=3,
         sharex=True,
         sharey=False,
-        aspect=2.0,
+        aspect=1.1,
         hue_order=methods,
     )
     plot.map_dataframe(
@@ -108,8 +108,9 @@ def main():
         color=palette,
     )
 
-    pyplot.subplots_adjust(right=0.90)
+    pyplot.subplots_adjust(right=0.85)
     pyplot.legend(loc="center left", bbox_to_anchor=(1, 1))
+    pyplot.savefig("regression.svg")
 
     pyplot.show()
 

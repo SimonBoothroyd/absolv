@@ -21,6 +21,7 @@ where the latter will be the main focus of this framework.
 
    user-guide/theory
    user-guide/transformations
+   user-guide/reproducibility
 
 .. toctree::
    :hidden:
