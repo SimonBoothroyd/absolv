@@ -30,6 +30,7 @@ This can be compactly done by creating a new ``TransferFreeEnergySchema`` object
         alchemical_protocol_a=EquilibriumProtocol(
             lambda_sterics=[1.0, 1.0, 1.0, 1.0, 1.0],
             lambda_electrostatics=[1.0, 0.75, 0.5, 0.25, 0.0],
+            sampler="repex"
         ),
         alchemical_protocol_b=EquilibriumProtocol(
             lambda_sterics=[
@@ -40,6 +41,7 @@ This can be compactly done by creating a new ``TransferFreeEnergySchema`` object
                 1.00, 0.75, 0.50, 0.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
                 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
             ],
+            sampler="repex"
         ),
     )
 
