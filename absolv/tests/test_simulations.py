@@ -98,6 +98,7 @@ def alchemical_argon_eq_simulation(alchemical_argon_system):
             n_iterations=1, n_steps_per_iteration=1
         ),
         production_protocol=SimulationProtocol(n_iterations=1, n_steps_per_iteration=1),
+        sampler="independent",
     )
 
     simulation = EquilibriumOpenMMSimulation(
@@ -268,7 +269,9 @@ class TestEquilibriumOpenMMSimulation(BaseTemporaryDirTest):
         topology, coordinates, system = alchemical_argon_system
 
         protocol = EquilibriumProtocol(
-            lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
+            lambda_sterics=[1.0, 0.0],
+            lambda_electrostatics=[1.0, 1.0],
+            sampler="independent",
         )
 
         simulation = EquilibriumOpenMMSimulation(
@@ -395,7 +398,9 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
         topology, coordinates, system = alchemical_argon_system
 
         protocol = EquilibriumProtocol(
-            lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
+            lambda_sterics=[1.0, 0.0],
+            lambda_electrostatics=[1.0, 1.0],
+            sampler="independent",
         )
 
         simulation = AlchemicalOpenMMSimulation(
@@ -430,7 +435,9 @@ class TestAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
             topology.box_vectors,
             State(temperature=3.0 * unit.kelvin, pressure=None),
             EquilibriumProtocol(
-                lambda_sterics=[1.0, 0.0], lambda_electrostatics=[1.0, 1.0]
+                lambda_sterics=[1.0, 0.0],
+                lambda_electrostatics=[1.0, 1.0],
+                sampler="independent",
             ),
             0,
             "CPU",
