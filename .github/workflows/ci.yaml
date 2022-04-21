@@ -55,7 +55,7 @@ jobs:
         pytest -v --cov=absolv --cov-report=xml --color=yes absolv/tests/ regression-tests/
 
     - name: CodeCov
-      uses: codecov/codecov-action@v2.1.0
+      uses: codecov/codecov-action@v3.1.0
       with:
         file: ./coverage.xml
         flags: unittests
