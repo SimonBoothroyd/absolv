@@ -27,4 +27,4 @@ dependencies:
 
   - pip:
       - autodoc_pydantic
-      - git+git://github.com/jbms/sphinx-immaterial.git
+      - sphinx-immaterial
