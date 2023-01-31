@@ -68,13 +68,13 @@ def tip4p_nacl_lj_force_field() -> ForceField:
     virtual_site_handler = force_field.get_parameter_handler("VirtualSites")
     virtual_site_handler.add_parameter(
         {
-            "smirks": "[#1:1]-[#8X2H2+0:2]-[#1:3]",
+            "smirks": "[#1:2]-[#8X2H2+0:1]-[#1:3]",
             "type": "DivalentLonePair",
             "distance": -0.106 * unit.angstrom,
             "outOfPlaneAngle": 0.0 * unit.degrees,
             "match": "once",
-            "charge_increment1": 1.0552 * 0.5 * unit.elementary_charge,
-            "charge_increment2": 0.0 * unit.elementary_charge,
+            "charge_increment2": 1.0552 * 0.5 * unit.elementary_charge,
+            "charge_increment1": 0.0 * unit.elementary_charge,
             "charge_increment3": 1.0552 * 0.5 * unit.elementary_charge,
         }
     )
@@ -162,13 +162,13 @@ def tip4p_meoh_de_force_field() -> ForceField:
     virtual_site_handler = force_field.get_parameter_handler("VirtualSites")
     virtual_site_handler.add_parameter(
         {
-            "smirks": "[#1:1]-[#8X2H2+0:2]-[#1:3]",
+            "smirks": "[#1:2]-[#8X2H2+0:1]-[#1:3]",
             "type": "DivalentLonePair",
             "distance": -0.106 * unit.angstrom,
             "outOfPlaneAngle": 0.0 * unit.degrees,
             "match": "once",
-            "charge_increment1": 1.0552 * 0.5 * unit.elementary_charge,
-            "charge_increment2": 0.0 * unit.elementary_charge,
+            "charge_increment2": 1.0552 * 0.5 * unit.elementary_charge,
+            "charge_increment1": 0.0 * unit.elementary_charge,
             "charge_increment3": 1.0552 * 0.5 * unit.elementary_charge,
         }
     )

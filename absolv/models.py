@@ -171,7 +171,7 @@ class SimulationProtocol(BaseModel):
 
     _validate_timestep = float_validator("timestep", unit.femtoseconds)
     _validate_thermostat_friction = float_validator(
-        "thermostat_friction", (unit.picoseconds ** -1)
+        "thermostat_friction", (unit.picoseconds**-1)
     )
 
 
@@ -282,7 +282,7 @@ class SwitchingProtocol(BaseModel):
 
     _validate_timestep = float_validator("timestep", unit.femtoseconds)
     _validate_thermostat_friction = float_validator(
-        "thermostat_friction", (unit.picoseconds ** -1)
+        "thermostat_friction", (unit.picoseconds**-1)
     )
 
 
@@ -370,7 +370,7 @@ class DeltaG(BaseModel):
 
         return DeltaG(
             value=self.value + other.value,
-            std_error=numpy.sqrt(self.std_error ** 2 + other.std_error ** 2),
+            std_error=numpy.sqrt(self.std_error**2 + other.std_error**2),
         )
 
     def __sub__(self, other: "DeltaG") -> "DeltaG":
@@ -380,7 +380,7 @@ class DeltaG(BaseModel):
 
         return DeltaG(
             value=self.value - other.value,
-            std_error=numpy.sqrt(self.std_error ** 2 + other.std_error ** 2),
+            std_error=numpy.sqrt(self.std_error**2 + other.std_error**2),
         )
 
 

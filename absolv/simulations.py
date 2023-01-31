@@ -5,7 +5,7 @@ from typing import IO, TYPE_CHECKING, Iterable, List, Optional, Tuple
 import numpy
 import openmm
 from openff.utilities import temporary_cd
-from openff.utilities.exceptions import MissingOptionalDependency
+from openff.utilities.exceptions import MissingOptionalDependencyError
 from openmm import unit
 from openmm.app import DCDFile
 from tqdm import tqdm
@@ -381,7 +381,7 @@ class RepexAlchemicalOpenMMSimulation:
         try:
             importlib.import_module("openmmtools")
         except ImportError:
-            raise MissingOptionalDependency("openmmtools")
+            raise MissingOptionalDependencyError("openmmtools")
 
         self._system = system
 

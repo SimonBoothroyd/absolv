@@ -9,14 +9,14 @@ dependencies:
   - pydantic
   - tqdm
 
-  - openff-toolkit-base >=0.9.2,<0.11
-  - openff-utilities
+  - openff-toolkit-base >=0.10.5,<0.11
+  - openff-utilities    >=0.1.8
 
   - openmm >=7.6
 
   - packmol
 
-  - pymbar
+  - pymbar >=4.0
 
     # Optional dependencies
   - rdkit

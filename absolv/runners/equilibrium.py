@@ -91,8 +91,8 @@ class EquilibriumRunner(BaseRunner):
 
         for k in range(n_states):
 
-            _, g, _ = timeseries.detectEquilibration(u_kln[k, k, :])
-            indices = timeseries.subsampleCorrelatedData(u_kln[k, k, :], g=g)
+            _, g, _ = timeseries.detect_equilibration(u_kln[k, k, :])
+            indices = timeseries.subsample_correlated_data(u_kln[k, k, :], g=g)
 
             n_k[k] = len(indices)
             u_kln[k, :, 0 : n_k[k]] = u_kln[k, :, indices].T
@@ -100,7 +100,9 @@ class EquilibriumRunner(BaseRunner):
         # Compute free energy differences and statistical uncertainties
         mbar = MBAR(u_kln, n_k)
 
-        delta_f_ij, delta_delta_f_ij = mbar.getFreeEnergyDifferences()
+        differences = mbar.compute_free_energy_differences()
+
+        delta_f_ij, delta_delta_f_ij = differences["Delta_f"], differences["dDelta_f"]
 
         return delta_f_ij[0, -1], delta_delta_f_ij[0, -1]
 

@@ -248,7 +248,7 @@ class TestBaseOpenMMSimulation(BaseTemporaryDirTest):
 
         reduced_potential = simulation._compute_reduced_potential()
 
-        expected_energy = 4.0 * (2.0 ** -12 - 2.0 ** -6) * unit.kilojoules_per_mole
+        expected_energy = 4.0 * (2.0**-12 - 2.0**-6) * unit.kilojoules_per_mole
         expected_volume = (12.0 * unit.angstrom) ** 3
 
         expected_reduced = expected_energy / (
@@ -526,7 +526,7 @@ class TestRepexAlchemicalOpenMMSimulation(BaseTemporaryDirTest):
                 repex_argon_eq_simulation._protocol.production_protocol.timestep,
             )
             assert numpy.isclose(
-                mcmc_move.collision_rate.value_in_unit(unit.picosecond ** -1),
+                mcmc_move.collision_rate.value_in_unit(unit.picosecond**-1),
                 repex_argon_eq_simulation._protocol.production_protocol.thermostat_friction,
             )
             assert (

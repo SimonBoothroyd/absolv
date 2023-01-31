@@ -173,7 +173,9 @@ class NonEquilibriumRunner(BaseRunner):
                 delimiter=" ",
             )
 
-            value, std_error = pymbar.BAR(forward_work, reverse_work)
+            bar_result = pymbar.bar(forward_work, reverse_work)
+
+            value, std_error = bar_result["Delta_f"], bar_result["dDelta_f"]
 
             free_energies[solvent_index] = {"value": value, "std_error": std_error}
 

@@ -36,7 +36,7 @@ extensions = [
     "nbsphinx_link",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.autodoc_pydantic",
-    "sphinx_immaterial"
+    "sphinx_immaterial",
 ]
 
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -50,7 +50,9 @@ autosummary_generate = True
 autosummary_imported_members = False
 autosummary_ignore___all__ = False
 autosummary_context = {"exclude_modules": ["absolv.tests"]}
-autodoc_default_options = {"member-order": "bysource",}
+autodoc_default_options = {
+    "member-order": "bysource",
+}
 autodoc_mock_imports = ["openff", "mdtraj"]
 autodoc_typehints = "description"
 
