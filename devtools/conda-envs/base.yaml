@@ -6,7 +6,6 @@ channels:
 
 dependencies:
 
-    # Core dependencies
   - python
   - pydantic
   - tqdm
@@ -28,14 +27,14 @@ dependencies:
 
   - smirnoff-plugins  # custom vdW functional forms
 
-    # Testing
+    # Dev / Testing
+  - pre-commit
+  - isort
+  - black
+  - flake8
+
   - pytest
   - pytest-cov
   - codecov
 
   - mdtraj  # loading trajectories
-
-    # Development
-  - isort
-  - black
-  - flake8

@@ -1,16 +1,47 @@
 name: CI
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
-    branches:
-      - "main"
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - "main"
-  schedule:
-    - cron: "0 0 * * *"
+    branches: [ "main" ]
+
 
 jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2.1.4
+        with:
+          python-version: '3.10'
+      - name: Install the package
+        run: |
+          pip install -e .
+
+      - name: Install isort / flake8 / black
+        run: |
+          pip install isort flake8 black
+
+      - name: Run isort
+        run: |
+          isort --recursive --check-only nagl
+
+      - name: Run black
+        run: |
+          black nagl --check
+
+      - name: Run flake8
+        run: |
+          flake8 nagl
+
   test:
 
     name: ${{ matrix.os }} python=${{ matrix.python-version }}
@@ -19,29 +50,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python-version: [3.8, 3.9]
+        os: [ "ubuntu-latest" ]
+        python-version: [ "3.10" ]
 
     steps:
     - uses: actions/checkout@v2.4.0
 
     - name: Setup Conda Environment
-      uses: conda-incubator/setup-miniconda@v2.1.1
+      uses: mamba-org/provision-with-micromamba@main
       with:
-        python-version: ${{ matrix.python-version }}
-        environment-file: devtools/conda-envs/test-env.yaml
-
-        channels: conda-forge,defaults
-
-        activate-environment: test
-        auto-update-conda: true
-        auto-activate-base: false
-        show-channel-urls: true
+        environment-file: devtools/envs/base.yaml
+        extra-specs: |
+          python=${{ matrix.python-version }}
 
     - name: Install Package
       shell: bash -l {0}
       run: |
-        python setup.py develop --no-deps
+        pip install -e .
 
     - name: Conda Environment Information
       shell: bash -l {0}
@@ -52,11 +77,11 @@ jobs:
     - name: Run Tests
       shell: bash -l {0}
       run: |
-        pytest -v --cov=absolv --cov-report=xml --color=yes absolv/tests/ regression-tests/
+        pytest -v --cov=nagl --cov-report=xml --cov-report=term --color=yes nagl/tests/
 
     - name: CodeCov
-      uses: codecov/codecov-action@v2.1.0
+      uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
         flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
+        name: codecov-${{
