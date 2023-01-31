@@ -1,3 +1,4 @@
+"""Euilibrium alchemical calculation runners."""
 import os
 from typing import Dict, List, Literal, Optional, Tuple
 

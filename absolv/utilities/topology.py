@@ -1,3 +1,4 @@
+"""Utilities for manipulating OpenFF topology objects."""
 from typing import List, Set, Tuple
 
 from openff.toolkit.topology import Topology

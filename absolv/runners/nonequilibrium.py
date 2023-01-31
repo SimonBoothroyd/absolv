@@ -1,3 +1,4 @@
+"""Non-equilibrium alchemical calculation runners."""
 import os
 
 import numpy
