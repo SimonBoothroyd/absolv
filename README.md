@@ -1,7 +1,6 @@
 # ABsolute SOLVantion Free Energy Calculations
 
 [![Test Status](https://github.com/simonboothroyd/absolv/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/simonboothroyd/absolv/actions/workflows/ci.yaml)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/SimonBoothroyd/absolv.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SimonBoothroyd/absolv/context:python)
 [![codecov](https://codecov.io/gh/simonboothroyd/absolv/branch/main/graph/badge.svg)](https://codecov.io/gh/simonboothroyd/absolv/branch/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
