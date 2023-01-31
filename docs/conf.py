@@ -101,12 +101,6 @@ mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
 
 html_static_path = ["_static"]
 
-html_context = {
-    "css_files": [
-        "_static/overrides.css",
-    ]
-}
-
 # -- HTML theme settings ------------------------------------------------
 
 html_title = "AbSolv"

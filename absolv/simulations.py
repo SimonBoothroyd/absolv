@@ -1,3 +1,4 @@
+"""Utilities for running OpenMM simulations."""
 import importlib
 import os.path
 from typing import IO, TYPE_CHECKING, Iterable, List, Optional, Tuple

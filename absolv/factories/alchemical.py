@@ -1,3 +1,4 @@
+"""Factories for creating alchemical OpenMM systems."""
 import copy
 import itertools
 from typing import List, Optional, Set, Tuple

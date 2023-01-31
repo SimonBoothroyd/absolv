@@ -1,3 +1,4 @@
+"""Models defining free energy calculations and their settings."""
 from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
 import numpy
@@ -15,6 +16,8 @@ from pydantic import (
 
 
 def float_validator(field_name: str, expected_units: unit.Unit) -> validator:
+    """A validator that maps unit wrapped quantities to floats in the right unit."""
+
     def validate_unit(cls, value):
 
         if isinstance(value, str):

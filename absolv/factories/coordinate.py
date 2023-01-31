@@ -1,3 +1,4 @@
+"""Factories for building system coordintes."""
 import errno
 import logging
 import os

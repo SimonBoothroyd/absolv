@@ -1,3 +1,4 @@
+"""Utilities to manipulate OpenMM objects."""
 import copy
 from typing import Callable, List, Literal, Optional, Tuple, Union, overload
 
