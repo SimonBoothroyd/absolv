@@ -9,7 +9,6 @@
       
       
       
-      
       <link rel="icon" href="">
     
     
@@ -18,28 +17,27 @@
       
     
     
-      <link rel="stylesheet" href="../_static/stylesheets/main.91c34c39.min.css">
       
         
-        <link rel="stylesheet" href="../_static/stylesheets/palette.89291e57.min.css">
         
       
+      
+
     
     
     
       
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
         <link rel="stylesheet" href="../_static/overrides.css">
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
-
+    
     
     
   </head>
@@ -55,9 +53,8 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
-      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -65,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="" class="md-skip">
+        <a href="#absolv.simulations.EquilibriumOpenMMSimulation" class="md-skip">
           Skip to content
         </a>
       
@@ -74,15 +71,18 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -113,22 +113,21 @@
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
       
@@ -148,11 +147,10 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SimonBoothroyd/absolv
@@ -161,6 +159,7 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
@@ -168,6 +167,8 @@
       
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -186,17 +187,16 @@
     <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
     </a>
     AbSolv
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SimonBoothroyd/absolv
@@ -213,9 +213,10 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../index.html" class="md-nav__link">
-        Overview
+        <span title="/index.rst (reference label)" class="md-ellipsis">Overview</span>
       </a>
     </li>
   
@@ -225,12 +226,13 @@
       
       
 
+  
   
   
   
     <li class="md-nav__item">
       <a href="../installation.html" class="md-nav__link">
-        Installation
+        <span title="/installation.rst (reference label)" class="md-ellipsis">Installation</span>
       </a>
     </li>
   
@@ -249,58 +251,71 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_3">
-        <a class="" href="../user-guide/theory.html">User Guide</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">User Guide</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="User Guide" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
-          User Guide
+          <span class="md-ellipsis">User Guide</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/theory.html" class="md-nav__link">
-        Theory
+        <span title="/user-guide/theory.rst (reference label)" class="md-ellipsis">Theory</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/transformations.html" class="md-nav__link">
-        Alchemical Transformations
+        <span title="/user-guide/transformations.rst (reference label)" class="md-ellipsis">Alchemical Transformations</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/reproducibility.html" class="md-nav__link">
-        Reproducibility
+        <span title="/user-guide/reproducibility.rst (reference label)" class="md-ellipsis">Reproducibility</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -317,46 +332,56 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        <a class="" href="../examples/equilibrium.html">Examples</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          <span class="md-ellipsis">Examples</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Examples" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Examples
+          <span class="md-ellipsis">Examples</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../examples/equilibrium.html" class="md-nav__link">
-        Equilibrium Calculations
+        <span title="/examples/equilibrium.rst (reference label)" class="md-ellipsis">Equilibrium Calculations</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../examples/non-equilibrium.html" class="md-nav__link">
-        Non-Equilibrium Calculations
+        <span title="/examples/non-equilibrium.rst (reference label)" class="md-ellipsis">Non-<wbr>Equilibrium Calculations</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -377,18 +402,22 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
-      <label class="md-nav__link" for="__nav_5">
-        <a class="" href="absolv.html">API</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          <span class="md-ellipsis">API</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API" data-md-level="1">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
-          API
+          <span class="md-ellipsis">API</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -400,54 +429,72 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" checked>
       
-      <label class="md-nav__link" for="__nav_5_1">
-        <a class="" href="absolv.html">absolv</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="absolv.html"><span title="/api/absolv.rst (reference label)" class="md-ellipsis">absolv</span></a>
+          
+            <label for="__nav_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="absolv" data-md-level="2">
         <label class="md-nav__title" for="__nav_5_1">
           <span class="md-nav__icon md-icon"></span>
-          absolv
+          <span title="/api/absolv.rst (reference label)" class="md-ellipsis">absolv</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.factories.html" class="md-nav__link">
-        factories
+        <span title="/api/absolv.factories.rst (reference label)" class="md-ellipsis">factories</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.html" class="md-nav__link">
-        models
+        <span title="/api/absolv.models.rst (reference label)" class="md-ellipsis">models</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.runners.html" class="md-nav__link">
-        runners
+        <span title="/api/absolv.runners.rst (reference label)" class="md-ellipsis">runners</span>
       </a>
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -459,62 +506,163 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4" type="checkbox" id="__nav_5_1_4" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_4">
-        <a class="" href="absolv.simulations.html">simulations</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="absolv.simulations.html"><span title="/api/absolv.simulations.rst (reference label)" class="md-ellipsis">simulations</span></a>
+          
+            <label for="__nav_5_1_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="simulations" data-md-level="3">
         <label class="md-nav__title" for="__nav_5_1_4">
           <span class="md-nav__icon md-icon"></span>
-          simulations
+          <span title="/api/absolv.simulations.rst (reference label)" class="md-ellipsis">simulations</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.simulations.AlchemicalOpenMMSimulation.html" class="md-nav__link">
-        AlchemicalOpenMMSimulation
+        <span title="/api/absolv.simulations.alchemicalopenmmsimulation.rst (reference label)" class="md-ellipsis">Alchemical<wbr>Open<wbr>MMSimulation</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
+  
+    
+  
+    
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__current-nested md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_2" type="checkbox" id="__nav_5_1_4_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="#"><span title="/api/absolv.simulations.equilibriumopenmmsimulation.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation</span></a>
+          
+            <label for="__nav_5_1_4_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="EquilibriumOpenMMSimulation" data-md-level="4">
+        <label class="md-nav__title" for="__nav_5_1_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/api/absolv.simulations.equilibriumopenmmsimulation.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_5_1_4_2_1" type="checkbox" id="__nav_5_1_4_2_1" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="#absolv.simulations.EquilibriumOpenMMSimulation"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class) — A class that simplifies the process of running an equilibrium simulation with OpenMM, including performing energy minimizations, equilibration steps, and checkpointing." class="md-ellipsis">absolv.<wbr>simulations.<wbr>Equilibrium<wbr>Open<wbr>MMSimulation</span></a>
+          
+            <label for="__nav_5_1_4_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="absolv.simulations.EquilibriumOpenMMSimulation" data-md-level="5">
+        <label class="md-nav__title" for="__nav_5_1_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class) — A class that simplifies the process of running an equilibrium simulation with OpenMM, including performing energy minimizations, equilibration steps, and checkpointing." class="md-ellipsis">absolv.<wbr>simulations.<wbr>Equilibrium<wbr>Open<wbr>MMSimulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="absolv.simulations.EquilibriumOpenMMSimulation.current_state.html" class="md-nav__link">
+        <span title="/api/absolv.simulations.equilibriumopenmmsimulation.current_state.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation.<wbr>current_<wbr>state</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+      
+    <li class="md-nav__item md-nav__item--active md-nav__current-toc">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/api/absolv.simulations.equilibriumopenmmsimulation.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/api/absolv.simulations.equilibriumopenmmsimulation.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
   
   
     
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          EquilibriumOpenMMSimulation
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="" class="md-nav__link md-nav__link--active">
-        EquilibriumOpenMMSimulation
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      EquilibriumOpenMMSimulation
-      
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#absolv.simulations.EquilibriumOpenMMSimulation" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class)">absolv.simulations.EquilibriumOpenMMSimulation</span>
+    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class) — A class that simplifies the process of running an equilibrium simulation with OpenMM, including performing energy minimizations, equilibration steps, and checkpointing." class="md-ellipsis">absolv.<wbr>simulations.<wbr>Equilibrium<wbr>Open<wbr>MMSimulation</span>
   </a>
   
     <nav class="md-nav" aria-label="absolv.simulations.EquilibriumOpenMMSimulation">
@@ -522,22 +670,178 @@
         
           <li class="md-nav__item">
   <a href="absolv.simulations.EquilibriumOpenMMSimulation.current_state.html" class="md-nav__link">
-    EquilibriumOpenMMSimulation.current_state
+    <span title="/api/absolv.simulations.equilibriumopenmmsimulation.current_state.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Open<wbr>MMSimulation.<wbr>current_<wbr>state</span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate." class="md-ellipsis">system</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms." class="md-ellipsis">coordinates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors." class="md-ellipsis">box_<wbr>vectors</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to." class="md-ellipsis">protocol</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at." class="md-ellipsis">lambda_<wbr>index</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using." class="md-ellipsis">platform</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__ (Python method)">__init__</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__ (Python method) — The OpenMM system to simulate." class="md-ellipsis">__<wbr>init__<wbr></span>
+  </a>
+  
+    <nav class="md-nav" aria-label="__init__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate." class="md-ellipsis">system</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run (Python method)">run</span>
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms." class="md-ellipsis">coordinates</span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors." class="md-ellipsis">box_<wbr>vectors</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to." class="md-ellipsis">protocol</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at." class="md-ellipsis">lambda_<wbr>index</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using." class="md-ellipsis">platform</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run (Python method) — Run the full simulation, restarting from where it left off if a previous attempt to run had already been made." class="md-ellipsis">run</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run.directory" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run.directory (Python parameter) — The (optional) directory to run in. If no directory is specified the outputs will be stored in a temporary directory and no restarts will be possible." class="md-ellipsis">directory</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -553,70 +857,88 @@
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.simulations.NonEquilibriumOpenMMSimulation.html" class="md-nav__link">
-        NonEquilibriumOpenMMSimulation
+        <span title="/api/absolv.simulations.nonequilibriumopenmmsimulation.rst (reference label)" class="md-ellipsis">Non<wbr>Equilibrium<wbr>Open<wbr>MMSimulation</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.simulations.RepexAlchemicalOpenMMSimulation.html" class="md-nav__link">
-        RepexAlchemicalOpenMMSimulation
+        <span title="/api/absolv.simulations.repexalchemicalopenmmsimulation.rst (reference label)" class="md-ellipsis">Repex<wbr>Alchemical<wbr>Open<wbr>MMSimulation</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.simulations.TYPE_CHECKING.html" class="md-nav__link">
-        TYPE_CHECKING
+        <span title="/api/absolv.simulations.type_checking.rst (reference label)" class="md-ellipsis">TYPE_<wbr>CHECKING</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
+  
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.utilities.html" class="md-nav__link">
-        utilities
+        <span title="/api/absolv.utilities.rst (reference label)" class="md-ellipsis">utilities</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
+  
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -632,42 +954,192 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+<nav class="md-nav md-nav--secondary">
+  
   
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      EquilibriumOpenMMSimulation
-      
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#absolv.simulations.EquilibriumOpenMMSimulation" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class)">absolv.simulations.EquilibriumOpenMMSimulation</span>
+    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="absolv.simulations.EquilibriumOpenMMSimulation (Python class) — A class that simplifies the process of running an equilibrium simulation with OpenMM, including performing energy minimizations, equilibration steps, and checkpointing." class="md-ellipsis">absolv.<wbr>simulations.<wbr>Equilibrium<wbr>Open<wbr>MMSimulation</span>
   </a>
   
     <nav class="md-nav" aria-label="absolv.simulations.EquilibriumOpenMMSimulation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="absolv.simulations.EquilibriumOpenMMSimulation.current_state.html" class="md-nav__link">
-    EquilibriumOpenMMSimulation.current_state
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
   </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate." class="md-ellipsis">system</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms." class="md-ellipsis">coordinates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors." class="md-ellipsis">box_<wbr>vectors</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to." class="md-ellipsis">protocol</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at." class="md-ellipsis">lambda_<wbr>index</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using." class="md-ellipsis">platform</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__ (Python method)">__init__</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__ (Python method) — The OpenMM system to simulate." class="md-ellipsis">__<wbr>init__<wbr></span>
+  </a>
+  
+    <nav class="md-nav" aria-label="__init__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate." class="md-ellipsis">system</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run (Python method)">run</span>
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms." class="md-ellipsis">coordinates</span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors." class="md-ellipsis">box_<wbr>vectors</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to." class="md-ellipsis">protocol</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at." class="md-ellipsis">lambda_<wbr>index</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using." class="md-ellipsis">platform</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run (Python method) — Run the full simulation, restarting from where it left off if a previous attempt to run had already been made." class="md-ellipsis">run</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.simulations.EquilibriumOpenMMSimulation.run.directory" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="absolv.simulations.EquilibriumOpenMMSimulation.run.directory (Python parameter) — The (optional) directory to run in. If no directory is specified the outputs will be stored in a temporary directory and no restarts will be possible." class="md-ellipsis">directory</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -684,89 +1156,82 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset" role="main">
-              
-                
-                
-  <h1 id="equilibriumopenmmsimulation">EquilibriumOpenMMSimulation<a class="headerlink" href="#equilibriumopenmmsimulation" title="Permalink to this headline">¶</a></h1>
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="equilibriumopenmmsimulation">EquilibriumOpenMMSimulation<a class="headerlink" href="#equilibriumopenmmsimulation" title="Permalink to this heading">¶</a></h1>
 <dl class="py class objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.simulations.EquilibriumOpenMMSimulation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">absolv.simulations.</span></span><span class="sig-name descname"><span class="pre">EquilibriumOpenMMSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_vectors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object highlight sig-wrap py" id="absolv.simulations.EquilibriumOpenMMSimulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">absolv.simulations.</span></span><span class="sig-name descname"><span class="pre">EquilibriumOpenMMSimulation</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate."><span class="n"><span class="pre">system</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms."><span class="n"><span class="pre">coordinates</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors."><span class="n"><span class="pre">box_vectors</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to."><span class="n"><span class="pre">protocol</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at."><span class="n"><span class="pre">lambda_index</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using."><span class="n"><span class="pre">platform</span></span></a></em></span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class that simplifies the process of running an equilibrium simulation with
 OpenMM, including performing energy minimizations, equilibration steps, and
 checkpointing.</p>
 <p class="rubric">Attributes</p>
-<table class="longtable docutils data align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils data align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="absolv.simulations.EquilibriumOpenMMSimulation.current_state.html#absolv.simulations.EquilibriumOpenMMSimulation.current_state" title="absolv.simulations.EquilibriumOpenMMSimulation.current_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_state</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="absolv.simulations.EquilibriumOpenMMSimulation.current_state.html#absolv.simulations.EquilibriumOpenMMSimulation.current_state" title="absolv.simulations.EquilibriumOpenMMSimulation.current_state (Python property) — Retrieve the current state of the simulation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_state</span></code></a></p></td>
 <td><p>Retrieve the current state of the simulation.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
-<table class="longtable docutils data align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils data align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__ (Python method) — The OpenMM system to simulate."><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param system</dt>
+<dt class="field-odd">param system<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The OpenMM system to simulate.</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.run" title="absolv.simulations.EquilibriumOpenMMSimulation.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.run" title="absolv.simulations.EquilibriumOpenMMSimulation.run (Python method) — Run the full simulation, restarting from where it left off if a previous attempt to run had already been made."><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
 <td><p>Run the full simulation, restarting from where it left off if a previous attempt to run had already been made.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="api-field simple">
-<dt><span class="sig-name descname">system</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.System.html#openmm.openmm.System" title="(in OpenMM Python API v7.7.0)">openmm.openmm.System</a></span></span></dt><dd><p></p>
+<dt class="field-odd" id="absolv.simulations.EquilibriumOpenMMSimulation-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system"><span class="sig-name descname">system</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.System.html#openmm.openmm.System" title="(in OpenMM Python API v7.7.0)">System</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">coordinates</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a></span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates"><span class="sig-name descname">coordinates</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">Quantity</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">box_vectors</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors"><span class="sig-name descname">box_vectors</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">Quantity</a> | None</span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.State.html#absolv.models.State" title="absolv.models.State">absolv.models.State</a></span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.State.html#absolv.models.State" title="absolv.models.State (Python model) — A model that defines the temperature and (optionally) the pressure of a thermodynamic state.">State</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">protocol</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.EquilibriumProtocol.html#absolv.models.EquilibriumProtocol" title="absolv.models.EquilibriumProtocol">absolv.models.EquilibriumProtocol</a></span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol"><span class="sig-name descname">protocol</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.EquilibriumProtocol.html#absolv.models.EquilibriumProtocol" title="absolv.models.EquilibriumProtocol (Python model) — A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR) alchemical free energy calculation.">EquilibriumProtocol</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">lambda_index</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index"><span class="sig-name descname">lambda_index</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
-<dt><span class="sig-name descname">platform</span><span class="p"> : </span><span class="desctype"><span class="desctype">Literal['Reference', 'OpenCL', 'CUDA', 'CPU']</span></span></dt><dd><p></p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform"><span class="sig-name descname">platform</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)">Literal</a>['Reference', 'OpenCL', 'CUDA', 'CPU']</span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" title="Permalink to this definition">¶</a></dt><dd><p></p>
 </dd>
 </dl>
 </dd>
 </dl>
 <dl class="py method objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.simulations.EquilibriumOpenMMSimulation.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_vectors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object highlight sig-wrap py" id="absolv.simulations.EquilibriumOpenMMSimulation.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system (Python parameter) — The OpenMM system to simulate."><span class="n"><span class="pre">system</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates (Python parameter) — The initial coordinates of all atoms."><span class="n"><span class="pre">coordinates</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors (Python parameter) — The (optional) initial periodic box vectors."><span class="n"><span class="pre">box_vectors</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state (Python parameter) — The state to simulate at."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol (Python parameter) — The protocol to simulate according to."><span class="n"><span class="pre">protocol</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index (Python parameter) — The index defining which value of lambda to simulate at."><span class="n"><span class="pre">lambda_index</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" title="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform (Python parameter) — The OpenMM platform to simulate using."><span class="n"><span class="pre">platform</span></span></a></em></span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="api-field simple">
-<dt><span class="sig-name descname">system</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.System.html#openmm.openmm.System" title="(in OpenMM Python API v7.7.0)">openmm.openmm.System</a></span></span></dt><dd><p>The OpenMM system to simulate.</p>
+<dt class="field-odd" id="absolv.simulations.EquilibriumOpenMMSimulation.__init__-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.system"><span class="sig-name descname">system</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.System.html#openmm.openmm.System" title="(in OpenMM Python API v7.7.0)">System</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.system" title="Permalink to this definition">¶</a></dt><dd><p>The OpenMM system to simulate.</p>
 </dd>
-<dt><span class="sig-name descname">coordinates</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a></span></span></dt><dd><p>The initial coordinates of all atoms.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates"><span class="sig-name descname">coordinates</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">Quantity</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.coordinates" title="Permalink to this definition">¶</a></dt><dd><p>The initial coordinates of all atoms.</p>
 </dd>
-<dt><span class="sig-name descname">box_vectors</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">openmm.unit.quantity.Quantity</a>]</span></span></dt><dd><p>The (optional) initial periodic box vectors.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors"><span class="sig-name descname">box_vectors</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.unit.quantity.Quantity.html#openmm.unit.quantity.Quantity" title="(in OpenMM Python API v7.7.0)">Quantity</a> | None</span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.box_vectors" title="Permalink to this definition">¶</a></dt><dd><p>The (optional) initial periodic box vectors.</p>
 </dd>
-<dt><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.State.html#absolv.models.State" title="absolv.models.State">absolv.models.State</a></span></span></dt><dd><p>The state to simulate at.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.State.html#absolv.models.State" title="absolv.models.State (Python model) — A model that defines the temperature and (optionally) the pressure of a thermodynamic state.">State</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.state" title="Permalink to this definition">¶</a></dt><dd><p>The state to simulate at.</p>
 </dd>
-<dt><span class="sig-name descname">protocol</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.EquilibriumProtocol.html#absolv.models.EquilibriumProtocol" title="absolv.models.EquilibriumProtocol">absolv.models.EquilibriumProtocol</a></span></span></dt><dd><p>The protocol to simulate according to.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol"><span class="sig-name descname">protocol</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="absolv.models.EquilibriumProtocol.html#absolv.models.EquilibriumProtocol" title="absolv.models.EquilibriumProtocol (Python model) — A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR) alchemical free energy calculation.">EquilibriumProtocol</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.protocol" title="Permalink to this definition">¶</a></dt><dd><p>The protocol to simulate according to.</p>
 </dd>
-<dt><span class="sig-name descname">lambda_index</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></span></span></dt><dd><p>The index defining which value of lambda to simulate at.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index"><span class="sig-name descname">lambda_index</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.lambda_index" title="Permalink to this definition">¶</a></dt><dd><p>The index defining which value of lambda to simulate at.</p>
 </dd>
-<dt><span class="sig-name descname">platform</span><span class="p"> : </span><span class="desctype"><span class="desctype">Literal['Reference', 'OpenCL', 'CUDA', 'CPU']</span></span></dt><dd><p>The OpenMM platform to simulate using.</p>
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform"><span class="sig-name descname">platform</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)">Literal</a>['Reference', 'OpenCL', 'CUDA', 'CPU']</span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.__init__.platform" title="Permalink to this definition">¶</a></dt><dd><p>The OpenMM platform to simulate using.</p>
 </dd>
 </dl>
 </dd>
@@ -774,14 +1239,14 @@ checkpointing.</p>
 </dd></dl>
 
 <dl class="py method objdesc">
-<dt class="sig sig-object py" id="absolv.simulations.EquilibriumOpenMMSimulation.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object highlight py" id="absolv.simulations.EquilibriumOpenMMSimulation.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#absolv.simulations.EquilibriumOpenMMSimulation.run.directory" title="absolv.simulations.EquilibriumOpenMMSimulation.run.directory (Python parameter) — The (optional) directory to run in. If no directory is specified the outputs will be stored in a temporary directory and no restarts will be possible."><span class="n"><span class="pre">directory</span></span></a></em></span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/absolv/simulations.html#EquilibriumOpenMMSimulation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the full simulation, restarting from where it left off if a previous
 attempt to run had already been made.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="api-field simple">
-<dt><span class="sig-name descname">directory</span><span class="p"> : </span><span class="desctype"><span class="desctype">Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</span></span></dt><dd><p>The (optional) directory to run in. If no directory is specified
+<dt class="field-odd" id="absolv.simulations.EquilibriumOpenMMSimulation.run-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.run-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="absolv.simulations.EquilibriumOpenMMSimulation.run.directory"><span class="sig-name descname">directory</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a> | None</span></span><a class="headerlink" href="#absolv.simulations.EquilibriumOpenMMSimulation.run.directory" title="Permalink to this definition">¶</a></dt><dd><p>The (optional) directory to run in. If no directory is specified
 the outputs will be stored in a temporary directory and no restarts will
 be possible.</p>
 </dd>
@@ -794,46 +1259,43 @@ be possible.</p>
 
 
 
-                
-                  
-                    
-
-<hr>
-<div class="md-source-date">
+  <hr>
+<div class="md-source-file">
   <small>
     
-      Last update: Dec 23, 2021
+      Last update:
+      Jan 31, 2023
     
   </small>
 </div>
-                  
-                
-              
-              
-                
 
 
-              
-            </article>
-          </div>
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
             Back to top
           </a>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
         <a href="absolv.simulations.AlchemicalOpenMMSimulation.current_state.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: AlchemicalOpenMMSimulation.current_state" rel="prev">
           <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
           <div class="md-footer__title">
             <div class="md-ellipsis">
@@ -857,11 +1319,12 @@ be possible.</p>
             </div>
           </div>
           <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
           </div>
         </a>
       
     </nav>
+  
   
   
   <div class="md-footer-meta md-typeset">
@@ -873,11 +1336,11 @@ be possible.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
-      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      
+        <script src="../_static/sphinx_immaterial_theme.cea6a0c1d5b0618cf.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
   </body>

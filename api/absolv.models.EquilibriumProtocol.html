@@ -9,7 +9,6 @@
       
       
       
-      
       <link rel="icon" href="">
     
     
@@ -18,28 +17,27 @@
       
     
     
-      <link rel="stylesheet" href="../_static/stylesheets/main.91c34c39.min.css">
       
         
-        <link rel="stylesheet" href="../_static/stylesheets/palette.89291e57.min.css">
         
       
+      
+
     
     
     
       
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
         <link rel="stylesheet" href="../_static/overrides.css">
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
-
+    
     
     
   </head>
@@ -55,9 +53,8 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="light-blue">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
-      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -65,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="" class="md-skip">
+        <a href="#absolv.models.EquilibriumProtocol" class="md-skip">
           Skip to content
         </a>
       
@@ -74,15 +71,18 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../index.html" title="AbSolv" class="md-header__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -113,22 +113,21 @@
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
       
@@ -148,11 +147,10 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SimonBoothroyd/absolv
@@ -161,6 +159,7 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
@@ -168,6 +167,8 @@
       
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -186,17 +187,16 @@
     <a href="../index.html" title="AbSolv" class="md-nav__button md-logo" aria-label="AbSolv" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
     </a>
     AbSolv
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/SimonBoothroyd/absolv/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SimonBoothroyd/absolv
@@ -213,9 +213,10 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../index.html" class="md-nav__link">
-        Overview
+        <span title="/index.rst (reference label)" class="md-ellipsis">Overview</span>
       </a>
     </li>
   
@@ -225,12 +226,13 @@
       
       
 
+  
   
   
   
     <li class="md-nav__item">
       <a href="../installation.html" class="md-nav__link">
-        Installation
+        <span title="/installation.rst (reference label)" class="md-ellipsis">Installation</span>
       </a>
     </li>
   
@@ -249,58 +251,71 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_3">
-        <a class="" href="../user-guide/theory.html">User Guide</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">User Guide</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="User Guide" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
-          User Guide
+          <span class="md-ellipsis">User Guide</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/theory.html" class="md-nav__link">
-        Theory
+        <span title="/user-guide/theory.rst (reference label)" class="md-ellipsis">Theory</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/transformations.html" class="md-nav__link">
-        Alchemical Transformations
+        <span title="/user-guide/transformations.rst (reference label)" class="md-ellipsis">Alchemical Transformations</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../user-guide/reproducibility.html" class="md-nav__link">
-        Reproducibility
+        <span title="/user-guide/reproducibility.rst (reference label)" class="md-ellipsis">Reproducibility</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -317,46 +332,56 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        <a class="" href="../examples/equilibrium.html">Examples</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          <span class="md-ellipsis">Examples</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Examples" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Examples
+          <span class="md-ellipsis">Examples</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../examples/equilibrium.html" class="md-nav__link">
-        Equilibrium Calculations
+        <span title="/examples/equilibrium.rst (reference label)" class="md-ellipsis">Equilibrium Calculations</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="../examples/non-equilibrium.html" class="md-nav__link">
-        Non-Equilibrium Calculations
+        <span title="/examples/non-equilibrium.rst (reference label)" class="md-ellipsis">Non-<wbr>Equilibrium Calculations</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -377,18 +402,22 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
-      <label class="md-nav__link" for="__nav_5">
-        <a class="" href="absolv.html">API</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          <span class="md-ellipsis">API</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API" data-md-level="1">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
-          API
+          <span class="md-ellipsis">API</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -400,30 +429,42 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" checked>
       
-      <label class="md-nav__link" for="__nav_5_1">
-        <a class="" href="absolv.html">absolv</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="absolv.html"><span title="/api/absolv.rst (reference label)" class="md-ellipsis">absolv</span></a>
+          
+            <label for="__nav_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="absolv" data-md-level="2">
         <label class="md-nav__title" for="__nav_5_1">
           <span class="md-nav__icon md-icon"></span>
-          absolv
+          <span title="/api/absolv.rst (reference label)" class="md-ellipsis">absolv</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.factories.html" class="md-nav__link">
-        factories
+        <span title="/api/absolv.factories.rst (reference label)" class="md-ellipsis">factories</span>
       </a>
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -435,119 +476,235 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_2" type="checkbox" id="__nav_5_1_2" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_2">
-        <a class="" href="absolv.models.html">models</a>
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="absolv.models.html"><span title="/api/absolv.models.rst (reference label)" class="md-ellipsis">models</span></a>
+          
+            <label for="__nav_5_1_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="models" data-md-level="3">
         <label class="md-nav__title" for="__nav_5_1_2">
           <span class="md-nav__icon md-icon"></span>
-          models
+          <span title="/api/absolv.models.rst (reference label)" class="md-ellipsis">models</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.DeltaG.html" class="md-nav__link">
-        DeltaG
+        <span title="/api/absolv.models.deltag.rst (reference label)" class="md-ellipsis">Delta<wbr>G</span>
       </a>
     </li>
   
 
+            
           
             
+              
   
+  
+    
   
     
   
   
     <li class="md-nav__item md-nav__item--active">
       
+      
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          EquilibriumProtocol
+          <span title="/api/absolv.models.equilibriumprotocol.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Protocol</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="" class="md-nav__link md-nav__link--active">
-        EquilibriumProtocol
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/api/absolv.models.equilibriumprotocol.rst (reference label)" class="md-ellipsis">Equilibrium<wbr>Protocol</span>
       </a>
       
         
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      EquilibriumProtocol
-      
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol" class="md-nav__link">
-    absolv.models.EquilibriumProtocol
+    <span title="absolv.models.EquilibriumProtocol (Python model) — A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR) alchemical free energy calculation." class="md-ellipsis">absolv.<wbr>models.<wbr>Equilibrium<wbr>Protocol</span>
   </a>
   
     <nav class="md-nav" aria-label="absolv.models.EquilibriumProtocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#absolv.models.EquilibriumProtocol.type" class="md-nav__link">
-    type
+  <a href="#absolv.models.EquilibriumProtocol-fields" class="md-nav__link">
+    <span class="md-ellipsis">Fields</span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.type" class="md-nav__link">
+    <span title="absolv.models.EquilibriumProtocol.type (Python field) — _validate_lambda_lengths" class="md-ellipsis">type</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.type-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.minimization_protocol" class="md-nav__link">
-    minimization_protocol
+    <span title="absolv.models.EquilibriumProtocol.minimization_protocol (Python field) — Whether to minimize the energy of the system prior to any simulations." class="md-ellipsis">minimization_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="minimization_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.minimization_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.equilibration_protocol" class="md-nav__link">
-    equilibration_protocol
+    <span title="absolv.models.EquilibriumProtocol.equilibration_protocol (Python field) — The (optional) protocol that describes the equilibration simulation to run prior to the production one." class="md-ellipsis">equilibration_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="equilibration_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.equilibration_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.production_protocol" class="md-nav__link">
-    production_protocol
+    <span title="absolv.models.EquilibriumProtocol.production_protocol (Python field) — The protocol that describes the production to run." class="md-ellipsis">production_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="production_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.production_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.lambda_sterics" class="md-nav__link">
-    lambda_sterics
+    <span title="absolv.models.EquilibriumProtocol.lambda_sterics (Python field) — The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled." class="md-ellipsis">lambda_<wbr>sterics</span>
   </a>
+  
+    <nav class="md-nav" aria-label="lambda_sterics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.lambda_sterics-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" class="md-nav__link">
-    lambda_electrostatics
+    <span title="absolv.models.EquilibriumProtocol.lambda_electrostatics (Python field) — The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled." class="md-ellipsis">lambda_<wbr>electrostatics</span>
   </a>
+  
+    <nav class="md-nav" aria-label="lambda_electrostatics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.lambda_electrostatics-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.sampler" class="md-nav__link">
-    sampler
+    <span title="absolv.models.EquilibriumProtocol.sampler (Python field) — The mode in which to sample each of the different lambda states." class="md-ellipsis">sampler</span>
   </a>
+  
+    <nav class="md-nav" aria-label="sampler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.sampler-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.n_states" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="absolv.models.EquilibriumProtocol.n_states (Python property)">n_states</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="absolv.models.EquilibriumProtocol.n_states (Python property) — Returns the number of lambda states that will be sampled at." class="md-ellipsis">n_<wbr>states</span>
   </a>
   
 </li>
@@ -564,166 +721,208 @@
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.MinimizationProtocol.html" class="md-nav__link">
-        MinimizationProtocol
+        <span title="/api/absolv.models.minimizationprotocol.rst (reference label)" class="md-ellipsis">Minimization<wbr>Protocol</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.NonEquilibriumProtocol.html" class="md-nav__link">
-        NonEquilibriumProtocol
+        <span title="/api/absolv.models.nonequilibriumprotocol.rst (reference label)" class="md-ellipsis">Non<wbr>Equilibrium<wbr>Protocol</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.SimulationProtocol.html" class="md-nav__link">
-        SimulationProtocol
+        <span title="/api/absolv.models.simulationprotocol.rst (reference label)" class="md-ellipsis">Simulation<wbr>Protocol</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.State.html" class="md-nav__link">
-        State
+        <span title="/api/absolv.models.state.rst (reference label)" class="md-ellipsis">State</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.SwitchingProtocol.html" class="md-nav__link">
-        SwitchingProtocol
+        <span title="/api/absolv.models.switchingprotocol.rst (reference label)" class="md-ellipsis">Switching<wbr>Protocol</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.System.html" class="md-nav__link">
-        System
+        <span title="/api/absolv.models.system.rst (reference label)" class="md-ellipsis">System</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.TransferFreeEnergyResult.html" class="md-nav__link">
-        TransferFreeEnergyResult
+        <span title="/api/absolv.models.transferfreeenergyresult.rst (reference label)" class="md-ellipsis">Transfer<wbr>Free<wbr>Energy<wbr>Result</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.TransferFreeEnergySchema.html" class="md-nav__link">
-        TransferFreeEnergySchema
+        <span title="/api/absolv.models.transferfreeenergyschema.rst (reference label)" class="md-ellipsis">Transfer<wbr>Free<wbr>Energy<wbr>Schema</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.models.float_validator.html" class="md-nav__link">
-        float_validator
+        <span title="/api/absolv.models.float_validator.rst (reference label)" class="md-ellipsis">float_<wbr>validator</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
+  
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.runners.html" class="md-nav__link">
-        runners
+        <span title="/api/absolv.runners.rst (reference label)" class="md-ellipsis">runners</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.simulations.html" class="md-nav__link">
-        simulations
+        <span title="/api/absolv.simulations.rst (reference label)" class="md-ellipsis">simulations</span>
       </a>
     </li>
   
 
+            
           
             
+              
+  
   
   
   
     <li class="md-nav__item">
       <a href="absolv.utilities.html" class="md-nav__link">
-        utilities
+        <span title="/api/absolv.utilities.rst (reference label)" class="md-ellipsis">utilities</span>
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
+  
 
+            
           
         </ul>
       </nav>
     </li>
+  
   
 
     
@@ -739,76 +938,175 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+<nav class="md-nav md-nav--secondary">
+  
   
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      EquilibriumProtocol
-      
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol" class="md-nav__link">
-    absolv.models.EquilibriumProtocol
+    <span title="absolv.models.EquilibriumProtocol (Python model) — A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR) alchemical free energy calculation." class="md-ellipsis">absolv.<wbr>models.<wbr>Equilibrium<wbr>Protocol</span>
   </a>
   
     <nav class="md-nav" aria-label="absolv.models.EquilibriumProtocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#absolv.models.EquilibriumProtocol.type" class="md-nav__link">
-    type
+  <a href="#absolv.models.EquilibriumProtocol-fields" class="md-nav__link">
+    <span class="md-ellipsis">Fields</span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.type" class="md-nav__link">
+    <span title="absolv.models.EquilibriumProtocol.type (Python field) — _validate_lambda_lengths" class="md-ellipsis">type</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.type-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.minimization_protocol" class="md-nav__link">
-    minimization_protocol
+    <span title="absolv.models.EquilibriumProtocol.minimization_protocol (Python field) — Whether to minimize the energy of the system prior to any simulations." class="md-ellipsis">minimization_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="minimization_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.minimization_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.equilibration_protocol" class="md-nav__link">
-    equilibration_protocol
+    <span title="absolv.models.EquilibriumProtocol.equilibration_protocol (Python field) — The (optional) protocol that describes the equilibration simulation to run prior to the production one." class="md-ellipsis">equilibration_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="equilibration_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.equilibration_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.production_protocol" class="md-nav__link">
-    production_protocol
+    <span title="absolv.models.EquilibriumProtocol.production_protocol (Python field) — The protocol that describes the production to run." class="md-ellipsis">production_<wbr>protocol</span>
   </a>
+  
+    <nav class="md-nav" aria-label="production_protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.production_protocol-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.lambda_sterics" class="md-nav__link">
-    lambda_sterics
+    <span title="absolv.models.EquilibriumProtocol.lambda_sterics (Python field) — The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled." class="md-ellipsis">lambda_<wbr>sterics</span>
   </a>
+  
+    <nav class="md-nav" aria-label="lambda_sterics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.lambda_sterics-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" class="md-nav__link">
-    lambda_electrostatics
+    <span title="absolv.models.EquilibriumProtocol.lambda_electrostatics (Python field) — The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled." class="md-ellipsis">lambda_<wbr>electrostatics</span>
   </a>
+  
+    <nav class="md-nav" aria-label="lambda_electrostatics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.lambda_electrostatics-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.sampler" class="md-nav__link">
-    sampler
+    <span title="absolv.models.EquilibriumProtocol.sampler (Python field) — The mode in which to sample each of the different lambda states." class="md-ellipsis">sampler</span>
   </a>
+  
+    <nav class="md-nav" aria-label="sampler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#absolv.models.EquilibriumProtocol.sampler-validated-by" class="md-nav__link">
+    <span class="md-ellipsis">Validated by</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#absolv.models.EquilibriumProtocol.n_states" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="absolv.models.EquilibriumProtocol.n_states (Python property)">n_states</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="absolv.models.EquilibriumProtocol.n_states (Python property) — Returns the number of lambda states that will be sampled at." class="md-ellipsis">n_<wbr>states</span>
   </a>
   
 </li>
@@ -826,190 +1124,191 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset" role="main">
-              
-                
-                
-  <h1 id="equilibriumprotocol">EquilibriumProtocol<a class="headerlink" href="#equilibriumprotocol" title="Permalink to this headline">¶</a></h1>
-<dl class="py pydantic_model objdesc">
-<dt class="sig sig-object py" id="absolv.models.EquilibriumProtocol">
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="equilibriumprotocol">EquilibriumProtocol<a class="headerlink" href="#equilibriumprotocol" title="Permalink to this heading">¶</a></h1>
+<dl class="py class pydantic_model objdesc">
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">absolv.models.</span></span><span class="sig-name descname"><span class="pre">EquilibriumProtocol</span></span><a class="reference internal" href="../_modules/absolv/models.html#EquilibriumProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#absolv.models.EquilibriumProtocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR)
 alchemical free energy calculation.</p>
 <p><details  class="autodoc_pydantic_collapsable_json">
 <summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><code><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;EquilibriumProtocol&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR)\nalchemical free energy calculation.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;equilibrium&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;equilibrium&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;minimization_protocol&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Minimization Protocol&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Whether to minimize the energy of the system prior to any simulations.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;tolerance&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
-            <span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span> <span class="mi">0</span>
-         <span class="p">},</span>
-         <span class="nt">&quot;allOf&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-               <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/MinimizationProtocol&quot;</span>
-            <span class="p">}</span>
-         <span class="p">]</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;equilibration_protocol&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Equilibration Protocol&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The (optional) protocol that describes the equilibration simulation to run prior to the production one.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
-            <span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="nt">&quot;timestep&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
-            <span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
-         <span class="p">},</span>
-         <span class="nt">&quot;allOf&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-               <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/SimulationProtocol&quot;</span>
-            <span class="p">}</span>
-         <span class="p">]</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;production_protocol&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Production Protocol&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The protocol that describes the production to run.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span> <span class="mi">6250</span><span class="p">,</span>
-            <span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span> <span class="mi">160</span><span class="p">,</span>
-            <span class="nt">&quot;timestep&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
-            <span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
-         <span class="p">},</span>
-         <span class="nt">&quot;allOf&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-               <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/SimulationProtocol&quot;</span>
-            <span class="p">}</span>
-         <span class="p">]</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;lambda_sterics&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Lambda Sterics&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-            <span class="nt">&quot;maximum&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
-         <span class="p">}</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;lambda_electrostatics&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Lambda Electrostatics&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-            <span class="nt">&quot;maximum&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
-         <span class="p">}</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;sampler&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Sampler&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The mode in which to sample each of the different lambda states.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;repex&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;independent&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;repex&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;lambda_electrostatics&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;MinimizationProtocol&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;MinimizationProtocol&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A model that encodes how a system should be energy minimized.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;tolerance&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Tolerance&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;How precisely the energy minimum must be located [kj / mol / nm]&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
-               <span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Iterations&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The maximum number of iterations to perform. If this is 0, minimization is continued until the results converge.&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">}</span>
-         <span class="p">}</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;SimulationProtocol&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;SimulationProtocol&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A model that encodes how a system should be evolved by molecular simulation.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;N Steps Per Iteration&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The number of steps to evolve the system by at each iteration. The total number of steps performed will be equal to the ``total_number_of_iterations * steps_per_iteration``.&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;N Iterations&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The number of times to evolve the system forward by ``n_steps_per_iteration`` time steps.&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;timestep&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Timestep&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The timestep [fs] to evolve the system by at each step.&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
-               <span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Thermostat Friction&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The friction coefficient [1/ps] to use for the Langevin thermostat.&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
-               <span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span>
-            <span class="p">}</span>
-         <span class="p">},</span>
-         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;n_steps_per_iteration&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;n_iterations&quot;</span>
-         <span class="p">]</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EquilibriumProtocol&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A model that encodes the protocol for performing an equilibrium (e.g. TI, MBAR)\nalchemical free energy calculation.&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;equilibrium&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;equilibrium&quot;</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;minimization_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Minimization Protocol&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether to minimize the energy of the system prior to any simulations.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;allOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/MinimizationProtocol&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;equilibration_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Equilibration Protocol&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The (optional) protocol that describes the equilibration simulation to run prior to the production one.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;timestep&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;allOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/SimulationProtocol&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;production_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Production Protocol&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The protocol that describes the production to run.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6250</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;timestep&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;allOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/SimulationProtocol&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;lambda_sterics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lambda Sterics&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;lambda_electrostatics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lambda Electrostatics&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;sampler&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sampler&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The mode in which to sample each of the different lambda states.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;repex&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;independent&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;repex&quot;</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;lambda_sterics&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;lambda_electrostatics&quot;</span>
+<span class="w">   </span><span class="p">],</span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;MinimizationProtocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MinimizationProtocol&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A model that encodes how a system should be energy minimized.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tolerance&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;How precisely the energy minimum must be located [kj / mol / nm]&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Max Iterations&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The maximum number of iterations to perform. If this is 0, minimization is continued until the results converge.&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;SimulationProtocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SimulationProtocol&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A model that encodes how a system should be evolved by molecular simulation.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;n_steps_per_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N Steps Per Iteration&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The number of steps to evolve the system by at each iteration. The total number of steps performed will be equal to the ``total_number_of_iterations * steps_per_iteration``.&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;n_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N Iterations&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The number of times to evolve the system forward by ``n_steps_per_iteration`` time steps.&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;timestep&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Timestep&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The timestep [fs] to evolve the system by at each step.&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;thermostat_friction&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thermostat Friction&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The friction coefficient [1/ps] to use for the Langevin thermostat.&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;exclusiveMinimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;n_steps_per_iteration&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;n_iterations&quot;</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 </div>
 </details></p><dl class="field-list simple">
-<dt class="field-odd">Fields</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol-fields">Fields<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol-fields" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.equilibration_protocol" title="absolv.models.EquilibriumProtocol.equilibration_protocol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equilibration_protocol</span> <span class="pre">(Optional[absolv.models.SimulationProtocol])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" title="absolv.models.EquilibriumProtocol.lambda_electrostatics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lambda_electrostatics</span> <span class="pre">(List[absolv.models.ConstrainedFloatValue])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.lambda_sterics" title="absolv.models.EquilibriumProtocol.lambda_sterics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lambda_sterics</span> <span class="pre">(List[absolv.models.ConstrainedFloatValue])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.minimization_protocol" title="absolv.models.EquilibriumProtocol.minimization_protocol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimization_protocol</span> <span class="pre">(Optional[absolv.models.MinimizationProtocol])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.production_protocol" title="absolv.models.EquilibriumProtocol.production_protocol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">production_protocol</span> <span class="pre">(Optional[absolv.models.SimulationProtocol])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.sampler" title="absolv.models.EquilibriumProtocol.sampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sampler</span> <span class="pre">(Literal['independent',</span> <span class="pre">'repex'])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.type" title="absolv.models.EquilibriumProtocol.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Literal['equilibrium'])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.equilibration_protocol" title="absolv.models.EquilibriumProtocol.equilibration_protocol (Python field) — The (optional) protocol that describes the equilibration simulation to run prior to the production one."><code class="xref py py-obj docutils literal notranslate"><span class="pre">equilibration_protocol</span> <span class="pre">(absolv.models.SimulationProtocol</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" title="absolv.models.EquilibriumProtocol.lambda_electrostatics (Python field) — The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled."><code class="xref py py-obj docutils literal notranslate"><span class="pre">lambda_electrostatics</span> <span class="pre">(List[absolv.models.ConstrainedFloatValue])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.lambda_sterics" title="absolv.models.EquilibriumProtocol.lambda_sterics (Python field) — The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled."><code class="xref py py-obj docutils literal notranslate"><span class="pre">lambda_sterics</span> <span class="pre">(List[absolv.models.ConstrainedFloatValue])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.minimization_protocol" title="absolv.models.EquilibriumProtocol.minimization_protocol (Python field) — Whether to minimize the energy of the system prior to any simulations."><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimization_protocol</span> <span class="pre">(absolv.models.MinimizationProtocol</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.production_protocol" title="absolv.models.EquilibriumProtocol.production_protocol (Python field) — The protocol that describes the production to run."><code class="xref py py-obj docutils literal notranslate"><span class="pre">production_protocol</span> <span class="pre">(absolv.models.SimulationProtocol</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.sampler" title="absolv.models.EquilibriumProtocol.sampler (Python field) — The mode in which to sample each of the different lambda states."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sampler</span> <span class="pre">(Literal['independent',</span> <span class="pre">'repex'])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#absolv.models.EquilibriumProtocol.type" title="absolv.models.EquilibriumProtocol.type (Python field) — _validate_lambda_lengths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Literal['equilibrium'])</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py" id="absolv.models.EquilibriumProtocol.type">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'equilibrium'</span></span><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;equilibrium&#39;</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.type" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol.type">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="s"><span class="pre">'equilibrium'</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;equilibrium&#39;</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.type" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.type-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.type-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1017,12 +1316,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.models.EquilibriumProtocol.minimization_protocol">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimization_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.MinimizationProtocol.html#absolv.models.MinimizationProtocol" title="absolv.models.MinimizationProtocol"><span class="pre">absolv.models.MinimizationProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">MinimizationProtocol</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.minimization_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="absolv.models.EquilibriumProtocol.minimization_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimization_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference internal" href="absolv.models.MinimizationProtocol.html#absolv.models.MinimizationProtocol" title="absolv.models.MinimizationProtocol (Python model) — A model that encodes how a system should be energy minimized."><span class="pre">MinimizationProtocol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">MinimizationProtocol</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.minimization_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to minimize the energy of the system prior to any simulations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.minimization_protocol-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.minimization_protocol-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1030,12 +1329,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.models.EquilibriumProtocol.equilibration_protocol">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equilibration_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.equilibration_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="absolv.models.EquilibriumProtocol.equilibration_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equilibration_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol (Python model) — A model that encodes how a system should be evolved by molecular simulation."><span class="pre">SimulationProtocol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.equilibration_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The (optional) protocol that describes the equilibration simulation to run prior to the production one.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.equilibration_protocol-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.equilibration_protocol-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1043,12 +1342,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.models.EquilibriumProtocol.production_protocol">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">production_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol"><span class="pre">absolv.models.SimulationProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.production_protocol" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="absolv.models.EquilibriumProtocol.production_protocol">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">production_protocol</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference internal" href="absolv.models.SimulationProtocol.html#absolv.models.SimulationProtocol" title="absolv.models.SimulationProtocol (Python model) — A model that encodes how a system should be evolved by molecular simulation."><span class="pre">SimulationProtocol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="n">SimulationProtocol</span><span class="p">(</span><span class="n">n_steps_per_iteration</span><span class="o">=</span><span class="mi">6250</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">thermostat_friction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.production_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol that describes the production to run.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.production_protocol-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.production_protocol-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1056,12 +1355,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.models.EquilibriumProtocol.lambda_sterics">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambda_sterics</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">absolv.models.ConstrainedFloatValue</span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_sterics" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol.lambda_sterics">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambda_sterics</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ConstrainedFloatValue</span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_sterics" title="Permalink to this definition">¶</a></dt>
 <dd><p>The alchemical pathway to transform the vdW interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent vdW interactions disabled.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.lambda_sterics-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_sterics-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1069,12 +1368,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py sig-wrap" id="absolv.models.EquilibriumProtocol.lambda_electrostatics">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambda_electrostatics</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">absolv.models.ConstrainedFloatValue</span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol.lambda_electrostatics">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lambda_electrostatics</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ConstrainedFloatValue</span><span class="p"><span class="pre">]</span></span></span><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_electrostatics" title="Permalink to this definition">¶</a></dt>
 <dd><p>The alchemical pathway to transform the electrostatic interactions along. A value of 1.0 represents a fully interacting system while a value of 0.0 represents a system with the solute-solute and solute-solvent electrostatic interactions disabled.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.lambda_electrostatics-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.lambda_electrostatics-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1082,12 +1381,12 @@ alchemical free energy calculation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py pydantic_field objdesc">
-<dt class="sig sig-object py" id="absolv.models.EquilibriumProtocol.sampler">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sampler</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'independent'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'repex'</span></span><span class="p"><span class="pre">]</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;repex&#39;</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.sampler" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute pydantic_field objdesc">
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol.sampler">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sampler</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="s"><span class="pre">'independent'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'repex'</span></span></span><span class="p"> <span class="pre">=</span> </span><code class="code python docutils literal highlight highlight-python"><span class="s1">&#39;repex&#39;</span></code><a class="headerlink" href="#absolv.models.EquilibriumProtocol.sampler" title="Permalink to this definition">¶</a></dt>
 <dd><p>The mode in which to sample each of the different lambda states.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
+<dt class="field-odd" id="absolv.models.EquilibriumProtocol.sampler-validated-by">Validated by<span class="colon">:</span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.sampler-validated-by" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_lambda_lengths</span></code></p></li>
 </ul>
@@ -1096,8 +1395,8 @@ alchemical free energy calculation.</p>
 </dd></dl>
 
 <dl class="py property objdesc">
-<dt class="sig sig-object py" id="absolv.models.EquilibriumProtocol.n_states">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_states</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><a class="headerlink" href="#absolv.models.EquilibriumProtocol.n_states" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object highlight py" id="absolv.models.EquilibriumProtocol.n_states">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_states</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><a class="headerlink" href="#absolv.models.EquilibriumProtocol.n_states" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of lambda states that will be sampled at.</p>
 </dd></dl>
 
@@ -1105,46 +1404,43 @@ alchemical free energy calculation.</p>
 
 
 
-                
-                  
-                    
-
-<hr>
-<div class="md-source-date">
+  <hr>
+<div class="md-source-file">
   <small>
     
-      Last update: Dec 23, 2021
+      Last update:
+      Jan 31, 2023
     
   </small>
 </div>
-                  
-                
-              
-              
-                
 
 
-              
-            </article>
-          </div>
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
             Back to top
           </a>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
         <a href="absolv.models.DeltaG.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DeltaG" rel="prev">
           <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
           <div class="md-footer__title">
             <div class="md-ellipsis">
@@ -1168,11 +1464,12 @@ alchemical free energy calculation.</p>
             </div>
           </div>
           <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
           </div>
         </a>
       
     </nav>
+  
   
   
   <div class="md-footer-meta md-typeset">
@@ -1184,11 +1481,11 @@ alchemical free energy calculation.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
     
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
-      <script src="../_static/javascripts/bundle.c6851205.min.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      
+        <script src="../_static/sphinx_immaterial_theme.cea6a0c1d5b0618cf.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
   </body>
