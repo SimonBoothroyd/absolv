@@ -50,7 +50,7 @@ class PACKMOLCoordinateFactory:
             for smiles in {smiles for smiles, _ in components}
         }
 
-        volume = 0.0 * unit.angstrom ** 3
+        volume = 0.0 * unit.angstrom**3
 
         for smiles, count in components:
 

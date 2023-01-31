@@ -8,8 +8,7 @@ The recommended way to install ``absolv`` is via the ``conda`` package manger:
 
 .. code-block:: bash
 
-    # The -c SimonBoothroyd is temporary until a full release is made
-    conda install -c conda-forge -c SimonBoothroyd absolv
+    conda install -c conda-forge absolv
 
 If you have access to the OpenEye toolkits (namely ``oechem``, ``oequacpac`` and ``oeomega``) we recommend installing
 these also as these can speed up molecule parameterization and coordinate generation significantly.

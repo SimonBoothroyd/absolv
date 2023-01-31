@@ -142,7 +142,7 @@ def test_minimize():
 
     force = openmm.HarmonicBondForce()
     force.addBond(
-        0, 1, 1.0 * unit.angstrom, 4.0 * unit.kilojoule_per_mole / unit.angstrom ** 2
+        0, 1, 1.0 * unit.angstrom, 4.0 * unit.kilojoule_per_mole / unit.angstrom**2
     )
     system.addForce(force)
 
@@ -171,7 +171,7 @@ def test_evaluate_energy():
 
     force = openmm.HarmonicBondForce()
     force.addBond(
-        0, 1, 1.0 * unit.angstrom, 4.0 * unit.kilojoule_per_mole / unit.angstrom ** 2
+        0, 1, 1.0 * unit.angstrom, 4.0 * unit.kilojoule_per_mole / unit.angstrom**2
     )
     system.addForce(force)
 

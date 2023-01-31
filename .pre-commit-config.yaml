@@ -1,0 +1,19 @@
+files: \.py$
+repos:
+
+- repo: local
+  hooks:
+    - id: isort
+      name: Import formatting
+      language: system
+      entry: isort
+
+    - id: black
+      name: Code formatting
+      language: system
+      entry: black
+
+    - id: flake8
+      name: Linting
+      language: system
+      entry: flake8
