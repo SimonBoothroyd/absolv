@@ -84,4 +84,4 @@ jobs:
       with:
         file: ./coverage.xml
         flags: unittests
-        name: codecov-${{
+        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
