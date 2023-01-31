@@ -27,12 +27,4 @@ To install ``absolv`` from source begin by cloning the repository from `github
 Create a custom conda environment which contains the required dependencies and activate it:
 
 .. code-block:: bash
-
-    conda env create --name absolv --file devtools/conda-envs/test-env.yaml
-    conda activate absolv
-
-Finally, install ``absolv`` itself:
-
-.. code-block:: bash
-
-    python setup.py develop
+    make env
