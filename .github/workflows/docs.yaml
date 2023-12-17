@@ -1,51 +1,53 @@
-name: docs
+name: Publish Documentation
 
 on:
   push:
     branches:
-      - "main"
-  pull_request:
-    branches:
-      - "main"
+      - main
+    tags:
+      - '*'
 
 jobs:
-  docs:
+  deploy-docs:
 
     runs-on: ubuntu-latest
+    container: condaforge/mambaforge:latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
-
-    - name: Setup Conda Environment
-      uses: mamba-org/provision-with-micromamba@main
-      with:
-        environment-file: docs/environment.yml
-        extra-specs: |
-          python=${{ matrix.python-version }}
-
-    - name: Install Package
-      shell: bash -l {0}
+    - name: Prepare container
       run: |
-        pip install -e .
+        apt update && apt install -y git make
 
-    - name: Environment Information
-      shell: bash -l {0}
+    - name: Checkout
+      uses: actions/checkout@v3.3.0
+
+    - name: Determine Version
+      shell: bash
       run: |
-        conda info
-        conda list
+        if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+          echo "VERSION=latest" >> $GITHUB_ENV
+        elif [ "${GITHUB_REF#refs/tags/}" != "$GITHUB_REF" ]; then
+          VERSION=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          echo "VERSION=$VERSION stable" >> $GITHUB_ENV
+        else
+          echo "Invalid ref: $GITHUB_REF"
+          exit 1
+        fi
 
-    - name: Build 🔧
-      shell: bash -l {0}
+    - name: Build and Deploy Documentation
+      env:
+        INSIDER_DOCS_TOKEN: ${{ secrets.INSIDER_DOCS_TOKEN }}
       run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git config --global --add safe.directory "$PWD"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
-        cd docs
+        git fetch --all --prune
 
-        python compile-sass.py
-        make html
+        make env
 
-    - name: Deploy 🚀
-      if: github.ref == 'refs/heads/main'
-      uses: JamesIves/github-pages-deploy-action@4.1.8
-      with:
-        branch: gh-pages
-        folder: docs/_build/html
+        sed -i 's/# extensions/extensions/' mkdocs.yml
+
+        make docs-insiders INSIDER_DOCS_TOKEN="${INSIDER_DOCS_TOKEN}"
+        make docs-deploy VERSION="$VERSION"

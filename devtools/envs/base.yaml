@@ -1,4 +1,4 @@
-name: test
+name: absolv
 
 channels:
   - conda-forge
@@ -6,34 +6,53 @@ channels:
 dependencies:
 
   - python
-  - pydantic
+  - pydantic            >=2
   - tqdm
 
-  - openff-toolkit-base >=0.10.5,<0.11
-  - openff-utilities    >=0.1.8
+  - openff-toolkit      >=0.13.0
+  - openff-utilities
 
-  - openmm >=7.6
+  - openmm              >=8.0
+  - mdtraj
+  - femto
 
-  - packmol
+  - pymbar              >=4.0
 
-  - pymbar >=4.0
+  # Optional packages
 
-    # Optional dependencies
+  ### Parameterization
   - rdkit
   - ambertools
 
-  - openmmtools  # repex
+  ### Custom functional forms
+  - smirnoff-plugins
 
-  - smirnoff-plugins  # custom vdW functional forms
+  # Dev / Testing
+  - versioneer
 
-    # Dev / Testing
   - pre-commit
-  - isort
-  - black
-  - flake8
+  - ruff
 
   - pytest
+  - pytest-mock
   - pytest-cov
   - codecov
 
-  - mdtraj  # loading trajectories
+  ### Regression Testing
+  - openmmforcefields
+  - seaborn
+  - pandas
+
+  # Docs
+  - mkdocs
+  - mkdocs-material
+  - mkdocs-gen-files
+  - mkdocs-literate-nav
+  - mkdocs-jupyter
+  - mkdocstrings
+  - mkdocstrings-python
+  - black
+  - mike
+
+  - pip:
+      - mkdocs-bibtex
