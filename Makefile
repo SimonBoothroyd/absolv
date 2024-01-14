@@ -19,7 +19,7 @@ format:
 	$(CONDA_ENV_RUN) ruff format $(PACKAGE_NAME)
 
 test:
-	$(CONDA_ENV_RUN) pytest -v $(TEST_ARGS) $(PACKAGE_NAME)/*/tests/
+	$(CONDA_ENV_RUN) pytest -v $(TEST_ARGS) $(PACKAGE_NAME)/tests/
 
 docs-build:
 	$(CONDA_ENV_RUN) mkdocs build
