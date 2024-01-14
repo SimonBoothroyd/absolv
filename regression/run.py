@@ -5,6 +5,8 @@ import urllib.request
 import datetime
 
 import click
+import femto.md.config
+import femto.md.system
 import openff.toolkit
 import openff.units
 import openmm.app
@@ -80,14 +82,22 @@ def default_config_eq(system: absolv.config.System) -> absolv.config.Config:
         pressure=DEFAULT_PRESSURE,
         alchemical_protocol_a=absolv.config.EquilibriumProtocol(
             production_protocol=absolv.config.HREMDProtocol(
-                n_steps_per_cycle=500, n_cycles=3000
+                n_steps_per_cycle=500,
+                n_cycles=2000,
+                integrator=femto.md.config.LangevinIntegrator(
+                    timestep=1.0 * openmm.unit.femtosecond
+                ),
             ),
             lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_VACUUM,
             lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_VACUUM,
         ),
         alchemical_protocol_b=absolv.config.EquilibriumProtocol(
             production_protocol=absolv.config.HREMDProtocol(
-                n_steps_per_cycle=500, n_cycles=3000
+                n_steps_per_cycle=500,
+                n_cycles=1000,
+                integrator=femto.md.config.LangevinIntegrator(
+                    timestep=4.0 * openmm.unit.femtosecond
+                ),
             ),
             lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_SOLVENT,
             lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_SOLVENT,
@@ -163,10 +173,17 @@ def run_replica(
 
     prepared_system_a, prepared_system_b = absolv.runner.setup(config, system_generator)
 
+    femto.md.system.apply_hmr(
+        prepared_system_a.system,
+        parmed.openmm.load_topology(prepared_system_a.topology.to_openmm()),
+    )
+    femto.md.system.apply_hmr(
+        prepared_system_b.system,
+        parmed.openmm.load_topology(prepared_system_a.topology.to_openmm()),
+    )
+
     run_fn = absolv.runner.run_neq if method == "neq" else absolv.runner.run_eq
     result = run_fn(config, prepared_system_a, prepared_system_b, "CUDA")
-
-    result = config
 
     (output_dir / "result.json").write_text(result.model_dump_json(indent=2))
 
