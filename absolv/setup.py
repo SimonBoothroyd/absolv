@@ -161,9 +161,7 @@ def setup_system(
             file.write(input_file_contents)
 
         with open("input.txt") as file:
-            subprocess.run(
-                packmol_path, stdin=file, stderr=subprocess.STDOUT, check=True
-            )
+            subprocess.run(packmol_path, stdin=file, check=True, capture_output=True)
 
         with open("output.xyz") as file:
             output_lines = file.read().splitlines(False)
