@@ -1,22 +1,21 @@
 import pathlib
 
 import numpy
-import openmm
-import pytest
 import openff.toolkit
 import openff.units
 import openff.units.openmm
+import openmm
 import openmm.unit
+import pytest
 
 from absolv.config import (
+    Config,
     EquilibriumProtocol,
     NonEquilibriumProtocol,
     SimulationProtocol,
     SwitchingProtocol,
     System,
-    Config,
 )
-
 
 MOLAR_GAS_CONSTANT_R = openff.units.openmm.from_openmm(openmm.unit.MOLAR_GAS_CONSTANT_R)
 

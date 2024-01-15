@@ -1,11 +1,18 @@
+import femto.md.constants
+import mdtraj
 import numpy.random
+import openff.toolkit
 import openmm
 import openmm.app
 import openmm.unit
-import openff.toolkit
 
 from absolv.tests import is_close
-from absolv.utils.openmm import create_system_generator, add_barostat
+from absolv.utils.openmm import (
+    add_barostat,
+    create_simulation,
+    create_system_generator,
+    extract_frame,
+)
 
 
 def test_add_barostat():
@@ -22,6 +29,42 @@ def test_add_barostat():
 
     assert is_close(barostat.getDefaultPressure(), expected_pressure)
     assert is_close(barostat.getDefaultTemperature(), expected_temperature)
+
+
+def test_create_simulation():
+    system = openmm.System()
+    system.addParticle(1.0)
+
+    expected_coords = numpy.array([[1.0, 2.0, 3.0]]) * openmm.unit.angstrom
+    expected_box = numpy.eye(3) * 12.3 * openmm.unit.angstrom
+
+    topology = openff.toolkit.Molecule.from_smiles("[Ar]").to_topology()
+    topology.box_vectors = expected_box
+
+    integrator = openmm.LangevinIntegrator(0.001, 1.0, 0.001)
+
+    simulation = create_simulation(
+        system,
+        topology,
+        expected_coords,
+        integrator,
+        femto.md.constants.OpenMMPlatform.REFERENCE,
+    )
+    assert isinstance(simulation, openmm.app.Simulation)
+
+    found_coords = simulation.context.getState(getPositions=True).getPositions(
+        asNumpy=True
+    )
+    assert numpy.allclose(
+        found_coords.value_in_unit(openmm.unit.angstrom),
+        expected_coords.value_in_unit(openmm.unit.angstrom),
+    )
+
+    found_box = simulation.context.getState().getPeriodicBoxVectors(asNumpy=True)
+    assert numpy.allclose(
+        found_box.value_in_unit(openmm.unit.angstrom),
+        expected_box.value_in_unit(openmm.unit.angstrom),
+    )
 
 
 def test_create_system_generator(test_data_dir):
@@ -74,3 +117,37 @@ def test_create_system_generator(test_data_dir):
         if isinstance(force, openmm.NonbondedForce)
     ][0]
     assert nonbonded_force_b.getNonbondedMethod() == openmm.NonbondedForce.NoCutoff
+
+
+def test_extract_frame():
+    expected_coords = numpy.array([[[1.0, 2.0, 3.0]]]) * openmm.unit.angstrom
+    expected_lengths = numpy.array([[1.2, 2.3, 3.4]]) * openmm.unit.angstrom
+
+    expected_box = (
+        numpy.array([[[1.2, 0.0, 0.0], [0.0, 2.3, 0.0], [0.0, 0.0, 3.4]]])
+        * openmm.unit.angstrom
+    )
+
+    topology = openff.toolkit.Molecule.from_smiles("[Ar]").to_topology().to_openmm()
+
+    trajectory = mdtraj.Trajectory(
+        expected_coords.value_in_unit(openmm.unit.nanometers),
+        mdtraj.Topology.from_openmm(topology),
+        unitcell_lengths=expected_lengths.value_in_unit(openmm.unit.nanometers),
+        unitcell_angles=numpy.array([[90.0, 90.0, 90.0]]),
+    )
+    print(trajectory)
+
+    state = extract_frame(trajectory, 0)
+
+    found_coords = state.getPositions(asNumpy=True)
+    assert numpy.allclose(
+        found_coords.value_in_unit(openmm.unit.angstrom),
+        expected_coords.value_in_unit(openmm.unit.angstrom)[0],
+    )
+
+    found_box = state.getPeriodicBoxVectors(asNumpy=True)
+    assert numpy.allclose(
+        found_box.value_in_unit(openmm.unit.angstrom),
+        expected_box.value_in_unit(openmm.unit.angstrom)[0],
+    )

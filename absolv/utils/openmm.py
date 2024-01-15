@@ -4,11 +4,10 @@ import typing
 import femto.md.constants
 import femto.md.utils.openmm
 import mdtraj
+import openff.toolkit
 import openmm
 import openmm.app
 import openmm.unit
-import openff.toolkit
-
 
 SystemGenerator = typing.Callable[
     [

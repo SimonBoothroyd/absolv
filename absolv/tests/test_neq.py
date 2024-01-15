@@ -5,8 +5,8 @@ import openmm.unit
 import pytest
 
 import absolv.config
-import absolv.setup
 import absolv.fep
+import absolv.setup
 from absolv.neq import _compute_lambdas, _enumerate_frames, _simulate, run_neq
 
 

@@ -6,14 +6,14 @@ import pytest
 from openmm import unit
 
 from absolv.fep import (
-    _find_v_sites,
-    _find_nonbonded_forces,
-    _add_electrostatics_lambda,
-    _add_lj_vdw_lambda,
+    LJ_POTENTIAL,
     LJ_POTENTIAL_BEUTLER,
     LORENTZ_BERTHELOT,
-    LJ_POTENTIAL,
     _add_custom_vdw_lambda,
+    _add_electrostatics_lambda,
+    _add_lj_vdw_lambda,
+    _find_nonbonded_forces,
+    _find_v_sites,
     apply_fep,
 )
 from absolv.tests import is_close

@@ -1,5 +1,5 @@
-import pytest
 import openff.toolkit
+import pytest
 
 from absolv.utils.topology import topology_to_atom_indices, topology_to_components
 

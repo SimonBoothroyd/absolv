@@ -1,8 +1,8 @@
 import shutil
 
 import numpy
-import pytest
 import openmm.unit
+import pytest
 
 from absolv.setup import (
     _approximate_box_size_by_density,

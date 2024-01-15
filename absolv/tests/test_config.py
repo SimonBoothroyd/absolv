@@ -1,5 +1,5 @@
-import pytest
 import pydantic
+import pytest
 
 from absolv.config import EquilibriumProtocol, System
 
