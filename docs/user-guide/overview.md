@@ -54,7 +54,9 @@ specified. This can either be a more traditional 'equilibrium' pathway, or a
     )
     ```
 
-    Here the default lambda schedule from FreeSolv is used.
+    Here the default lambda schedule from FreeSolv is used. A lambda of `1.0` indicates
+    a fully interacting system, and a lambda of `0.0` indicates a fully decoupled
+    system.
 
 === "Non-equilibrium"
 
@@ -124,16 +126,13 @@ import absolv.runner
 prepared_system_a, prepared_system_b = absolv.runner.setup(system, config, force_field)
 ```
 
-run the calculation:
+and run the calculation:
 
 === "Equilibrium"
 
     ```python
     result = absolv.runner.run_eq(
-        config,
-        prepared_system_a,
-        prepared_system_b,
-        "CUDA",
+        config, prepared_system_a, prepared_system_b, "CUDA"
     )
     print(result)
     ```
@@ -142,12 +141,9 @@ run the calculation:
 
     ```python
     result = absolv.runner.run_neq(
-        config,
-        prepared_system_a,
-        prepared_system_b,
-        "CUDA",
+        config, prepared_system_a, prepared_system_b, "CUDA"
     )
     print(result)
     ```
 
-\bibliography
+where the result will be a [Result][absolv.config.Result] object.

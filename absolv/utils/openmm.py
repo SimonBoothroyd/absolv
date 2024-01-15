@@ -135,10 +135,8 @@ def create_system_generator(
 
                 symbols = sorted(atom.element.symbol for atom in residue.atoms())
 
-                if symbols != ["H", "H", "O"]:
-                    continue
-
-                residue.name = "HOH"
+                if symbols == ["H", "H", "O"]:
+                    residue.name = "HOH"
 
         from openmm.app import Modeller
 

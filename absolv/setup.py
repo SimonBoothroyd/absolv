@@ -17,10 +17,6 @@ _LOGGER = logging.getLogger(__name__)
 _G_PER_ML = openmm.unit.grams / openmm.unit.milliliters
 
 
-class PACKMOLRuntimeError(RuntimeError):
-    """An error raised when PACKMOL fails to execute / converge for some reason."""
-
-
 def _approximate_box_size_by_density(
     components: list[tuple[str, int]],
     target_density: openmm.unit.Quantity,
@@ -165,12 +161,9 @@ def setup_system(
             file.write(input_file_contents)
 
         with open("input.txt") as file:
-            result = subprocess.check_output(
-                packmol_path, stdin=file, stderr=subprocess.STDOUT
-            ).decode("utf-8")
-
-        if not result.find("Success!") > 0:
-            raise PACKMOLRuntimeError(result)
+            subprocess.run(
+                packmol_path, stdin=file, stderr=subprocess.STDOUT, check=True
+            )
 
         with open("output.xyz") as file:
             output_lines = file.read().splitlines(False)
