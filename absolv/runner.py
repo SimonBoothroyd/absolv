@@ -178,6 +178,7 @@ def _run_phase_hremd(
     temperature: openmm.unit.Quantity,
     prepared_system: PreparedSystem,
     platform: femto.md.constants.OpenMMPlatform,
+    output_dir: pathlib.Path | None = None,
 ) -> tuple[dict[str, float], dict[str, numpy.ndarray]]:
     platform = (
         femto.md.constants.OpenMMPlatform.REFERENCE
@@ -222,10 +223,11 @@ def _run_phase_hremd(
     )
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        tmp_dir = pathlib.Path(tmp_dir)
+        output_dir = pathlib.Path(tmp_dir) if output_dir is None else output_dir
+        output_dir.mkdir(parents=True, exist_ok=True)
 
-        femto.md.hremd.run_hremd(simulation, states, hremd_config, tmp_dir)
-        u_kn, n_k = femto.fe.ddg.load_u_kn(tmp_dir / "samples.arrow")
+        femto.md.hremd.run_hremd(simulation, states, hremd_config, output_dir)
+        u_kn, n_k = femto.fe.ddg.load_u_kn(output_dir / "samples.arrow")
 
     return femto.fe.ddg.estimate_ddg(u_kn, n_k, temperature)
 
@@ -235,6 +237,7 @@ def run_eq(
     prepared_system_a: PreparedSystem,
     prepared_system_b: PreparedSystem,
     platform: femto.md.constants.OpenMMPlatform = femto.md.constants.OpenMMPlatform.CUDA,
+    output_dir: pathlib.Path | None = None,
 ) -> absolv.config.Result:
     """Perform a simulation at each lambda window and for each solvent.
 
@@ -243,17 +246,26 @@ def run_eq(
         prepared_system_a: The prepared system a. See ``setup`` for more details.
         prepared_system_b: The prepared system b. See ``setup`` for more details.
         platform: The OpenMM platform to run using.
+        output_dir: The (optional) directory to save HREMD samples to.
     """
 
     results_a, overlap_a = _run_phase_hremd(
-        config.alchemical_protocol_a, config.temperature, prepared_system_a, platform
+        config.alchemical_protocol_a,
+        config.temperature,
+        prepared_system_a,
+        platform,
+        None if output_dir is None else output_dir / "solvant-a",
     )
 
     dg_a, dg_a_std = results_a["ddG_kcal_mol"], results_a["ddG_error_kcal_mol"]
     # overlap_a = overlap_a["overlap_0"]
 
     results_b, overlap_b = _run_phase_hremd(
-        config.alchemical_protocol_b, config.temperature, prepared_system_b, platform
+        config.alchemical_protocol_b,
+        config.temperature,
+        prepared_system_b,
+        platform,
+        None if output_dir is None else output_dir / "solvant-b",
     )
 
     dg_b, dg_b_std = results_b["ddG_kcal_mol"], results_b["ddG_error_kcal_mol"]

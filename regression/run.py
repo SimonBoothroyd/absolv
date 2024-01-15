@@ -182,8 +182,14 @@ def run_replica(
         parmed.openmm.load_topology(prepared_system_a.topology.to_openmm()),
     )
 
-    run_fn = absolv.runner.run_neq if method == "neq" else absolv.runner.run_eq
-    result = run_fn(config, prepared_system_a, prepared_system_b, "CUDA")
+    if method == "neq":
+        result = absolv.runner.run_neq(
+            config, prepared_system_a, prepared_system_b, "CUDA"
+        )
+    else:
+        result = absolv.runner.run_eq(
+            config, prepared_system_a, prepared_system_b, "CUDA", output_dir
+        )
 
     (output_dir / "result.json").write_text(result.model_dump_json(indent=2))
 
@@ -220,9 +226,13 @@ def main(solutes: list[str], methods: list[str], replicas: list[str]):
                 logging.info(f"running {method} {solute} {replica}")
 
                 replica_dir = output_dir / f"{method}-{solute}-{replica}"
-                run_replica(
-                    DEFAULT_SYSTEMS[solute], system_generator, method, replica_dir
-                )
+
+                try:
+                    run_replica(
+                        DEFAULT_SYSTEMS[solute], system_generator, method, replica_dir
+                    )
+                except BaseException as e:
+                    logging.exception(f"failed to run {method} {solute} {replica}", e)
 
 
 if __name__ == "__main__":

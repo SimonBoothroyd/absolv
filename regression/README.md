@@ -27,3 +27,5 @@ python run.py --solute methanol \
               --replica 0       \
               --replica 1
 ```
+
+The results will be written to `results/{timestamp}/{method}-{solute}-{replica}/results.json`.
