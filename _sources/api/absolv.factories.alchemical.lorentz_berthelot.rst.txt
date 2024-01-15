@@ -1,6 +1,0 @@
-lorentz\_berthelot
-==================
-
-.. currentmodule:: absolv.factories.alchemical
-
-.. autofunction:: lorentz_berthelot

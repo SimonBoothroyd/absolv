@@ -1,6 +1,0 @@
-AlchemicalOpenMMSimulation.current\_state
-=========================================
-
-.. currentmodule:: absolv.simulations
-
-.. autoproperty:: AlchemicalOpenMMSimulation.current_state

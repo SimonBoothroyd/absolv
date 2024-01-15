@@ -1,6 +1,0 @@
-evaluate\_energy
-================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: evaluate_energy

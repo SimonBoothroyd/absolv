@@ -1,6 +1,0 @@
-MinimizationProtocol
-====================
-
-.. currentmodule:: absolv.models
-
-.. autopydantic_model:: MinimizationProtocol

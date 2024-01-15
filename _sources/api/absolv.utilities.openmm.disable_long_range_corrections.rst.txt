@@ -1,6 +1,0 @@
-disable\_long\_range\_corrections
-=================================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: disable_long_range_corrections

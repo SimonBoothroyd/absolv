@@ -1,6 +1,0 @@
-array\_to\_vectors
-==================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: array_to_vectors

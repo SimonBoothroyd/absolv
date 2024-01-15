@@ -1,6 +1,0 @@
-topology\_to\_atom\_indices
-===========================
-
-.. currentmodule:: absolv.utilities.topology
-
-.. autofunction:: topology_to_atom_indices

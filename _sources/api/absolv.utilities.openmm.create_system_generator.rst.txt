@@ -1,6 +1,0 @@
-create\_system\_generator
-=========================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: create_system_generator

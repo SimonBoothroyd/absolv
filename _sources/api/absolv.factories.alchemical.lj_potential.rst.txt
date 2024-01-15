@@ -1,6 +1,0 @@
-lj\_potential
-=============
-
-.. currentmodule:: absolv.factories.alchemical
-
-.. autofunction:: lj_potential

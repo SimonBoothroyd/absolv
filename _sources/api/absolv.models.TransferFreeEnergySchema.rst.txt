@@ -1,6 +1,0 @@
-TransferFreeEnergySchema
-========================
-
-.. currentmodule:: absolv.models
-
-.. autopydantic_model:: TransferFreeEnergySchema

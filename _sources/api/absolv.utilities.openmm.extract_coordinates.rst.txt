@@ -1,6 +1,0 @@
-extract\_coordinates
-====================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: extract_coordinates

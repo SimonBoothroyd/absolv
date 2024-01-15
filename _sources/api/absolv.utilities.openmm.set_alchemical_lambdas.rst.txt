@@ -1,6 +1,0 @@
-set\_alchemical\_lambdas
-========================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: set_alchemical_lambdas

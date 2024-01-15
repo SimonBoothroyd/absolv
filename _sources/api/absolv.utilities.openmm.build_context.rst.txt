@@ -1,6 +1,0 @@
-build\_context
-==============
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: build_context

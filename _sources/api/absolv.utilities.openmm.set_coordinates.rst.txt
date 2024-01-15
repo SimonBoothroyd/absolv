@@ -1,6 +1,0 @@
-set\_coordinates
-================
-
-.. currentmodule:: absolv.utilities.openmm
-
-.. autofunction:: set_coordinates
