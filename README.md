@@ -43,4 +43,4 @@ mamba install -c conda-forge femto "openmpi=4.1.5=*external*"
 
 ## Getting Started
 
-To get started, see the [usage guide](https://SimonBoothroyd.github.io/absolv/latest/user-guide).
+To get started, see the [usage guide](https://simonboothroyd.github.io/absolv/latest/user-guide/overview/).
