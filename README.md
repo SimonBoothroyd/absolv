@@ -31,14 +31,14 @@ API can change without notice.*
 This package can be installed using `conda` (or `mamba`, a faster version of `conda`):
 
 ```shell
-mamba install -c conda-forge femto
+mamba install -c conda-forge absolv
 ```
 
 If you are running with MPI on an HPC cluster, you may need to instruct conda to use your local installation
 depending on your setup
 
 ```shell
-mamba install -c conda-forge femto "openmpi=4.1.5=*external*"
+mamba install -c conda-forge absolv "openmpi=4.1.5=*external*"
 ```
 
 ## Getting Started
