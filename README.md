@@ -1,29 +1,46 @@
-# ABsolute SOLVantion Free Energy Calculations
+<h1 align="center">ABsolute SOLVantion Free Energy Calculations</h1>
 
-[![Test Status](https://github.com/simonboothroyd/absolv/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/simonboothroyd/absolv/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/gh/simonboothroyd/absolv/branch/main/graph/badge.svg)](https://codecov.io/gh/simonboothroyd/absolv/branch/main)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">Absolute solvation free energy calculations using OpenMM</p>
 
-The `absolv` framework aims to offer a simple API for computing the change in free energy when transferring a solute 
+<p align="center">
+  <a href="https://github.com/SimonBoothroyd/absolv/actions?query=workflow%3Aci">
+    <img alt="ci" src="https://github.com/SimonBoothroyd/absolv/actions/workflows/ci.yaml/badge.svg" />
+  </a>
+  <a href="https://codecov.io/gh/SimonBoothroyd/absolv/branch/main">
+    <img alt="coverage" src="https://codecov.io/gh/SimonBoothroyd/absolv/branch/main/graph/badge.svg" />
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img alt="license" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
+
+---
+
+The `absolv` framework aims to offer a simple API for computing the change in free energy when transferring a solute
 from one solvent to another, or to vacuum in the case of solvation free energy calculations.
 
-It offers two routes to this end: standard equilibrium calculations and non-equilibrium switching type calculations, 
+It offers two routes to this end: standard equilibrium calculations and non-equilibrium switching type calculations,
 where the latter will be the main focus of this framework.
 
-***Warning**: This code is currently experimental and under active development. If you are using this it, please be 
+***Warning**: This code is currently experimental and under active development. If you are using this it, please be
 aware that it is not guaranteed to provide correct results, the documentation and testing is incomplete, and the
 API can change without notice.*
 
+## Installation
+
+This package can be installed using `conda` (or `mamba`, a faster version of `conda`):
+
+```shell
+mamba install -c conda-forge femto
+```
+
+If you are running with MPI on an HPC cluster, you may need to instruct conda to use your local installation
+depending on your setup
+
+```shell
+mamba install -c conda-forge femto "openmpi=4.1.5=*external*"
+```
+
 ## Getting Started
 
-To start using this framework we recommend looking over [the documentation](https://simonboothroyd.github.io/absolv/),
-especially the [equilibrium](https://simonboothroyd.github.io/absolv/examples/equilibrium.html) and 
-[non-equilibrium](https://simonboothroyd.github.io/absolv/examples/non-equilibrium.html) free energy examples.
-
-## License
-
-The main package is release under the [MIT license](LICENSE). 
-
-## Copyright
-
-Copyright (c) 2021, Simon Boothroyd
+To get started, see the [usage guide](https://SimonBoothroyd.github.io/absolv/latest/user-guide).

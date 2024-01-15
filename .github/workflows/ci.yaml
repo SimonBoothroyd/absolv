@@ -5,83 +5,29 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+  push: { branches: [ "main" ] }
+  pull_request: { branches: [ "main" ] }
 
 jobs:
-
-  lint:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2.1.4
-        with:
-          python-version: '3.10'
-      - name: Install the package
-        run: |
-          pip install -e .
-
-      - name: Install isort / flake8 / black
-        run: |
-          pip install isort flake8 black
-
-      - name: Run isort
-        run: |
-          isort --check-only absolv
-
-      - name: Run black
-        run: |
-          black absolv --check
-
-      - name: Run flake8
-        run: |
-          flake8 absolv
-
   test:
 
-    name: ${{ matrix.os }} python=${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ "ubuntu-latest" ]
-        python-version: [ "3.10" ]
+    runs-on: ubuntu-latest
+    container: condaforge/mambaforge:latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3.3.0
 
     - name: Setup Conda Environment
-      uses: mamba-org/provision-with-micromamba@main
-      with:
-        environment-file: devtools/envs/base.yaml
-        extra-specs: |
-          python=${{ matrix.python-version }}
-
-    - name: Install Package
-      shell: bash -l {0}
       run: |
-        pip install -e .
+        apt update && apt install -y git make
 
-    - name: Conda Environment Information
-      shell: bash -l {0}
-      run: |
-        conda info
-        conda list
-
-    - name: Run Tests
-      shell: bash -l {0}
-      run: |
-        pytest -v --cov=absolv --cov-report=xml --cov-report=term --color=yes absolv/tests/
+        make env
+        make lint
+        make test
+        make docs-build
 
     - name: CodeCov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v3.1.1
       with:
         file: ./coverage.xml
         flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}

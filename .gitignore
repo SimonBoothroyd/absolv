@@ -110,3 +110,5 @@ ENV/
 
 # OSX
 .DS_Store
+
+.ruff_cache

@@ -1,4 +1,4 @@
-"""Absolute solvation free energy calculations with OpenFF and OpenMM"""
+"""Absolute solvation free energy calculations using OpenMM"""
 
 from . import _version
 
