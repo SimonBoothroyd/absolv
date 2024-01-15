@@ -54,10 +54,8 @@ class TestSystem:
             solutes={"CO": 1, "CCO": 2}, solvent_a={"O": 3}, solvent_b={"OCO": 4}
         )
 
-        components_a, components_b = system.to_components()
-
-        assert components_a == [("CO", 1), ("CCO", 2), ("O", 3)]
-        assert components_b == [("CO", 1), ("CCO", 2), ("OCO", 4)]
+        assert system.components_a == [("CO", 1), ("CCO", 2), ("O", 3)]
+        assert system.components_b == [("CO", 1), ("CCO", 2), ("OCO", 4)]
 
 
 class TestEquilibriumProtocol:

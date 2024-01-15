@@ -86,23 +86,31 @@ class System(pydantic.BaseModel):
         ), "at least one solvent must be specified when `solvent_b` is not none"
         return value
 
-    def to_components(self) -> tuple[list[tuple[str, int]], list[tuple[str, int]]]:
-        """Converts this object into two lists: one containing the identities and
-        counts of the molecules present in the first solution, and one containing the
-        same for the second solution.
+    @property
+    def components_a(self) -> list[tuple[str, int]]:
+        """Returns the identities and counts of the molecules present in the first
+        system.
 
-        The identity and amount are stored in a tuple as a SMILES pattern and integer
-        count.
+        Returns:
+            The SMILES representation and count of each component.
         """
 
-        components_a = [*self.solutes.items()] + (
+        return [*self.solutes.items()] + (
             [] if self.solvent_a is None else [*self.solvent_a.items()]
         )
-        components_b = [*self.solutes.items()] + (
+
+    @property
+    def components_b(self) -> list[tuple[str, int]]:
+        """Returns the identities and counts of the molecules present in the second
+        system.
+
+        Returns:
+            The SMILES representation and count of each component.
+        """
+
+        return [*self.solutes.items()] + (
             [] if self.solvent_b is None else [*self.solvent_b.items()]
         )
-
-        return components_a, components_b
 
 
 class MinimizationProtocol(pydantic.BaseModel):
@@ -308,14 +316,7 @@ AlchemicalProtocol = EquilibriumProtocol | NonEquilibriumProtocol
 
 
 class Config(pydantic.BaseModel):
-    """A schema that fully defines the inputs needed to compute the transfer free energy
-    of a solvent between to solvents, or between a solvent and vacuum."""
-
-    system: System = pydantic.Field(
-        ...,
-        description="A description of the system under investigation, including the "
-        "identity of the solute and the two solvent phases.",
-    )
+    """Configure a transfer free energy calculation."""
 
     temperature: OpenMMQuantity[openmm.unit.kelvin] = pydantic.Field(
         ..., description="The temperature to calculate at [K]."

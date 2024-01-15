@@ -87,6 +87,7 @@ def _setup_solvent(
 
 
 def setup(
+    system: absolv.config.System,
     config: absolv.config.Config,
     force_field: openff.toolkit.ForceField | absolv.utils.openmm.SystemGenerator,
     custom_alchemical_potential: str | None = None,
@@ -94,6 +95,7 @@ def setup(
     """Prepare each system to be simulated, namely the ligand in each solvent.
 
     Args:
+        system: The system to prepare.
         config: The config defining the calculation to perform.
         force_field: The force field, or a callable that transforms an OpenFF
             topology into an OpenMM system, **without** any alchemical modifications
@@ -112,32 +114,28 @@ def setup(
         The two prepared systems, corresponding to solvent-a and solvent-b respectively.
     """
 
-    n_solute_molecules = config.system.n_solute_molecules
-
-    components_a, components_b = config.system.to_components()
-
     solvated_a = _setup_solvent(
         "solvent-a",
-        components_a,
+        system.components_a,
         force_field,
-        n_solute_molecules,
-        config.system.n_solvent_molecules_a,
+        system.n_solute_molecules,
+        system.n_solvent_molecules_a,
         custom_alchemical_potential,
     )
     solvated_b = _setup_solvent(
         "solvent-b",
-        components_b,
+        system.components_b,
         force_field,
-        n_solute_molecules,
-        config.system.n_solvent_molecules_b,
+        system.n_solute_molecules,
+        system.n_solvent_molecules_b,
         custom_alchemical_potential,
     )
 
-    if config.system.solvent_a is not None and config.pressure is not None:
+    if system.solvent_a is not None and config.pressure is not None:
         absolv.utils.openmm.add_barostat(
             solvated_a.system, config.temperature, config.pressure
         )
-    if config.system.solvent_b is not None and config.pressure is not None:
+    if system.solvent_b is not None and config.pressure is not None:
         absolv.utils.openmm.add_barostat(
             solvated_b.system, config.temperature, config.pressure
         )

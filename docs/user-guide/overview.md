@@ -107,7 +107,6 @@ These individual components are then combined into a single configuration object
 import absolv.config
 
 config = absolv.config.Config(
-    system=system,
     temperature=temperature,
     pressure=pressure,
     alchemical_protocol_a=alchemical_protocol_a,
@@ -122,7 +121,7 @@ import openff.toolkit
 force_field = openff.toolkit.ForceField("openff-2.1.0.offxml")
 
 import absolv.runner
-prepared_system_a, prepared_system_b = absolv.runner.setup(config, force_field)
+prepared_system_a, prepared_system_b = absolv.runner.setup(system, config, force_field)
 ```
 
 run the calculation:

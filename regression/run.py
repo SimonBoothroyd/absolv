@@ -51,58 +51,52 @@ REFERENCE_URL = (
 )
 
 
-def default_config_neq(system: absolv.config.System) -> absolv.config.Config:
-    return absolv.config.Config(
-        system=system,
-        temperature=DEFAULT_TEMPERATURE,
-        pressure=DEFAULT_PRESSURE,
-        alchemical_protocol_a=absolv.config.NonEquilibriumProtocol(
-            switching_protocol=absolv.config.SwitchingProtocol(
-                n_electrostatic_steps=60,
-                n_steps_per_electrostatic_step=100,  # 12 ps
-                n_steric_steps=0,
-                n_steps_per_steric_step=0,
-            )
-        ),
-        alchemical_protocol_b=absolv.config.NonEquilibriumProtocol(
-            switching_protocol=absolv.config.SwitchingProtocol(
-                n_electrostatic_steps=60,
-                n_steps_per_electrostatic_step=100,  # 12 ps
-                n_steric_steps=190,
-                n_steps_per_steric_step=100,  # 38 ps
-            )
-        ),
-    )
-
-
-def default_config_eq(system: absolv.config.System) -> absolv.config.Config:
-    return absolv.config.Config(
-        system=system,
-        temperature=DEFAULT_TEMPERATURE,
-        pressure=DEFAULT_PRESSURE,
-        alchemical_protocol_a=absolv.config.EquilibriumProtocol(
-            production_protocol=absolv.config.HREMDProtocol(
-                n_steps_per_cycle=500,
-                n_cycles=2000,
-                integrator=femto.md.config.LangevinIntegrator(
-                    timestep=1.0 * openmm.unit.femtosecond
-                ),
+DEFAULT_CONFIG_NEQ = absolv.config.Config(
+    temperature=DEFAULT_TEMPERATURE,
+    pressure=DEFAULT_PRESSURE,
+    alchemical_protocol_a=absolv.config.NonEquilibriumProtocol(
+        switching_protocol=absolv.config.SwitchingProtocol(
+            n_electrostatic_steps=60,
+            n_steps_per_electrostatic_step=100,  # 12 ps
+            n_steric_steps=0,
+            n_steps_per_steric_step=0,
+        )
+    ),
+    alchemical_protocol_b=absolv.config.NonEquilibriumProtocol(
+        switching_protocol=absolv.config.SwitchingProtocol(
+            n_electrostatic_steps=60,
+            n_steps_per_electrostatic_step=100,  # 12 ps
+            n_steric_steps=190,
+            n_steps_per_steric_step=100,  # 38 ps
+        )
+    ),
+)
+DEFAULT_CONFIG_EQ = absolv.config.Config(
+    temperature=DEFAULT_TEMPERATURE,
+    pressure=DEFAULT_PRESSURE,
+    alchemical_protocol_a=absolv.config.EquilibriumProtocol(
+        production_protocol=absolv.config.HREMDProtocol(
+            n_steps_per_cycle=500,
+            n_cycles=2000,
+            integrator=femto.md.config.LangevinIntegrator(
+                timestep=1.0 * openmm.unit.femtosecond
             ),
-            lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_VACUUM,
-            lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_VACUUM,
         ),
-        alchemical_protocol_b=absolv.config.EquilibriumProtocol(
-            production_protocol=absolv.config.HREMDProtocol(
-                n_steps_per_cycle=500,
-                n_cycles=1000,
-                integrator=femto.md.config.LangevinIntegrator(
-                    timestep=4.0 * openmm.unit.femtosecond
-                ),
+        lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_VACUUM,
+        lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_VACUUM,
+    ),
+    alchemical_protocol_b=absolv.config.EquilibriumProtocol(
+        production_protocol=absolv.config.HREMDProtocol(
+            n_steps_per_cycle=500,
+            n_cycles=1000,
+            integrator=femto.md.config.LangevinIntegrator(
+                timestep=4.0 * openmm.unit.femtosecond
             ),
-            lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_SOLVENT,
-            lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_SOLVENT,
         ),
-    )
+        lambda_sterics=absolv.config.DEFAULT_LAMBDA_STERICS_SOLVENT,
+        lambda_electrostatics=absolv.config.DEFAULT_LAMBDA_ELECTROSTATICS_SOLVENT,
+    ),
+)
 
 
 def _download_ref_mols():
@@ -168,10 +162,11 @@ def run_replica(
 ):
     output_dir.mkdir(parents=True, exist_ok=False)
 
-    config_generator = default_config_neq if method == "neq" else default_config_eq
-    config = config_generator(system)
+    config = DEFAULT_CONFIG_NEQ if method == "neq" else DEFAULT_CONFIG_EQ
 
-    prepared_system_a, prepared_system_b = absolv.runner.setup(config, system_generator)
+    prepared_system_a, prepared_system_b = absolv.runner.setup(
+        system, config, system_generator
+    )
 
     femto.md.system.apply_hmr(
         prepared_system_a.system,
@@ -232,7 +227,7 @@ def main(solutes: list[str], methods: list[str], replicas: list[str]):
                         DEFAULT_SYSTEMS[solute], system_generator, method, replica_dir
                     )
                 except BaseException as e:
-                    logging.exception(f"failed to run {method} {solute} {replica}", e)
+                    logging.error(f"failed to run {method} {solute} {replica}: {e}")
 
 
 if __name__ == "__main__":
