@@ -1,5 +1,4 @@
 """Configure free energy calculations."""
-import math
 import typing
 
 import femto.md.config
@@ -355,28 +354,3 @@ class Result(pydantic.BaseModel):
     dg_std_solvent_b: OpenMMQuantity[KCAL_MOL] = pydantic.Field(
         description="The standard error in ``dg_solvent_b``."
     )
-
-    @property
-    def dg(self) -> openmm.unit.Quantity:
-        """The change in free energy of transferring the solute from *solvent-a* to
-        *solvent-b* in units of kT."""
-        return self.dg_solvent_b - self.dg_solvent_a
-
-    @property
-    def dg_std(self) -> openmm.unit.Quantity:
-        """The standard error in ``ddg``."""
-
-        std = math.sqrt(
-            self.dg_std_solvent_a.value_in_unit(KCAL_MOL) ** 2
-            + self.dg_std_solvent_b.value_in_unit(KCAL_MOL) ** 2
-        )
-        return std * KCAL_MOL
-
-    def __str__(self):
-        return (
-            f"ΔG a->b={self.dg.value_in_unit(KCAL_MOL):.3f} kcal/mol "
-            f"ΔG a->b std={self.dg_std.value_in_unit(KCAL_MOL):.3f} kcal/mol"
-        )
-
-    def __repr__(self):
-        return f"{self.__repr_name__()}({self.__str__()})"

@@ -118,9 +118,6 @@ def setup_system(
         tolerance: The minimum spacing between molecules during packing in units
              compatible with angstroms.
 
-    Raises:
-        * PACKMOLRuntimeError
-
     Returns:
         A topology containing the molecules the coordinates were generated for and
         a unit [A] wrapped numpy array of coordinates with shape=(n_atoms, 3).

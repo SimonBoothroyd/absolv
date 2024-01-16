@@ -1,10 +1,7 @@
-import math
-
-import openmm.unit
 import pydantic
 import pytest
 
-from absolv.config import EquilibriumProtocol, Result, System
+from absolv.config import EquilibriumProtocol, System
 
 
 class TestSystem:
@@ -80,26 +77,3 @@ class TestEquilibriumProtocol:
                 lambda_sterics=lambda_sterics,
                 lambda_electrostatics=lambda_electrostatics,
             )
-
-
-class TestResult:
-    @pytest.fixture
-    def mock_result(self):
-        return Result(
-            dg_solvent_a=1.0 * openmm.unit.kilocalorie_per_mole,
-            dg_std_solvent_a=0.2 * openmm.unit.kilocalorie_per_mole,
-            dg_solvent_b=3.0 * openmm.unit.kilocalorie_per_mole,
-            dg_std_solvent_b=0.4 * openmm.unit.kilocalorie_per_mole,
-        )
-
-    def test_dg(self, mock_result):
-        assert mock_result.dg == pytest.approx(2.0) * openmm.unit.kilocalorie_per_mole
-        assert (
-            mock_result.dg_std
-            == pytest.approx(math.sqrt(0.2**2 + 0.4**2))
-            * openmm.unit.kilocalorie_per_mole
-        )
-
-    def test_repr(self, mock_result):
-        assert repr(mock_result) is not None
-        assert str(mock_result) is not None
