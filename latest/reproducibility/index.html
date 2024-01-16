@@ -1030,25 +1030,29 @@
 
 
 <h1 id="reproducibility">Reproducibility<a class="headerlink" href="#reproducibility" title="Permanent link">#</a></h1>
-<p>While every effort has been made to ensure the 'correctness and reproducibility' of any results computed using this
-framework, achieving consistent free energies between different frameworks and simulation engines has been notoriously
-tricky <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
-<p>In an attempt to ensure that this framework remains at least self-consistent between versions, and as consistent as
-possible with other packages, a suite of regression tests are provided in the main <a href="https://github.com/SimonBoothroyd/absolv/">GitHub repository</a>.</p>
-<p>These include tests to ensure that:</p>
-<ul>
-<li>the energies of systems that been alchemically modified are consistent with the original system</li>
-<li>systems that contain custom non-bonded force are alchemically transformed in the exact same was as systems that
-  contain the built-in OpenMM LJ non-bonded force</li>
-</ul>
-<p>and most importantly, that computing the free energies using both the 'equilibrium' and 'non-equilibrium' methods
-supported in this framework are in agreement amongst themselves, with values computed using <a href="https://github.com/choderalab/yank">Yank</a>, and with the
-GROMACS values reported by Loeffler <em>et al</em> <sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+<p>While every effort has been made to ensure the 'correctness and reproducibility' of any
+results computed using this framework, achieving consistent free energies between
+different frameworks and simulation engines has been notoriously tricky
+<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+<p>In an attempt to ensure that this framework remains at least self-consistent between
+versions, and as consistent as possible with other packages, a suite of regression tests
+are provided in the main <a href="https://github.com/SimonBoothroyd/absolv/">GitHub repository</a>.</p>
+<p>These include tests to ensure that computing the free energies using both the
+'equilibrium' and 'non-equilibrium' methods supported in this framework are in agreement
+amongst themselves, and with the GROMACS values reported by Loeffler <em>et al</em>
+<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
 <h2 id="regression-results">Regression Results<a class="headerlink" href="#regression-results" title="Permanent link">#</a></h2>
-<p>The results of running the free energy comparisons using the latest version of the framework are shown below:</p>
-<p><img alt="" class="align-center" src="../images/regression.svg" width="80.0%" /></p>
-<p>Here the error bars show the standard deviation computed across three
-replicas.</p>
+<p>The results of running the free energy comparisons using the latest version of the
+framework are shown below:</p>
+<figure>
+<p><img alt="Regression Results" src="../images/regression.svg" width="100.0%" />
+  </p>
+<figcaption>The average hydration free energies of methane, methanol, toluene, and
+              2-cyclopentanylindole computed using the 'equilibrium' and
+              'non-equilibrium' methods across three replicas. The error bars show the
+              standard deviation computed across three replicas.
+  </figcaption>
+</figure>
 <div class="footnote">
 <hr />
 <ol>
