@@ -29,3 +29,12 @@ python run.py --solute methanol \
 ```
 
 The results will be written to `results/{timestamp}/{method}-{solute}-{replica}/results.json`.
+
+The results can be plotted using:
+
+```shell
+python analyze.py --result-dir results/2024-01-15--12-00-40 \
+                  --result-dir results/2024-01-15--18-20-15 \
+                  --result-dir ...                          \
+                  --output     results/1.0.0.svg
+```
