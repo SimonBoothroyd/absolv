@@ -25,7 +25,7 @@ dependencies:
   - ambertools
 
   ### Custom functional forms
-  - smirnoff-plugins
+  - smirnoff-plugins   >=2024
 
   # Dev / Testing
   - versioneer
