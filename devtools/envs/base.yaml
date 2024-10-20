@@ -49,10 +49,9 @@ dependencies:
   - mkdocs-gen-files
   - mkdocs-literate-nav
   - mkdocs-jupyter
+  - mkdocs-bibtex
   - mkdocstrings
-  - mkdocstrings-python
+  - mkdocstrings-python >=1.10.8
+  - griffe-pydantic
   - black
   - mike
-
-  - pip:
-      - mkdocs-bibtex
