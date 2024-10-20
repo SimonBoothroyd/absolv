@@ -56,9 +56,6 @@ def test_find_nonbonded_forces_lj_only(aq_nacl_lj_system):
     assert custom_bond_force is None
 
 
-@pytest.mark.xfail(
-    reason="interchange splits electrostatic force when plugins are present"
-)
 def test_find_nonbonded_forces_custom(aq_meoh_de_system):
     expected_types = (
         openmm.NonbondedForce,

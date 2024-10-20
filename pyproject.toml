@@ -1,30 +1,21 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel", "versioneer"]
+requires = ["setuptools>=61.0", "setuptools_scm>=8", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "absolv"
 description = "Absolute solvation free energy calculations using OpenMM"
+authors = [ {name = "Simon Boothroyd"} ]
+license = { text = "MIT" }
 dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = ["Programming Language :: Python :: 3"]
 
-[tool.setuptools]
-zip-safe = false
-include-package-data = false
-
 [tool.setuptools.packages.find]
-namespaces = true
-where = ["."]
+include = ["absolv*"]
 
-[tool.versioneer]
-VCS = "git"
-style = "pep440"
-versionfile_source = "absolv/_version.py"
-versionfile_build = "absolv/_version.py"
-tag_prefix = ""
-parentdir_prefix = "absolv-"
+[tool.setuptools_scm]
 
 [tool.ruff.lint]
 ignore = ["C901", "E501"]
@@ -32,7 +23,7 @@ select = ["B","C","E","F","W","B9"]
 ignore-init-module-imports = true
 
 [tool.coverage.run]
-omit = ["**/tests/*", "**/_version.py"]
+omit = ["**/tests/*"]
 
 [tool.coverage.report]
 exclude_lines = [

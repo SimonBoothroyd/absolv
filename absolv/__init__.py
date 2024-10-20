@@ -1,6 +1,10 @@
 """Absolute solvation free energy calculations using OpenMM"""
 
-from . import _version
+import importlib.metadata
 
-__version__ = _version.get_versions()["version"]
+try:
+    __version__ = importlib.metadata.version("absolv")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0+unknown"
+
 __all__ = ["__version__"]

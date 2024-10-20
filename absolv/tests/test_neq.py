@@ -127,7 +127,7 @@ def test_simulate(
     lambda_values = [call.args[1:] for call in spied_set_lambda.call_args_list]
     assert lambda_values == expected_lambda_values
 
-    assert mock_step.has_calls([mocker.call(step) for step in expected_steps])
+    mock_step.assert_has_calls([mocker.call(step) for step in expected_steps])
     assert reduced_potentials.shape == (3, 2)
 
 

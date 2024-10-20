@@ -185,7 +185,9 @@ def tip4p_meoh_de_force_field() -> openff.toolkit.ForceField:
         }
     )
 
-    virtual_site_handler = force_field.get_parameter_handler("VirtualSites")
+    virtual_site_handler = force_field.get_parameter_handler(
+        "DoubleExponentialVirtualSites"
+    )
     virtual_site_handler.add_parameter(
         {
             "smirks": "[#1:2]-[#8X2H2+0:1]-[#1:3]",
@@ -196,6 +198,8 @@ def tip4p_meoh_de_force_field() -> openff.toolkit.ForceField:
             "charge_increment2": 1.0552 * 0.5 * openff.units.unit.elementary_charge,
             "charge_increment1": 0.0 * openff.units.unit.elementary_charge,
             "charge_increment3": 1.0552 * 0.5 * openff.units.unit.elementary_charge,
+            "epsilon": 0.0 * openff.units.unit.kilojoule / openff.units.unit.mole,
+            "r_min": 1.0 * openff.units.unit.angstrom,
         }
     )
 
