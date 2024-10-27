@@ -7,6 +7,7 @@ import pytest
 from absolv.setup import (
     _approximate_box_size_by_density,
     _generate_input_file,
+    _molecule_from_smiles,
     setup_system,
 )
 
@@ -51,6 +52,23 @@ def test_generate_input_file(monkeypatch):
     )
 
     assert actual_input_file == expected_input_file
+
+
+@pytest.mark.parametrize(
+    "smiles, expected_order",
+    [
+        ("O", [8, 1, 1]),
+        ("[O:1]([H:2])[H:3]", [8, 1, 1]),
+        ("[H:2][O:1][H:3]", [8, 1, 1]),
+        ("[O:2]([H:1])[H:3]", [1, 8, 1]),
+        ("[O:2]([H])[H:3]", [8, 1, 1]),
+    ]
+)
+def test_molecule_from_smiles(smiles, expected_order):
+    molecule = _molecule_from_smiles(smiles)
+
+    assert [atom.atomic_number for atom in molecule.atoms] == expected_order
+
 
 
 def test_setup_system_packmol_missing(monkeypatch):

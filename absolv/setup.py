@@ -1,4 +1,5 @@
 """Setup systems ready for calculations."""
+
 import errno
 import functools
 import logging
@@ -9,6 +10,7 @@ import subprocess
 
 import numpy
 import openff.toolkit
+import openff.toolkit.utils.exceptions
 import openff.utilities
 import openmm
 
@@ -96,6 +98,17 @@ def _generate_input_file(
     )
 
 
+def _molecule_from_smiles(smiles: str) -> openff.toolkit.Molecule:
+    """Create a molecule from a SMILES string."""
+
+    try:
+        molecule = openff.toolkit.Molecule.from_mapped_smiles(smiles)
+    except (openff.toolkit.utils.exceptions.SmilesParsingError, ValueError):
+        molecule = openff.toolkit.Molecule.from_smiles(smiles)
+
+    return molecule
+
+
 def setup_system(
     components: list[tuple[str, int]],
     box_target_density: openmm.unit.Quantity = 0.95 * _G_PER_ML,
@@ -110,6 +123,9 @@ def setup_system(
             ``smiles_i`` is the SMILES representation of component `i` and
             ``count_i`` is the number of corresponding instances of that component
             to create.
+
+            If any SMILES is fully indexed an attempt will be made to create components
+            with the same atom ordering as the indices.
         box_target_density: Target mass density when approximating the box size for the
             final system with units compatible with g / mL.
         box_scale_factor: The amount to scale the approximate box size by.
@@ -139,7 +155,7 @@ def setup_system(
         if smiles in molecules:
             continue
 
-        molecule = openff.toolkit.Molecule.from_smiles(smiles)
+        molecule = _molecule_from_smiles(smiles)
         molecule.generate_conformers(n_conformers=1)
         molecule.name = f"component-{len(molecules)}.xyz"
         molecules[smiles] = molecule
