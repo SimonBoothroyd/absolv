@@ -1,4 +1,5 @@
 """Run calculations defined by a config."""
+
 import pathlib
 import tempfile
 import typing
@@ -219,7 +220,7 @@ def _run_phase_hremd(
         n_steps_per_cycle=protocol.production_protocol.n_steps_per_cycle,
         n_cycles=protocol.production_protocol.n_cycles,
         trajectory_interval=protocol.production_protocol.trajectory_interval,
-        trajectory_enforce_pbc=protocol.production_protocol.trajectory_enforce_pbc
+        trajectory_enforce_pbc=protocol.production_protocol.trajectory_enforce_pbc,
     )
 
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -254,7 +255,7 @@ def run_eq(
         config.temperature,
         prepared_system_a,
         platform,
-        None if output_dir is None else output_dir / "solvant-a",
+        None if output_dir is None else output_dir / "solvent-a",
     )
 
     dg_a, dg_a_std = results_a["ddG_kcal_mol"], results_a["ddG_error_kcal_mol"]
@@ -265,7 +266,7 @@ def run_eq(
         config.temperature,
         prepared_system_b,
         platform,
-        None if output_dir is None else output_dir / "solvant-b",
+        None if output_dir is None else output_dir / "solvent-b",
     )
 
     dg_b, dg_b_std = results_b["ddG_kcal_mol"], results_b["ddG_error_kcal_mol"]
