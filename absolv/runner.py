@@ -1,5 +1,7 @@
 """Run calculations defined by a config."""
 
+import functools
+import multiprocessing
 import pathlib
 import tempfile
 import typing
@@ -172,13 +174,26 @@ def _equilibrate(
     return simulation.context.getState(getPositions=True)
 
 
-def _run_phase_hremd(
+def _run_eq_phase(
     protocol: absolv.config.EquilibriumProtocol,
-    temperature: openmm.unit.Quantity,
     prepared_system: PreparedSystem,
+    output_dir: pathlib.Path | None,
+    temperature: openmm.unit.Quantity,
     platform: femto.md.constants.OpenMMPlatform,
-    output_dir: pathlib.Path | None = None,
 ) -> tuple[dict[str, float], dict[str, numpy.ndarray]]:
+    """Run HREMD for one of the solvent phases.
+
+    Args:
+        protocol: The protocol to run.
+        prepared_system: The prepared system to run.
+        output_dir: The (optional) directory to save HREMD samples to.
+        temperature: The temperature to run at.
+        platform: The OpenMM platform to run using.
+
+    Returns:
+        The free energy estimates and the overlap matrices. See
+        ``femto.fe.ddg.estimate_ddg`` for more details.
+    """
     platform = (
         femto.md.constants.OpenMMPlatform.REFERENCE
         if prepared_system.topology.box_vectors is None
@@ -239,6 +254,7 @@ def run_eq(
     prepared_system_b: PreparedSystem,
     platform: femto.md.constants.OpenMMPlatform = femto.md.constants.OpenMMPlatform.CUDA,
     output_dir: pathlib.Path | None = None,
+    parallel: bool = False,
 ) -> absolv.config.Result:
     """Perform a simulation at each lambda window and for each solvent.
 
@@ -248,27 +264,34 @@ def run_eq(
         prepared_system_b: The prepared system b. See ``setup`` for more details.
         platform: The OpenMM platform to run using.
         output_dir: The (optional) directory to save HREMD samples to.
+        parallel: Whether to run calculations for solvent A and solvent B in
+            parallel. This is mostly useful when running HFE calculations where
+            the vacuum phase will typically run on the CPU while the solvent phase
+            will run on the GPU.
     """
 
-    results_a, overlap_a = _run_phase_hremd(
-        config.alchemical_protocol_a,
-        config.temperature,
-        prepared_system_a,
-        platform,
-        None if output_dir is None else output_dir / "solvent-a",
+    output_dir_a = None if output_dir is None else output_dir / "solvent-a"
+    output_dir_b = None if output_dir is None else output_dir / "solvent-b"
+
+    args = [
+        (config.alchemical_protocol_a, prepared_system_a, output_dir_a),
+        (config.alchemical_protocol_b, prepared_system_b, output_dir_b),
+    ]
+    run_fn = functools.partial(
+        _run_eq_phase, temperature=config.temperature, platform=platform
     )
+
+    if parallel:
+        with multiprocessing.Pool(2) as pool:
+            results = list(pool.starmap(run_fn, args))
+    else:
+        results = [run_fn(*args[0]), run_fn(*args[1])]
+
+    results_a, overlap_a = results[0]
+    results_b, overlap_b = results[1]
 
     dg_a, dg_a_std = results_a["ddG_kcal_mol"], results_a["ddG_error_kcal_mol"]
     # overlap_a = overlap_a["overlap_0"]
-
-    results_b, overlap_b = _run_phase_hremd(
-        config.alchemical_protocol_b,
-        config.temperature,
-        prepared_system_b,
-        platform,
-        None if output_dir is None else output_dir / "solvent-b",
-    )
-
     dg_b, dg_b_std = results_b["ddG_kcal_mol"], results_b["ddG_error_kcal_mol"]
     # overlap_b = overlap_b["overlap_0"]
 
