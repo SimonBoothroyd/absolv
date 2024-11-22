@@ -98,6 +98,7 @@ def _rebuild_topology(
     atom_counts_per_residue = collections.defaultdict(
         lambda: collections.defaultdict(int)
     )
+    atoms = []
 
     last_residue_idx = -1
     residue = None
@@ -113,13 +114,26 @@ def _rebuild_topology(
         symbol = "X" if element is None else element.symbol
 
         atom_counts_per_residue[residue_idx][atomic_num] += 1
-        topology.addAtom(
+        atom = topology.addAtom(
             f"{symbol}{atom_counts_per_residue[residue_idx][atomic_num]}".ljust(3, "x"),
             element,
             residue,
         )
 
+        atoms.append(atom)
+
     _rename_residues(topology)
+
+    atom_idx_to_particle_idx = {j: i for i, j in particle_idx_to_atom_idx.items()}
+
+    for bond in orig_top.bonds:
+        if atoms[atom_idx_to_particle_idx[bond.atom1_index]].residue.name == "HOH":
+            continue
+
+        topology.addBond(
+            atoms[atom_idx_to_particle_idx[bond.atom1_index]],
+            atoms[atom_idx_to_particle_idx[bond.atom2_index]],
+        )
 
     coords_with_v_sites = []
 
@@ -157,6 +171,9 @@ def _rename_residues(topology: openmm.app.Topology):
 
         if symbols == ["H", "H", "O"]:
             residue.name = "HOH"
+
+            for i, atom in enumerate(residue.atoms()):
+                atom.name = "OW" if atom.element.symbol == "O" else f"HW{i}"
 
 
 def _setup_solvent(

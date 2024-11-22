@@ -132,12 +132,12 @@ def test_rebuild_topology():
         ("H3x", "H", 0, "UNK"),
         ("H4x", "H", 0, "UNK"),
         ("H5x", "H", 0, "UNK"),
-        ("O1x", "O", 1, "HOH"),
-        ("H1x", "H", 1, "HOH"),
-        ("H2x", "H", 1, "HOH"),
-        ("O1x", "O", 2, "HOH"),
-        ("H1x", "H", 2, "HOH"),
-        ("H2x", "H", 2, "HOH"),
+        ("OW", "O", 1, "HOH"),
+        ("HW1", "H", 1, "HOH"),
+        ("HW2", "H", 1, "HOH"),
+        ("OW", "O", 2, "HOH"),
+        ("HW1", "H", 2, "HOH"),
+        ("HW2", "H", 2, "HOH"),
         ("X1x", None, 3, "UNK"),
         ("X1x", None, 4, "UNK"),
         ("X1x", None, 5, "UNK"),
@@ -177,6 +177,27 @@ def test_rebuild_topology():
     box_vectors = numpy.array(box_vectors)
 
     assert numpy.allclose(box_vectors, expected_box_vectors)
+
+    expected_bonds = [
+        ("C1x", "C2x"),
+        ("C2x", "C3x"),
+        ("C3x", "N1x"),
+        ("N1x", "C4x"),
+        ("C4x", "C5x"),
+        ("C5x", "C1x"),
+        ("C1x", "H1x"),
+        ("C2x", "H2x"),
+        ("C3x", "H3x"),
+        ("C4x", "H4x"),
+        ("C5x", "H5x"),
+        ("C1x", "C2x"),
+        ("C1x", "C3x"),
+        ("C1x", "C2x"),
+        ("C1x", "C3x"),
+    ]
+
+    actual_bonds = [(bond.atom1.name, bond.atom2.name) for bond in top.bonds()]
+    assert actual_bonds == expected_bonds
 
 
 def test_setup_fn():
