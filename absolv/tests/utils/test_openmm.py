@@ -45,7 +45,7 @@ def test_create_simulation():
 
     simulation = create_simulation(
         system,
-        topology,
+        topology.to_openmm(),
         expected_coords,
         integrator,
         femto.md.constants.OpenMMPlatform.REFERENCE,

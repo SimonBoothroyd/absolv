@@ -1,5 +1,6 @@
 """Run calculations defined by a config."""
 
+import collections
 import functools
 import multiprocessing
 import pathlib
@@ -17,6 +18,7 @@ import numpy
 import openff.toolkit
 import openff.utilities
 import openmm
+import openmm.app
 import openmm.unit
 import pymbar
 import tqdm
@@ -35,10 +37,126 @@ class PreparedSystem(typing.NamedTuple):
     system: openmm.System
     """The alchemically modified OpenMM system."""
 
-    topology: openff.toolkit.Topology
-    """The OpenFF topology with any box vectors set."""
+    topology: openmm.app.Topology
+    """The OpenMM topology with any box vectors set."""
     coords: openmm.unit.Quantity
     """The coordinates of the system."""
+
+
+def _rebuild_topology(
+    orig_top: openff.toolkit.Topology,
+    orig_coords: openmm.unit.Quantity,
+    system: openmm.System,
+) -> tuple[openmm.app.Topology, openmm.unit.Quantity]:
+    """Rebuild the topology to also include virtual sites."""
+    atom_idx_to_residue_idx = {}
+    atom_idx = 0
+
+    for residue_idx, molecule in enumerate(orig_top.molecules):
+        for _ in molecule.atoms:
+            atom_idx_to_residue_idx[atom_idx] = residue_idx
+            atom_idx += 1
+
+    particle_idx_to_atom_idx = {}
+    atom_idx = 0
+
+    for particle_idx in range(system.getNumParticles()):
+        if system.isVirtualSite(particle_idx):
+            continue
+
+        particle_idx_to_atom_idx[particle_idx] = atom_idx
+        atom_idx += 1
+
+    atoms_off = [*orig_top.atoms]
+    particles = []
+
+    for particle_idx in range(system.getNumParticles()):
+        if system.isVirtualSite(particle_idx):
+            v_site = system.getVirtualSite(particle_idx)
+
+            parent_idxs = {
+                particle_idx_to_atom_idx[v_site.getParticle(i)]
+                for i in range(v_site.getNumParticles())
+            }
+            parent_residue = atom_idx_to_residue_idx[next(iter(parent_idxs))]
+
+            particles.append((-1, parent_residue))
+            continue
+
+        atom_idx = particle_idx_to_atom_idx[particle_idx]
+        residue_idx = atom_idx_to_residue_idx[atom_idx]
+
+        particles.append((atoms_off[atom_idx].atomic_number, residue_idx))
+
+    topology = openmm.app.Topology()
+
+    if orig_top.box_vectors is not None:
+        topology.setPeriodicBoxVectors(orig_top.box_vectors.to_openmm())
+
+    chain = topology.addChain()
+
+    atom_counts_per_residue = collections.defaultdict(
+        lambda: collections.defaultdict(int)
+    )
+
+    last_residue_idx = -1
+    residue = None
+
+    for atomic_num, residue_idx in particles:
+        if residue_idx != last_residue_idx:
+            last_residue_idx = residue_idx
+            residue = topology.addResidue("UNK", chain)
+
+        element = (
+            None if atomic_num < 0 else openmm.app.Element.getByAtomicNumber(atomic_num)
+        )
+        symbol = "X" if element is None else element.symbol
+
+        atom_counts_per_residue[residue_idx][atomic_num] += 1
+        topology.addAtom(
+            f"{symbol}{atom_counts_per_residue[residue_idx][atomic_num]}".ljust(3, "x"),
+            element,
+            residue,
+        )
+
+    _rename_residues(topology)
+
+    coords_with_v_sites = []
+
+    for particle_idx in range(system.getNumParticles()):
+        if particle_idx in particle_idx_to_atom_idx:
+            coords_i = orig_coords[particle_idx_to_atom_idx[particle_idx]]
+            coords_with_v_sites.append(coords_i.value_in_unit(openmm.unit.angstrom))
+        else:
+            coords_with_v_sites.append(numpy.zeros((1, 3)))
+
+    coords_with_v_sites = numpy.vstack(coords_with_v_sites) * openmm.unit.angstrom
+
+    if len(orig_coords) != len(coords_with_v_sites):
+        context = openmm.Context(system, openmm.VerletIntegrator(1.0))
+        context.setPositions(coords_with_v_sites)
+        context.computeVirtualSites()
+        coords_with_v_sites = context.getState(getPositions=True).getPositions(
+            asNumpy=True
+        )
+
+    return topology, coords_with_v_sites
+
+
+def _rename_residues(topology: openmm.app.Topology):
+    """Attempts to assign standard residue names to known residues"""
+
+    for residue in topology.residues():
+        symbols = sorted(
+            (
+                atom.element.symbol
+                for atom in residue.atoms()
+                if atom.element is not None
+            )
+        )
+
+        if symbols == ["H", "H", "O"]:
+            residue.name = "HOH"
 
 
 def _setup_solvent(
@@ -67,18 +185,24 @@ def _setup_solvent(
 
     is_vacuum = n_solvent_molecules == 0
 
-    topology, coords = absolv.setup.setup_system(components)
-    topology.box_vectors = None if is_vacuum else topology.box_vectors
+    topology_off, coords = absolv.setup.setup_system(components)
+    topology_off.box_vectors = None if is_vacuum else topology_off.box_vectors
 
-    atom_indices = absolv.utils.topology.topology_to_atom_indices(topology)
+    if isinstance(force_field, openff.toolkit.ForceField):
+        original_system = force_field.create_openmm_system(topology_off)
+    else:
+        original_system: openmm.System = force_field(topology_off, coords, solvent_idx)
+
+    topology, coords = _rebuild_topology(topology_off, coords, original_system)
+
+    atom_indices = [
+        {atom.index for atom in residue.atoms()}
+        for chain in topology.chains()
+        for residue in chain.residues()
+    ]
 
     alchemical_indices = atom_indices[:n_solute_molecules]
     persistent_indices = atom_indices[n_solute_molecules:]
-
-    if isinstance(force_field, openff.toolkit.ForceField):
-        original_system = force_field.create_openmm_system(topology)
-    else:
-        original_system: openmm.System = force_field(topology, coords, solvent_idx)
 
     alchemical_system = absolv.fep.apply_fep(
         original_system,
@@ -196,7 +320,7 @@ def _run_eq_phase(
     """
     platform = (
         femto.md.constants.OpenMMPlatform.REFERENCE
-        if prepared_system.topology.box_vectors is None
+        if prepared_system.topology.getPeriodicBoxVectors() is None
         else platform
     )
 
@@ -312,7 +436,7 @@ def _run_phase_end_states(
 ):
     platform = (
         femto.md.constants.OpenMMPlatform.REFERENCE
-        if prepared_system.topology.box_vectors is None
+        if prepared_system.topology.getPeriodicBoxVectors() is None
         else platform
     )
 
@@ -363,11 +487,11 @@ def _run_switching(
 ):
     platform = (
         femto.md.constants.OpenMMPlatform.REFERENCE
-        if prepared_system.topology.box_vectors is None
+        if prepared_system.topology.getPeriodicBoxVectors() is None
         else platform
     )
 
-    mdtraj_topology = mdtraj.Topology.from_openmm(prepared_system.topology.to_openmm())
+    mdtraj_topology = mdtraj.Topology.from_openmm(prepared_system.topology)
 
     trajectory_0 = mdtraj.load_dcd(str(output_dir / "state-0.dcd"), mdtraj_topology)
     trajectory_1 = mdtraj.load_dcd(str(output_dir / "state-1.dcd"), mdtraj_topology)

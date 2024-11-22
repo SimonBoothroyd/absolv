@@ -1,8 +1,8 @@
+import datetime
 import logging
 import pathlib
 import tempfile
 import urllib.request
-import datetime
 
 import click
 import femto.md.config
@@ -16,8 +16,8 @@ import parmed
 from rdkit import Chem
 
 import absolv.config
-import absolv.utils.openmm
 import absolv.runner
+import absolv.utils.openmm
 
 DEFAULT_TEMPERATURE = 298.15 * openmm.unit.kelvin
 DEFAULT_PRESSURE = 1.0 * openmm.unit.atmosphere
@@ -170,11 +170,11 @@ def run_replica(
 
     femto.md.system.apply_hmr(
         prepared_system_a.system,
-        parmed.openmm.load_topology(prepared_system_a.topology.to_openmm()),
+        parmed.openmm.load_topology(prepared_system_a.topology),
     )
     femto.md.system.apply_hmr(
         prepared_system_b.system,
-        parmed.openmm.load_topology(prepared_system_a.topology.to_openmm()),
+        parmed.openmm.load_topology(prepared_system_a.topology),
     )
 
     if method == "neq":
