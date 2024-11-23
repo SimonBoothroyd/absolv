@@ -47,7 +47,7 @@ def _rebuild_topology(
     orig_top: openff.toolkit.Topology,
     orig_coords: openmm.unit.Quantity,
     system: openmm.System,
-) -> tuple[openmm.app.Topology, openmm.unit.Quantity]:
+) -> tuple[openmm.app.Topology, openmm.unit.Quantity, list[set[int]]]:
     """Rebuild the topology to also include virtual sites."""
     atom_idx_to_residue_idx = {}
     atom_idx = 0
@@ -103,7 +103,9 @@ def _rebuild_topology(
     last_residue_idx = -1
     residue = None
 
-    for atomic_num, residue_idx in particles:
+    residue_to_particle_idx = collections.defaultdict(list)
+
+    for particle_idx, (atomic_num, residue_idx) in enumerate(particles):
         if residue_idx != last_residue_idx:
             last_residue_idx = residue_idx
             residue = topology.addResidue("UNK", chain)
@@ -119,8 +121,9 @@ def _rebuild_topology(
             element,
             residue,
         )
-
         atoms.append(atom)
+
+        residue_to_particle_idx[residue_idx].append(particle_idx)
 
     _rename_residues(topology)
 
@@ -135,26 +138,30 @@ def _rebuild_topology(
             atoms[atom_idx_to_particle_idx[bond.atom2_index]],
         )
 
-    coords_with_v_sites = []
+    coords_full = []
 
     for particle_idx in range(system.getNumParticles()):
         if particle_idx in particle_idx_to_atom_idx:
             coords_i = orig_coords[particle_idx_to_atom_idx[particle_idx]]
-            coords_with_v_sites.append(coords_i.value_in_unit(openmm.unit.angstrom))
+            coords_full.append(coords_i.value_in_unit(openmm.unit.angstrom))
         else:
-            coords_with_v_sites.append(numpy.zeros((1, 3)))
+            coords_full.append(numpy.zeros((1, 3)))
 
-    coords_with_v_sites = numpy.vstack(coords_with_v_sites) * openmm.unit.angstrom
+    coords_full = numpy.vstack(coords_full) * openmm.unit.angstrom
 
-    if len(orig_coords) != len(coords_with_v_sites):
+    if len(orig_coords) != len(coords_full):
         context = openmm.Context(system, openmm.VerletIntegrator(1.0))
-        context.setPositions(coords_with_v_sites)
+        context.setPositions(coords_full)
         context.computeVirtualSites()
-        coords_with_v_sites = context.getState(getPositions=True).getPositions(
-            asNumpy=True
-        )
 
-    return topology, coords_with_v_sites
+        coords_full = context.getState(getPositions=True).getPositions(asNumpy=True)
+
+    residues = [
+        set(residue_to_particle_idx[residue_idx])
+        for residue_idx in range(len(residue_to_particle_idx))
+    ]
+
+    return topology, coords_full, residues
 
 
 def _rename_residues(topology: openmm.app.Topology):
@@ -210,13 +217,9 @@ def _setup_solvent(
     else:
         original_system: openmm.System = force_field(topology_off, coords, solvent_idx)
 
-    topology, coords = _rebuild_topology(topology_off, coords, original_system)
-
-    atom_indices = [
-        {atom.index for atom in residue.atoms()}
-        for chain in topology.chains()
-        for residue in chain.residues()
-    ]
+    topology, coords, atom_indices = _rebuild_topology(
+        topology_off, coords, original_system
+    )
 
     alchemical_indices = atom_indices[:n_solute_molecules]
     persistent_indices = atom_indices[n_solute_molecules:]

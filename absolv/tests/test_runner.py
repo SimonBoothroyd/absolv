@@ -109,7 +109,7 @@ def test_rebuild_topology():
     )
     assert n_v_sites == 3
 
-    top, coords = absolv.runner._rebuild_topology(orig_top, orig_coords, system)
+    top, coords, idxs = absolv.runner._rebuild_topology(orig_top, orig_coords, system)
 
     found_atoms = [
         (
@@ -198,6 +198,13 @@ def test_rebuild_topology():
 
     actual_bonds = [(bond.atom1.name, bond.atom2.name) for bond in top.bonds()]
     assert actual_bonds == expected_bonds
+
+    expected_idxs = [
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17},
+        {11, 12, 13, 18},
+        {14, 15, 16, 19},
+    ]
+    assert idxs == expected_idxs
 
 
 def test_setup_fn():
