@@ -13,31 +13,9 @@ from absolv.fep import (
     _add_electrostatics_lambda,
     _add_lj_vdw_lambda,
     _find_nonbonded_forces,
-    _find_v_sites,
     apply_fep,
 )
 from absolv.tests import is_close
-
-
-def test_find_v_sites():
-    """Ensure that v-sites are correctly detected from an OMM system and assigned
-    to the right parent molecule."""
-
-    # Construct a mock system of V A A A V A A where (0, 5, 6), (3,), (4, 1, 2)
-    # are the core molecules.
-    system = openmm.System()
-
-    for _ in range(7):
-        system.addParticle(1.0)
-
-    system.setVirtualSite(0, openmm.TwoParticleAverageSite(5, 6, 0.5, 0.5))
-    system.setVirtualSite(4, openmm.TwoParticleAverageSite(1, 2, 0.5, 0.5))
-
-    atom_indices = [{0, 1}, {2}, {3, 4}]
-
-    particle_indices = _find_v_sites(system, atom_indices)
-
-    assert particle_indices == [{1, 2, 4}, {3}, {0, 5, 6}]
 
 
 def test_find_nonbonded_forces_lj_only(aq_nacl_lj_system):
