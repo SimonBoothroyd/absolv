@@ -25,7 +25,7 @@ specified:
 ```python
 import openmm.unit
 
-temperature=298.15 * openmm.unit.kelvin,
+temperature=298.15 * openmm.unit.kelvin
 pressure=1.0 * openmm.unit.atmosphere
 ```
 

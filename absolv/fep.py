@@ -1,4 +1,5 @@
 """Prepare OpenMM systems for FEP calculations."""
+
 import copy
 import itertools
 
@@ -20,54 +21,6 @@ LJ_POTENTIAL_BEUTLER = (
     "x = (sigma/reff_sterics)^6;"
     f"reff_sterics = sigma*(0.5*(1.0-{LAMBDA_STERICS}) + (r/sigma)^6)^(1/6);"
 )
-
-
-def _find_v_sites(
-    system: openmm.System, atom_indices: list[set[int]]
-) -> list[set[int]]:
-    """Finds any virtual sites in the system and ensures their indices get appended
-    to the atom index list.
-
-    Args:
-        system: The system that may contain v-sites.
-        atom_indices: A list of per-molecule atom indices
-
-    Returns:
-        A list of the per molecule **particle** indices.
-    """
-
-    atom_to_molecule_idx = {
-        atom_idx: i for i, indices in enumerate(atom_indices) for atom_idx in indices
-    }
-
-    particle_to_atom_idx = {}
-    atom_idx = 0
-
-    for particle_idx in range(system.getNumParticles()):
-        if system.isVirtualSite(particle_idx):
-            continue
-
-        particle_to_atom_idx[particle_idx] = atom_idx
-        atom_idx += 1
-
-    atom_idx = 0
-
-    remapped_atom_indices: list[set[int]] = [set() for _ in range(len(atom_indices))]
-
-    for particle_idx in range(system.getNumParticles()):
-        if not system.isVirtualSite(particle_idx):
-            molecule_idx = atom_to_molecule_idx[atom_idx]
-            atom_idx += 1
-
-        else:
-            v_site = system.getVirtualSite(particle_idx)
-            parent_atom_idx = particle_to_atom_idx[v_site.getParticle(0)]
-
-            molecule_idx = atom_to_molecule_idx[parent_atom_idx]
-
-        remapped_atom_indices[molecule_idx].add(particle_idx)
-
-    return remapped_atom_indices
 
 
 def _find_nonbonded_forces(
@@ -468,7 +421,7 @@ def apply_fep(
         system: The chemical system to generate the alchemical system from
         alchemical_indices: The atom indices corresponding to each molecule that
             should be alchemically transformable. The atom indices **must**
-            correspond to  **all** atoms in each molecule as alchemically
+            correspond to  **all** atoms / v-sites in each molecule as alchemically
             transforming part of a molecule is not supported.
         persistent_indices: The atom indices corresponding to each molecule that
             should **not** be alchemically transformable.
@@ -480,15 +433,6 @@ def apply_fep(
     """
 
     system = copy.deepcopy(system)
-
-    # Make sure we track v-sites attached to any solutes that may be alchemically
-    # turned off. We do this as a post-process step as the OpenFF toolkit does not
-    # currently expose a clean way to access this information.
-    atom_indices = alchemical_indices + persistent_indices
-    atom_indices = _find_v_sites(system, atom_indices)
-
-    alchemical_indices = atom_indices[: len(alchemical_indices)]
-    persistent_indices = atom_indices[len(alchemical_indices) :]
 
     (
         nonbonded_force,

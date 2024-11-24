@@ -1,4 +1,5 @@
 """Utilities to manipulate OpenMM objects."""
+
 import typing
 
 import femto.md.constants
@@ -46,7 +47,7 @@ def add_barostat(
 
 def create_simulation(
     system: openmm.System,
-    topology: openff.toolkit.Topology,
+    topology: openmm.app.Topology,
     coords: openmm.unit.Quantity,
     integrator: openmm.Integrator,
     platform: femto.md.constants.OpenMMPlatform,
@@ -69,17 +70,20 @@ def create_simulation(
     )
     platform = openmm.Platform.getPlatformByName(platform)
 
-    if topology.box_vectors is not None:
-        system.setDefaultPeriodicBoxVectors(*topology.box_vectors.to_openmm())
+    is_periodic = topology.getPeriodicBoxVectors() is not None
+
+    if is_periodic:
+        system.setDefaultPeriodicBoxVectors(*topology.getPeriodicBoxVectors())
 
     simulation = openmm.app.Simulation(
-        topology.to_openmm(), system, integrator, platform, platform_properties
+        topology, system, integrator, platform, platform_properties
     )
 
-    if topology.box_vectors is not None:
-        simulation.context.setPeriodicBoxVectors(*topology.box_vectors.to_openmm())
+    if is_periodic:
+        simulation.context.setPeriodicBoxVectors(*topology.getPeriodicBoxVectors())
 
     simulation.context.setPositions(coords)
+    simulation.context.computeVirtualSites()
     simulation.context.setVelocitiesToTemperature(integrator.getTemperature())
 
     return simulation
@@ -191,5 +195,7 @@ def extract_frame(trajectory: mdtraj.Trajectory, idx: int) -> openmm.State:
 
     if trajectory.unitcell_vectors is not None:
         context.setPeriodicBoxVectors(*trajectory.openmm_boxes(idx))
+
+    context.computeVirtualSites()
 
     return context.getState(getPositions=True)

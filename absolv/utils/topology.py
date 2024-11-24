@@ -1,4 +1,5 @@
 """Utilities for manipulating OpenFF topology objects."""
+
 import openff.toolkit
 
 
@@ -41,24 +42,3 @@ def topology_to_components(topology: openff.toolkit.Topology) -> list[tuple[str,
         components.append((current_smiles, current_count))
 
     return components
-
-
-def topology_to_atom_indices(topology: openff.toolkit.Topology) -> list[set[int]]:
-    """A helper method for extracting the sets of atom indices associated with each
-    molecule in a topology.
-
-    Args:
-        topology: The topology to extract the atom indices from.
-
-    Returns:
-        The set of atoms indices associated with each molecule in the topology.
-    """
-
-    atom_indices: list[set[int]] = []
-    current_atom_idx = 0
-
-    for molecule in topology.molecules:
-        atom_indices.append({i + current_atom_idx for i in range(molecule.n_atoms)})
-        current_atom_idx += molecule.n_atoms
-
-    return atom_indices
