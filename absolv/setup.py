@@ -36,7 +36,7 @@ def _approximate_box_size_by_density(
     """
 
     molecules = {
-        smiles: openff.toolkit.Molecule.from_smiles(smiles)
+        smiles: openff.toolkit.Molecule.from_smiles(smiles, allow_undefined_stereo=True)
         for smiles in {smiles for smiles, _ in components}
     }
 
@@ -102,9 +102,13 @@ def _molecule_from_smiles(smiles: str) -> openff.toolkit.Molecule:
     """Create a molecule from a SMILES string."""
 
     try:
-        molecule = openff.toolkit.Molecule.from_mapped_smiles(smiles)
+        molecule = openff.toolkit.Molecule.from_mapped_smiles(
+            smiles, allow_undefined_stereo=True
+        )
     except (openff.toolkit.utils.exceptions.SmilesParsingError, ValueError):
-        molecule = openff.toolkit.Molecule.from_smiles(smiles)
+        molecule = openff.toolkit.Molecule.from_smiles(
+            smiles, allow_undefined_stereo=True
+        )
 
     return molecule
 
